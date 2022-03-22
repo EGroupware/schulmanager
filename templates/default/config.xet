@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.config.general" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="30%"/>
+				<column width="70%"/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Schulname"/>
+					<textbox id="newsettings[schulname]" maxlength="120" width="80%"/>
+				</row>
+				<row>
+					<description value="Schulname Untertitel"/>
+					<textbox id="newsettings[schulname_sub]" maxlength="120" width="80%"/>
+				</row>
+				<row>
+					<description value="Aktuelles Schuljahr"/>
+					<select id="newsettings[schuljahr]">
+						<option value="2018">2018/19</option>
+						<option value="2019">2019/20</option>
+						<option value="2020">2020/21</option>
+						<option value="2021">2021/22</option>
+						<option value="2022">2022/23</option>
+						<option value="2023">2023/24</option>
+						<option value="2023">2024/25</option>
+						<option value="2023">2025/26</option>
+						<option value="2023">2026/27</option>
+						<option value="2023">2027/28</option>
+					</select>
+				</row>
+				<row>
+					<description value="Farbe Kopfzeile (r,g,b)"/>
+					<textbox id="newsettings[color_header]"/>
+				</row>
+				<row>
+					<description value="URL Logo Image"/>
+					<textbox id="newsettings[logo_img_url]" maxlength="255" width="80%"/>
+				</row>
+				<row>
+					<description value="Aktueller Modus der Applikation"/>
+					<select id="newsettings[app_mode]">
+						<option value="productiv">Produktiv (Teile in der Entwicklung sind ausgeblendet)</option>
+						<option value="develop">Entwicklung (Teile in der Entwicklung werden eingetragenen Benutzern angezeigt)</option>
+						<option value="debug">Debug (Fehlermeldungen werden angezeigt)</option>
+					</select>
+				</row>
+				<row>
+					<description value="Teile in der Entwicklung werden folgenden Benutzern angezeigt:" for="newsettings[schulmanager_developer]"/>
+					<select-account account_type="accounts" id="newsettings[schulmanager_developer]" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row>
+					<description value="EGroupware-Benutzer für den Schulmanager (Lehrer benötigen Lese-Rechte an dessen Kalender)" for="newsettings[schulmanager_user]"/>
+					<select-account account_type="accounts" id="newsettings[schulmanager_user]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row>
+					<groupbox id="stundenraster" colspan="2">
+						<caption label="Stundenraster"/>
+						<grid width="60%">
+							<columns>
+								<column width="25%"/>
+								<column width="25%"/>
+								<column width="25%"/>
+								<column width="25%"/>
+							</columns>
+							<rows>
+								<row class="th">
+									<description value="Kurzbezeichnung"/>
+									<description value="Name"/>
+									<description value="Beginn"/>
+									<description value="Ende"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_0_short]"/>
+									<textbox id="newsettings[std_0_name]"/>
+									<date-timeonly id="newsettings[std_0_start]"/>
+									<date-timeonly id="newsettings[std_0_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_1_short]"/>
+									<textbox id="newsettings[std_1_name]"/>
+									<date-timeonly id="newsettings[std_1_start]"/>
+									<date-timeonly id="newsettings[std_1_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_2_short]"/>
+									<textbox id="newsettings[std_2_name]"/>
+									<date-timeonly id="newsettings[std_2_start]"/>
+									<date-timeonly id="newsettings[std_2_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_3_short]"/>
+									<textbox id="newsettings[std_3_name]"/>
+									<date-timeonly id="newsettings[std_3_start]"/>
+									<date-timeonly id="newsettings[std_3_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_4_short]"/>
+									<textbox id="newsettings[std_4_name]"/>
+									<date-timeonly id="newsettings[std_4_start]"/>
+									<date-timeonly id="newsettings[std_4_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_5_short]"/>
+									<textbox id="newsettings[std_5_name]"/>
+									<date-timeonly id="newsettings[std_5_start]"/>
+									<date-timeonly id="newsettings[std_5_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_6_short]"/>
+									<textbox id="newsettings[std_6_name]"/>
+									<date-timeonly id="newsettings[std_6_start]"/>
+									<date-timeonly id="newsettings[std_6_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_7_short]"/>
+									<textbox id="newsettings[std_7_name]"/>
+									<date-timeonly id="newsettings[std_7_start]"/>
+									<date-timeonly id="newsettings[std_7_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_8_short]"/>
+									<textbox id="newsettings[std_8_name]"/>
+									<date-timeonly id="newsettings[std_8_start]"/>
+									<date-timeonly id="newsettings[std_8_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_9_short]"/>
+									<textbox id="newsettings[std_9_name]"/>
+									<date-timeonly id="newsettings[std_9_start]"/>
+									<date-timeonly id="newsettings[std_9_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_10_short]"/>
+									<textbox id="newsettings[std_10_name]"/>
+									<date-timeonly id="newsettings[std_10_start]"/>
+									<date-timeonly id="newsettings[std_10_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_11_short]"/>
+									<textbox id="newsettings[std_11_name]"/>
+									<date-timeonly id="newsettings[std_11_start]"/>
+									<date-timeonly id="newsettings[std_11_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_12_short]"/>
+									<textbox id="newsettings[std_12_name]"/>
+									<date-timeonly id="newsettings[std_12_start]"/>
+									<date-timeonly id="newsettings[std_12_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_13_short]"/>
+									<textbox id="newsettings[std_13_name]"/>
+									<date-timeonly id="newsettings[std_13_start]"/>
+									<date-timeonly id="newsettings[std_13_end]"/>
+								</row>
+								<row>
+									<textbox id="newsettings[std_14_short]"/>
+									<textbox id="newsettings[std_14_name]"/>
+									<date-timeonly id="newsettings[std_14_start]"/>
+									<date-timeonly id="newsettings[std_14_end]"/>
+								</row>
+							</rows>
+						</grid>
+					</groupbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.config.noten" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Edit grades enabled"/>
+					<checkbox id="newsettings[edit_grades_enabled]"/>
+				</row>
+				<row>
+					<description value="Grant general grades view to groups" for="groups"/>
+					<select-account account_type="groups" id="newsettings[view_all_groups]" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row>
+					<description value="Grant general grades view to accounts" for="groups"/>
+					<select-account account_type="accounts" id="newsettings[view_all_accounts]" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row>
+					<description value="Art große Leistungsnachweise (Trennzeichen: ';')" for="groups"/>
+					<textbox id="newsettings[typlist_glnw]" class="et2_fullWidth" span="4"/>
+				</row>
+				<row>
+					<description value="Art kleine Leistungsnachweise (Trennzeichen: ';')" for="groups"/>
+					<textbox id="newsettings[typlist_klnw]" class="et2_fullWidth" span="4"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.config.calendar" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Grant general calendar access for accounts" for="groups"/>
+					<select-account account_type="accounts" id="newsettings[cal_coordinator]" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<!--<row>
+					<description value="Add custom fields to calendar app" for="groups"/>
+					<button statustext="Add custom fields" label="Add custom fields" id="button[add_custom_fields]" onclick="app.schulmanager.adminAddCustomFields"
+							 image="add" background_image="1"/>
+				</row>-->
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.config.zeugnis" template="" lang="" group="0" version="16.1">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="60%"/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description value="dummy"/>
+					<textbox id="newsettings[dummy]"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.config" template="" lang="" group="0" version="16.1">
+		<grid width="100%">
+			<columns>
+				<column width="88"/>
+				<column width="130"/>
+				<column width="88"/>
+				<column width="130"/>
+				<column width="130"/>
+				<column/>
+				<column width="50"/>
+				<column width="50"/>
+			</columns>
+			<rows>
+				<row>
+					<tabbox id="tabs" span="all">
+						<tabs>
+							<tab id="general" label="Allgemein" statustext="General"/>
+							<tab id="noten" label="Leistungsnachweise" statustext="Leistungsnachweise"/>
+							<tab id="calendar" label="Termine" statustext="Termine"/>
+							<tab id="zeugni" label="Zeugnis" statustext="Zeugnis"/>
+						</tabs>
+						<tabpanels>
+							<template id="schulmanager.config.general"/>
+							<template id="schulmanager.config.noten"/>
+							<template id="schulmanager.config.calendar"/>
+							<template id="schulmanager.config.zeugnis"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

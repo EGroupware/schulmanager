@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.notenmanager.edit.rows" template="" lang="" group="0" version="0.0.1">
+		<grid id="sm_noten_table" width="100%">
+			<columns>
+				<column width="2%"/>
+				<column width="9%"/>				
+				<column width="2%"/>
+				<column width="9%"/>
+				<column width="9%"/>
+				<column width="9%"/>
+				<column width="6%"/>
+				<column width="6%"/>
+				<column width="9%"/>
+				<column width="9%"/>
+				<column width="9%"/>
+				<column width="6%"/>
+				<column width="6%"/>
+				<column width="1%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header id="nr" label="Nr."/>
+					<vbox>
+						<nextmatch-header id="name" label="Name" class="sm_label"/>
+						<description id="vorname" label="Rufname"/>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="altb" label="alt. B"/>
+						<checkbox id="alt_b_all" onchange="app.schulmanager.changeGewAllModified" tabindex="900" />
+					</vbox>
+					<vbox>
+						<nextmatch-header id="glnw1" label="GLNW (1.HJ)" class="sm_nm_th_label"/>
+						<hbox class="glnw">
+							<textbox id="glnw_1_0" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="glnw_1_1" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="glnw_1_2" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="klnw_1" label="kLNW (1. HJ)" class="sm_nm_th_label"/>
+						<hbox>
+							<textbox id="klnw_1_0" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="klnw_1_2" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="klnw_1_4" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+						</hbox>
+						<hbox>
+							<textbox id="klnw_1_1" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="klnw_1_3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="klnw_1_5" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="avg_1" label="Schnitte (1.HJ)" class="sm_nm_th_label"/>
+						<hbox>
+							<vbox>
+								<description label="Ø GLNW"/>
+								<description id="schnitt_g" class="sm_nm_gew_th"/>
+							</vbox>
+							<vbox>
+								<description label="Ø kLNW"/>
+								<description id="schnitt_k" class="sm_nm_gew_th"/>
+							</vbox>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="zz" label="Note ZZ" class="sm_nm_th_label"/>
+						<hbox>
+							<vbox>
+								<description value="Ø" class="sm_nm_gew_th"/>
+							</vbox><vbox>
+								<description value="Note" class="sm_nm_gew_th" no_lang="1"/>
+							</vbox>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="mv_1" label="MV (1. HJ)" class="sm_nm_th_label"/>
+						<hbox>
+							<vbox>
+								<description value="Mit." class="sm_nm_gew_th"/>
+							</vbox>
+							<vbox>
+								<description value="Ver." class="sm_nm_gew_th"/>
+							</vbox>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="glnw_2" label="GLNW (2.HJ)" class="sm_nm_th_label"/>
+						<hbox class="glnw">
+							<textbox id="glnw_2_0" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="glnw_2_1" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="glnw_2_2" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="klnw_2" label="kLNW (2. HJ)"  class="sm_nm_th_label"/>
+						<hbox>
+							<textbox id="klnw_2_0" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="klnw_2_2" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="klnw_2_4" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+						</hbox>
+						<hbox>
+							<textbox id="klnw_2_1" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="klnw_2_3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+							<textbox id="klnw_2_5" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"/>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="avg_2" label="Schnitte" class="sm_nm_th_label"/>
+						<hbox>
+							<vbox>
+								<description value="Ø GLNW"/>
+								<description id="schnitt_g_2" class="sm_nm_gew_th"/>
+							</vbox>
+							<vbox>
+								<description value="Ø kLNW"/>
+								<description id="schnitt_k_2" class="sm_nm_gew_th"/>
+							</vbox>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="jz" label="Note JZ" class="sm_nm_th_label"/>
+						<hbox>
+							<vbox>
+								<description value="Ø" class="sm_nm_gew_th"/>
+							</vbox><vbox>
+								<description value="Note" class="sm_nm_gew_th" no_lang="1"/>
+							</vbox>
+						</hbox>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="mv_2" label="MV" class="sm_nm_th_label"/>
+						<hbox>
+							<vbox>
+								<description value="Mit." class="sm_nm_gew_th"/>
+							</vbox>
+							<vbox>
+								<description value="Ver." class="sm_nm_gew_th"/>
+							</vbox>
+						</hbox>
+					</vbox>
+					<vbox>
+						<description value=""/>
+					</vbox>
+				</row>
+				<row class="$row_cont[nm_id] $row_cont[class]">
+					<description id="${row}[nm_id]"  no_lang="1"/>
+					<vbox>
+						<description id="${row}[nm_st][st_asv_familienname]" class="$row_cont[nm_st][nm_st_class] et2_label sm_label" no_lang="1"/>					
+						<description id="${row}[nm_st][st_asv_rufname]" class="$row_cont[nm_st][nm_st_class] et2_label"  no_lang="1"/>
+					</vbox>
+					<vbox>
+						<checkbox id="${row}[noten][alt_b][-1][checked]" onchange="app.schulmanager.changeNote" tabindex="999" />
+						<link href="#"><image  label="$row_cont[nm_st][hint][text]" src="${row}[nm_st][hint][img]"/></link>
+					</vbox>
+					<!-- 1. HJ -->
+					<vbox>
+						<hbox>
+							<textbox id="${row}[noten][glnw_hj_1][0][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1000"  statustext="status"/>
+							<textbox id="${row}[noten][glnw_hj_1][1][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1001"/>
+							<textbox id="${row}[noten][glnw_hj_1][2][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1002"/>
+						</hbox>
+					</vbox>
+					<vbox>
+						<hbox align="left">
+							<textbox id="${row}[noten][klnw_hj_1][0][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1012"/>
+							<textbox id="${row}[noten][klnw_hj_1][2][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1014"/>
+							<textbox id="${row}[noten][klnw_hj_1][4][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1016"/>
+						</hbox>
+						<hbox align="left">
+							<textbox id="${row}[noten][klnw_hj_1][1][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1013"/>
+							<textbox id="${row}[noten][klnw_hj_1][3][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1015"/>
+							<textbox id="${row}[noten][klnw_hj_1][5][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1017"/>
+						</hbox>
+					</vbox>
+					<hbox>
+						<textbox id="${row}[noten][glnw_hj_1][-1][note]" validator="/^$|^[1-5](,[0-9][0-9]?)?$|^6(,00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][glnw_hj_1][avgclass] schulmanager_note_input sm_nm_glnw" align="center" tabindex="1028"/>
+						<textbox id="${row}[noten][klnw_hj_1][-1][note]" validator="/^$|^[1-5](,[0-9][0-9]?)?$|^6(,00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][klnw_hj_1][avgclass] schulmanager_note_input sm_nm_klnw" align="center" tabindex="1029"/>
+					</hbox>
+					<hbox>
+						<textbox id="${row}[noten][schnitt_hj_1][-1][note]" validator="/^$|^[1-5](,[0-9][0-9]?)?$|^6(,00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][schnitt_hj_1][avgclass] schulmanager_note_input sm_nm_znote_schnitt" align="center" tabindex="1030"/>
+						<textbox id="${row}[noten][note_hj_1][-1][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][note_hj_1][avgclass] schulmanager_note_input sm_nm_znote sm_nm_znote_note" align="center" tabindex="1031"/>
+					</hbox>
+					<hbox>
+						<textbox id="${row}[noten][m_hj_1][-1][note]" validator="/^$|^[1-5]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1032" readonly="false"/>
+						<textbox id="${row}[noten][v_hj_1][-1][note]" validator="/^$|^[1-5]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1033" readonly="false"/>
+					</hbox>
+					<!-- 2. HJ -->
+					<vbox>
+						<hbox>
+							<textbox id="${row}[noten][glnw_hj_2][0][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1040"  statustext="status"/>
+							<textbox id="${row}[noten][glnw_hj_2][1][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1041"/>
+							<textbox id="${row}[noten][glnw_hj_2][2][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1042"/>
+						</hbox>
+					</vbox>
+					<vbox>
+						<hbox align="left">
+							<textbox id="${row}[noten][klnw_hj_2][0][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1052"/>
+							<textbox id="${row}[noten][klnw_hj_2][2][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1054"/>
+							<textbox id="${row}[noten][klnw_hj_2][4][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1056"/>
+						</hbox>
+						<hbox align="left">
+							<textbox id="${row}[noten][klnw_hj_2][1][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1053"/>
+							<textbox id="${row}[noten][klnw_hj_2][3][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1055"/>
+							<textbox id="${row}[noten][klnw_hj_2][5][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1057"/>
+						</hbox>
+					</vbox>
+					<hbox>
+						<textbox id="${row}[noten][glnw_hj_2][-1][note]" validator="/^$|^[1-5](,[0-9][0-9]?)?$|^6(,00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][glnw_hj_2][avgclass] schulmanager_note_input sm_nm_glnw" align="center" tabindex="1062"/>
+						<textbox id="${row}[noten][klnw_hj_2][-1][note]" validator="/^$|^[1-5](,[0-9][0-9]?)?$|^6(,00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][klnw_hj_2][avgclass] schulmanager_note_input sm_nm_klnw" align="center" tabindex="1063"/>
+					</hbox>
+					<hbox>
+						<textbox id="${row}[noten][schnitt_hj_2][-1][note]" validator="/^$|^[1-5](,[0-9][0-9]?)?$|^6(,00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][schnitt_hj_2][avgclass] schulmanager_note_input sm_nm_znote_schnitt" align="center" tabindex="1064"/>
+						<textbox id="${row}[noten][note_hj_2][-1][note]" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][note_hj_2][avgclass] schulmanager_note_input sm_nm_znote sm_nm_znote_note" align="center" tabindex="1065"/>
+					</hbox>
+					<hbox>
+						<textbox id="${row}[noten][m_hj_2][-1][note]" validator="/^$|^[1-5]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1066" readonly="false"/>
+						<textbox id="${row}[noten][v_hj_2][-1][note]" validator="/^$|^[1-5]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1067" readonly="false"/>
+					</hbox>
+					<vbox></vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.notenmanager.edit.header" template="" lang="" group="0" version="0.0.001">
+		<hbox>
+			<button statustext="Save the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
+			<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+			<!--<buttononly statustext="Exit without saving" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>-->
+			<button statustext="Exit without saving" label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>
+		</hbox>
+	</template>
+
+	<template id="schulmanager.notenmanager.edit" template="" lang="" group="0" version="0.0.001">
+		<grid>
+			<columns>
+				<column width="90%"/>
+			</columns>
+			<rows>
+				<!--<row class="dialogHeader">
+					<description value="Fach/-gruppe" for="sm_fach"/>
+					<textbox readonly="true" id="sm_fach" no_lang="1" size="20" maxlength="64" value="Inf"/>
+					<description value="Fach/-gruppe" for="sm_fach"/>
+					<textbox readonly="true" id="sm_fach" no_lang="1" size="20" maxlength="64" value="test"/>
+				</row>
+				<row class="et2_toolbar">
+					<description id="spacer"/>
+				</row>-->
+				<row>
+					<description id="sm_nm_edit_hint" class="sm_hint_red" align="center" label="Änderungen müssen aktiv über Speichern oder Übernehmen bestätigt werden!" no_lang="1"/>
+				</row>
+				<row>
+					<nextmatch id="nm" no_lang="1" template="schulmanager.notenmanager.edit.rows" header_left="schulmanager.notenmanager.edit.header" />
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

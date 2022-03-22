@@ -1,0 +1,631 @@
+/* https://isotope-theme.github.io/Isotope.github.io/colors/ */
+
+/* debug */
+table, td, th {
+	/*border: 1px solid black;*/
+}
+
+/* ende debug */
+
+.th
+{
+	valign: top;
+}
+
+.sm_nm_th_label
+{
+	font-weight: bold;
+	text-align: center;
+	vertical-align: top;
+}
+
+.sm_nm_passiv
+{
+	text-align: center;
+	vertical-align: top;
+	color: #606060;
+}
+
+.sm_label
+{
+	font-weight: bold;
+}
+
+
+
+
+.sm_nm_gew_th
+{
+	width:30px !important;
+	height: 1.0rem !important;
+	vertical-align: middle;
+	text-align:center !important;
+	border: 1px solid #ddd;
+    border-radius: 5px;
+	font-size: 85%;
+	height: 0.75rem !important;
+
+	margin:1px 0px 0px 1px!important;
+	padding:0px 0px 0px 0px!important;
+}
+
+.sm_nm_gew_th_input{
+	background-color: #ffffff;
+	width:30px !important;
+	height: 1.0rem !important;
+	vertical-align: middle;
+	text-align:center !important;
+	border: 1px solid #ddd;
+    border-radius: 5px;
+	font-size: 85%;
+	height: 0.75rem !important;
+
+	margin:1px 0px 0px 1px!important;
+	padding:0px 0px 0px 0px!important;
+}
+
+
+
+.schulmanager_note_input
+{
+	width:30px !important;
+	height: 1.0rem !important;
+
+	vertical-align: middle;
+
+	text-align:center !important;
+	border: 1px solid #ddd;
+    border-radius: 5px;
+
+	margin:1px 0px 0px 1px!important;
+	padding:0px 0px 0px 0px!important;
+}
+
+#schulmanager-notenmanager-index_nm table th,
+#schulmanager-notenmanager-klassenview_nm table th
+{
+	vertical-align: top;
+	align: center;
+}
+
+#schulmanager-notenmanager-klassenview_showexportcontent{
+	position: absolute;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 99;
+}
+
+#schulmanager-notenmanager-edit_nm table th
+{
+	vertical-align: top;
+	background-color: #e53935;
+}
+
+#schulmanager-notenmanager-index_nm table tr td:nth-child(1),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(1)
+{
+	text-align:right;
+}
+
+/* 2021-03-07 */
+#schulmanager-notenmanager-index_nm table tr td{
+	padding: 1;
+	/*border: 1px solid black;*/
+}
+#schulmanager-notenmanager-index_nm table tr td div{
+	  padding: 0;
+	  /*border: 0px solid black;*/
+  }
+
+/* GLNK */
+/*#schulmanager-notenmanager-index_nm table tr td:nth-child(4),
+#schulmanager-notenmanager-index_nm table tr td:nth-child(9),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(4),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(9),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(4),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(9),*/
+.sm_col_glnw
+{
+	background-color: #fff47c;
+/*	min-height: 40px;*/
+}
+
+.sm_nm_glnw
+{
+	font-weight: bold;
+	background-color: #fff9ba;
+	border-color: #ffdd00;
+}
+
+/* klnw */
+/*#schulmanager-notenmanager-index_nm table tr td:nth-child(5),
+#schulmanager-notenmanager-index_nm table tr td:nth-child(10),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(5),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(10),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(5),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(10)*/
+.sm_col_klnw
+{
+	background-color: #a1e684;
+/*	min-height: 19px;*/
+}
+.sm_nm_klnw
+{
+	background-color: #beeaac;
+	border-color: #7ecc67;
+}
+
+/* Schnitte */
+/*#schulmanager-notenmanager-index_nm table tr td:nth-child(6),
+#schulmanager-notenmanager-index_nm table tr td:nth-child(11),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(6),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(11),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(6),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(11)*/
+.sm_col_avg
+{
+	background-color: #b0bec5;
+	min-height: 40px;
+}
+.sm_nm_schnitt
+{
+	background-color: #6ec6ff;
+	border-color: #808e95;
+}
+.nm_avg_manuell
+{
+	color:blue;
+	text-decoration: underline;
+}
+
+/* Note */
+/*#schulmanager-notenmanager-edit_nm table tr td:nth-child(7),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(12),
+#schulmanager-notenmanager-index_nm table tr td:nth-child(7),
+#schulmanager-notenmanager-index_nm table tr td:nth-child(12),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(7),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(12)*/
+.sm_col_note
+{
+	/*background-color: #f44336;*/
+	background-color: #42a5f5;
+	min-height: 40px;
+}
+.sm_nm_znote_schnitt
+{
+	background-color: #b0bec5;
+	border-color: #0077c2;
+}
+.sm_nm_znote
+{
+	/*background-color: #ff9761;*/
+	background-color: #80d6ff;
+	border-color: #0077c2;
+}
+.sm_nm_znote_note
+{
+	font-weight: bold;
+}
+
+/* Mitarbeit Verhalten */
+/* Note */
+/*#schulmanager-notenmanager-edit_nm table tr td:nth-child(8),
+#schulmanager-notenmanager-edit_nm table tr td:nth-child(13),
+#schulmanager-notenmanager-index_nm table tr td:nth-child(8),
+#schulmanager-notenmanager-index_nm table tr td:nth-child(13),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(8),
+#schulmanager-notenmanager-klassenview_nm table tr td:nth-child(13)*/
+.sm_col_mv
+{
+	background-color: #bdbdbd;
+	min-height: 40px;
+}
+.sm_nm_mv
+{
+	/*background-color: #efefef;*/
+	background-color: #bdbdbd;
+	border-color: #8d8d8d;
+}
+
+/* ausgetretene Schüler */
+.nm_st_left
+{
+	text-decoration: line-through;
+	color:#808080;
+}
+
+/* Hinweis Noten Bearbeiten */
+.sm_hint_red, .sm_hint_red label
+{
+	font-weight: bold;
+	color: #ff0000 !important;
+}
+
+/* bearbeitete Noten im Edit-Modus kennzeichnen */
+.schulmanager_note_changed
+{
+	border-bottom-color: #00f;
+	border-bottom-width: 2px;
+    transition: all 0.5s linear;
+}
+
+
+
+/* Calendar */
+.sm_cal_title
+{
+	color: #696969;
+	font-size: 110%;
+	font-weight: bold;
+}
+
+.sm_cal_mo_it
+{
+	border-style: solid;
+	font-size: 75%;
+	font-weight: bold;
+
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	width: 90%;
+	height: 100% !important;
+	text-align: center !important;
+	padding: 2px;
+}
+.sm_cal_editable
+{
+	border: 1px solid #F44336;
+}
+/*.sm_cal_readonly
+{
+	background-color: #dddddd !important;
+}*/
+
+.sm_cal_block
+{
+	/*background-color: #FF8961 !important;*/
+	background-color: #696969 !important;
+}
+.sm_cal_glnw
+{
+	background-color: #ffff6b !important;/* #fdd835 #80d6ff !important;*/
+}
+.sm_cal_klnw
+{
+	background-color: #80e27e !important;
+}
+.sm_cal_user{
+	text-decoration: underline;
+}
+
+
+
+.sm_cal_mo_it :hover
+{
+	background-color: #eedddd;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+
+.sm_cal_saso, .sm_cal_saso div div span
+{
+	/*background-color: #FF8961 !important;*/
+	color: #FFF !important;
+	background-color: #696969 !important;
+}
+
+.sm_cal_btn
+{
+	width: 8px;
+	height: auto;
+}
+/* popups */
+.addnewevent{
+	position: absolute;
+	display: none;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 99;
+}
+.editgew{
+	position: absolute;
+	display: none;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 1;
+	box-shadow: 10px 10px 5px grey;
+  /*
+    display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+ */
+
+}
+/* Modal Content/Box */
+/*.editgew-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}*/
+
+/*#schulmanager-calendar-editevent{
+	height: 400px;
+}*/
+
+/* Letzte Spalte in Schulaufgabenkalender */
+#schulmanager-calendar-index_nm  .optcol,
+#schulmanager-calendar-edit_nm  .optcol{
+	/*display:hide !important;*/
+	width:0px !important;
+}
+
+#schulmanager-calendar-help{
+	margin: 10px;
+}
+
+#schulmanager-calendar-help div table tr td{
+	border-collapse: separate;
+	margin: 4px;
+	padding: 4px;
+	border: 3px;
+}
+
+#sm_cal_hidden{
+	width:0px;
+	display:none;
+}
+
+#schulmanager-calendar-index_nm td button{
+	min-width:90%;/* !important;*/
+	height: 1.0rem !important;
+	/*border: none;*/
+	background:none;
+	outline: none;
+}
+
+#schulmanager-calendar-index_nm innerContainer{
+	padding: 1px !important;
+}
+
+div.gridCont_2_div_col_1.innerContainer{
+	padding: 1px !important;
+}
+/* TEST */
+/*.egwGridView_grid
+{
+	border-left: 12px !important;
+	border-spacing: 0 4px !important;
+}*/
+
+
+/* The Modal (background) */
+.modalbg {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	/*left: 0;
+	top: 0;*/
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* modal container contact ; #schulmanager-notenmanager-index_schulmanager-contact{*/
+/*#schulmanager-notenmanager-index_schulmanager-notenmanager-contact{*/
+#schulmanager-notenmanager-index_schulmanager-contact{
+	position: absolute;
+	display: none;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 99;
+}
+
+/* modal container */
+#schulmanager-notenmanager-index_schulmanager-notenmanager-details{
+	position: absolute;
+	display: none;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 99;
+}
+
+.details-grid-glnw{
+	border-collapse: collapse;
+	empty-cells: hide;
+	width: 100%;
+}
+.details-grid-glnw tr:nth-child(even) {
+	background: #fff9ba;
+}
+.details-grid-glnw tr:nth-child(odd) {
+	background: #fff47c;
+}
+.details-grid-glnw td{
+	word-break: break-word;;
+	border: 1px solid #ffdd00;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.details-grid-klnw{
+	border-collapse: collapse;
+	empty-cells: hide;
+	width: 100%;
+}
+.details-grid-klnw tr:nth-child(even) {
+	background: #beeaac;
+}
+.details-grid-klnw tr:nth-child(odd) {
+	background: #a1e684
+}
+.details-grid-klnw td{
+	word-break: break-word;;
+	border: 1px solid #7ecc67;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.button_details_edit{
+	background-size: 12px 12px !important;
+	height: 14px !important;
+	width: 14px !important;
+	padding: 1px !important;
+}
+
+.button_details_delete{
+	background-size: 12px 12px !important;
+	height: 14px !important;
+	width: 14px !important;
+	padding: 1px !important;
+}
+
+#schulmanager-notenmanager-notendetails_editcontent{
+	position: absolute;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 99;
+}
+
+
+/* substitutions and accounts */
+#schulmanager-accounts_editcontent{
+	position: absolute;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 99;
+}
+
+
+/*
+.sm_col_klnw
+{
+	background-color: #4caf50;
+	min-height: 19px;
+}
+.sm_nm_klnw
+{
+	background-color: #80e27e;
+	border-color: #087f23;
+}
+ */
+
+/* schueler report */
+/* Table Styles */
+
+.schulmanager-schoolreport_tabs{
+	height: 100%;
+}
+
+.table-wrapper{
+	margin: 10px 30px 30px;
+	box-shadow: 0px 15px 25px rgba( 0, 0, 0, 0.2 );
+}
+
+/* fl table */
+.fl-table {
+	border-radius: 5px;
+	font-size: 12px;
+	font-weight: normal;
+	border: none;
+	border-collapse: collapse;
+	width: 100%;
+	max-width: 100%;
+	white-space: nowrap;
+	background-color: white;
+}
+
+.fl-table td, .fl-table th {
+	text-align: center;
+	padding: 8px;
+}
+
+.fl-table td {
+	border-right: 1px solid #f8f8f8;
+	font-size: 12px;
+}
+
+.fl-table thead th {
+	color: #ffffff;
+	background: #4FC3A1;
+}
+
+
+.fl-table thead th:nth-child(odd) {
+	color: #ffffff;
+	background: #324960;
+}
+
+.fl-table tr:nth-child(even) {
+	background: #F8F8F8;
+}
+
+/* md table , modal*/
+.md-table {
+	border-radius: 5px;
+	font-size: 12px;
+	font-weight: normal;
+	border: none;
+	border-collapse: collapse;
+	width: 80%;
+	max-width: 80%;
+	white-space: nowrap;
+	background-color: white;
+}
+
+.md-table td, .fl-table th {
+	text-align: center;
+	padding: 8px;
+}
+
+.md-table td {
+	border-right: 1px solid #f8f8f8;
+	font-size: 12px;
+}
+
+.md-table thead th {
+	color: #ffffff;
+	background: #4FC3A1;
+}
+
+
+.md-table thead th:nth-child(odd) {
+	color: #ffffff;
+	background: #324960;
+}
+
+.md-table tr:nth-child(even) {
+	background: #F8F8F8;
+}
+

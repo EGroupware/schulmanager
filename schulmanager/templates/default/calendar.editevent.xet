@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<!-- GENERAL -->
+	<template id="schulmanager.calendar.editevent.general" template="" lang="" group="0" version="0.0.001">
+		<grid>
+			<columns>
+				<column width="50%"/>
+				<column width="50%"/>
+			</columns>
+			<rows>
+				<row>
+					<description id="sm_date" class="sm_cal_title" align="center"/>
+					<hbox>
+						<description id="sm_klasse" class="sm_cal_title" align="center"/>
+						<description id="sm_klassengruppe" class="sm_cal_title" align="center"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<!-- SINGLE EVENT -->
+	<template id="schulmanager.calendar.editevent.single" template="" lang="" group="0" version="0.0.001">
+		<grid>
+			<columns>
+				<column width="30%"/>
+				<column width="70%"/>
+			</columns>
+			<rows>
+				<row disabled="@sm_readonly">
+					<description value="Index:"/>
+					<hbox>
+						<radio id="sm_index" options="sm_index_0"/>
+						<description value="(leer)"/>
+						<radio id="sm_index" options="sm_index_1"/>
+						<description value="1."/>
+						<radio id="sm_index" options="sm_index_2"/>
+						<description value="2."/>
+						<radio id="sm_index" options="sm_index_3"/>
+						<description value="3."/>
+						<radio id="sm_index" options="sm_index_4"/>
+						<description value="4."/>
+					</hbox>
+				</row>
+				<row disabled="@sm_readonly">
+					<description value="Art:" no_lang="1" class="sm_label"/>
+					<menulist>
+						<menupopup no_lang="1" type="select" statustext="Art des Eintrags" id="sm_type_options" />
+					</menulist>
+				</row>
+				<row disabled="!@sm_readonly">
+					<description value="Art:" no_lang="1" class="sm_label"/>
+					<hbox>
+						<description id="sm_index_val"/>
+						<description id="sm_type_name" />
+					</hbox>
+				</row>
+				<row disabled="@sm_readonly">
+					<description value="Fach:" class="sm_label"/>
+					<menulist>
+						<menupopup type="select" statustext="Art des Eintrags" id="sm_fach_options"/>
+					</menulist>
+				</row>
+				<row disabled="!@sm_readonly" class="sm_label">
+					<description value="Fach:"/>
+					<description id="sm_fach_name"/>
+				</row>
+				<row disabled="@sm_coordinator">
+					<description value="Lehrer:"/>
+					<description id="sm_user_name"/>
+				</row>
+				<row disabled="!@sm_coordinator">
+					<description value="Lehrer:"/>
+					<select-account account_type="accounts" id="sm_user" multiple="false" class="et2_fullWidth" span="4" tags="true" needed="false"/>
+				</row>
+				<row disabled="!@sm_modified">
+					<description value="aktualisiert:"/>
+					<description id="sm_modified"/>
+				</row>
+				<row disabled="@sm_readonly">
+					<description value="Beschreibung:"/>
+					<textbox multiline="true" id="description" rows="2" cols="30" width="99%" height="150" resize_ratio="0.7"/>
+				</row>
+				<row disabled="!@sm_readonly">
+					<description value="Beschreibung:"/>
+					<textbox multiline="true" id="description" rows="2" cols="30" width="99%" height="150" resize_ratio="0.7" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+		<button disabled="@sm_readonly" statustext="Save the changes made"  label="Save" id="button[save]" image="save" background_image="1" />
+		<!--<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>-->
+		<button statustext="Exit without saving" label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>
+		<button disabled="@sm_readonly" statustext="Delete" label="Delete" id="button[delete]" image="delete" background_image="1"/>
+	</template>
+
+	<!-- EDIT EVENT LIST -->
+	<template id="schulmanager.calendar.editevent.addnewevent" template="" lang="" group="0" version="1.9.001">
+		<grid class="addnewevent">
+			<columns>
+				<column width="85"/>
+				<column width="210"/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Art:" no_lang="1"/>
+					<menulist>
+						<menupopup no_lang="1" type="select" statustext="Art des Eintrags" id="sm_type_options_list" />
+					</menulist>
+				</row>
+				<row>
+					<description value="Fach:"/>
+					<menulist>
+						<menupopup type="select" statustext="Art des Eintrags" id="sm_fach_options_list"/>
+					</menulist>
+				</row>
+				<row disabled="@sm_coordinator">
+					<description value="Lehrer:"/>
+					<description id="sm_activeuser"/>
+				</row>
+				<row disabled="!@sm_coordinator">
+					<description value="Lehrer:"/>
+					<select-account account_type="accounts" id="sm_user_list" multiple="false" class="et2_fullWidth" span="4" tags="true" needed="false"/>
+				</row>
+				<row>
+					<button label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="app.schulmanager.add_list_event(widget,form::name(''));jQuery('table.addnewevent').css('display','none');return false;" image="check" background_image="1"/>
+					<button label="Cancel" tabindex="6" id="button[cancel]" class="button_cancel" onclick="jQuery('table.addnewevent').css('display','none');return false;" image="check" background_image="1"/>
+				</row>
+			</rows>
+		</grid>
+		<description id="sm_activeuserID" disabled="true"/>
+	</template>
+	<template id="schulmanager.calendar.editevent.list.rows" template="" lang="" group="0" version="0.0.1">
+		<grid>
+			<columns>
+				<column width="20"/>
+				<column width="20"/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="20%"/>
+				<column width="15%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header id="row_id" label="ROWID"/>
+					<nextmatch-header id="id" label="ID"/>
+					<nextmatch-header id="type" label="Art"/>
+					<nextmatch-header id="fach" label="Fach"/>
+					<nextmatch-header id="description" label="Info"/>
+					<nextmatch-header id="username" label="Name"/>
+					<nextmatch-header id="modified" label="aktualisiert"/>
+					<nextmatch-customfields id="customfields"/>
+				</row>
+				<row class="$row_cont[cssmode]">
+					<description id="${row}[row_id]"  no_lang="1"/>
+					<description id="${row}[id]"  no_lang="1"/>
+					<description id="${row}[sm_type_name]"  no_lang="1"/>
+					<description id="${row}[sm_fach]"  no_lang="1"/>
+					<description id="${row}[description]"  no_lang="1"/>
+					<description id="${row}[sm_user_name]" class="et2_label" no_lang="1"/>
+					<description id="${row}[sm_modified]" class="et2_label"  no_lang="1"/>
+					<customfields-list id="$row" readonly="true"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+
+	<template id="schulmanager.calendar.editevent.list.header" template="" lang="" group="0" version="0.0.001">
+		<button statustext="Add Event" label="" onclick="jQuery('table.addnewevent').css('display','inline');" image="add" background_image="1" disabled="false"/>
+	</template>
+
+	<template id="schulmanager.calendar.editevent.list" template="" lang="" group="0" version="0.0.001">
+		<template id="schulmanager.calendar.editevent.addnewevent"/>
+		<nextmatch id="nm" template="schulmanager.calendar.editevent.list.rows" header_left="schulmanager.calendar.editevent.list.header"/>
+		<button statustext="Close" label="Schließen" id="button[close]" image="close" background_image="1"/>
+	</template>
+
+	<template id="schulmanager.calendar.editevent" template="" lang="" group="0" version="0.0.001">
+		<template id="schulmanager.calendar.editevent.general"/>
+		<template id="schulmanager.calendar.editevent.single" disabled="@editmode=list"/>
+		<template id="schulmanager.calendar.editevent.list" disabled="@editmode=single"/>
+	</template>
+
+</overlay>

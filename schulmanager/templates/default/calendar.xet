@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.calendar.week.rows" template="" lang="" group="0" version="0.0.1">
+		<grid width="100%" border="0" spacing="0" padding="0">
+			<columns>
+				<column width="5%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox>
+						<description value="Zeit"/>
+					</vbox>
+					<vbox>
+						<description value="Montag"/>
+					</vbox>
+					<vbox>
+						<description value="Dienstag"/>
+					</vbox>
+					<vbox>
+						<description value="Mittwoch"/>
+					</vbox>
+					<vbox>
+						<description value="Donnerstag"/>
+					</vbox>
+					<vbox>
+						<description value="Freitag"/>
+					</vbox>
+				</row>
+				<row class="$row_cont[cat_id] $row_cont[class]">
+					<vbox>
+						<description id="${row}[time][desc]"/>
+						<description id="${row}[time][desc2]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[d1]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[d2]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[d3]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[d4]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[d5]"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.calendar.month.rows" template="" lang="" group="0" version="0.0.1">
+		<grid width="100%" border="0" spacing="0" padding="0">
+			<columns>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+				<column width="5%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox>
+						<nextmatch-header  value="Klassen-" id="col_0" label="Klasse"/>
+
+					</vbox>
+					<vbox id="hday_1">
+						<nextmatch-header value="1." id="col_1" label="col_1"/>
+						<description value="Mo"/>
+					</vbox>
+					<vbox id="hday_2">
+						<nextmatch-header value="2." id="col_2"/>
+						<description value="Di"/>
+					</vbox>
+					<vbox id="hday_3">
+						<nextmatch-header value="3." id="col_3"/>
+						<description value="Mi"/>
+					</vbox>
+					<vbox id="hday_4">
+						<nextmatch-header value="4." id="col_4"/>
+						<description value="D0"/>
+					</vbox>
+					<vbox id="hday_5">
+						<nextmatch-header value="5." id="col_5"/>
+						<description value="Fr"/>
+					</vbox>
+					<vbox id="hday_6">
+						<nextmatch-header value="6." id="col_6"/>
+						<description value="Mo"/>
+					</vbox>
+					<vbox id="hday_7">
+						<nextmatch-header value="7." id="col_7"/>
+						<description value="Di"/>
+					</vbox>
+					<vbox id="hday_8">
+						<nextmatch-header value="8." id="col_8"/>
+						<description value="Mi"/>
+					</vbox>
+					<vbox id="hday_9">
+						<nextmatch-header value="9." id="col_9"/>
+						<description value="Do"/>
+					</vbox>
+					<vbox id="hday_10">
+						<nextmatch-header value="10." id="col_10"/>
+						<description value="Fr"/>
+					</vbox>
+					<vbox id="hday_11">
+						<nextmatch-header value="11." id="col_11"/>
+						<description value="Mo"/>
+					</vbox>
+					<vbox id="hday_12">
+						<nextmatch-header value="12." id="col_12"/>
+						<description value="Di"/>
+					</vbox>
+					<vbox id="hday_13">
+						<nextmatch-header value="13." id="col_13"/>
+						<description value="Mi"/>
+					</vbox>
+					<vbox id="hday_14">
+						<nextmatch-header value="14." id="col_14"/>
+						<description value="Do"/>
+					</vbox>
+					<vbox id="hday_15">
+						<nextmatch-header value="15." id="col_15"/>
+						<description value="Mo"/>
+					</vbox>
+					<vbox id="hday_16">
+						<nextmatch-header value="16." id="col_16"/>
+						<description value="Mo"/>
+					</vbox>
+					<vbox id="hday_17">
+						<nextmatch-header value="17." id="col_17"/>
+						<description value="Di"/>
+					</vbox>
+					<vbox id="hday_18">
+						<nextmatch-header value="18." id="col_18"/>
+						<description value="Mi"/>
+					</vbox>
+					<vbox id="hday_19">
+						<nextmatch-header value="19." id="col_19"/>
+						<description value="Do"/>
+					</vbox>
+					<vbox id="hday_20">
+						<nextmatch-header value="20." id="col_20"/>
+						<description value="Fr"/>
+					</vbox>
+					<vbox id="hday_21">
+						<nextmatch-header value="21." id="col_21"/>
+						<description value="Mo"/>
+					</vbox>
+					<vbox id="hday_22">
+						<nextmatch-header value="22." id="col_22"/>
+						<description value="Di"/>
+					</vbox>
+					<vbox id="hday_23">
+						<nextmatch-header value="23." id="col_23"/>
+						<description value="Mi"/>
+					</vbox>
+					<vbox id="hday_24">
+						<nextmatch-header value="24." id="col_24"/>
+						<description value="Do"/>
+					</vbox>
+					<vbox id="hday_25">
+						<nextmatch-header value="25." id="col_25"/>
+						<description value="Fr"/>
+					</vbox>
+					<vbox id="hday_26">
+						<nextmatch-header value="26." id="col_26"/>
+						<description value="Mo"/>
+					</vbox>
+					<vbox id="hday_27">
+						<nextmatch-header value="27." id="col_27"/>
+						<description value="Di"/>
+					</vbox>
+					<vbox id="hday_28">
+						<nextmatch-header value="28." id="col_28"/>
+						<description value="Mi"/>
+					</vbox>
+					<vbox id="hday_29">
+						<nextmatch-header value="29." id="col_29"/>
+						<description value="Do"/>
+					</vbox>
+					<vbox id="hday_30">
+						<nextmatch-header value="30." id="col_30"/>
+						<description value="Fr"/>
+					</vbox>
+					<vbox id="hday_31">
+						<nextmatch-header value="31." id="col_31"/>
+						<description value="Mo"/>
+					</vbox>
+				</row>
+				<row class="$row_cont[cat_id] $row_cont[class]">
+					<vbox>
+						<description id="${row}[kg][klasse]"/>
+						<description id="${row}[kg][zweig]"/>
+					</vbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][1][name]"/>
+							<description id="${row}[cal][1][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][2][name]"/>
+							<description id="${row}[cal][2][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][3][name]"/>
+							<description id="${row}[cal][3][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][4][name]"/>
+							<description id="${row}[cal][4][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][5][name]"/>
+							<description id="${row}[cal][5][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][6][name]"/>
+							<description id="${row}[cal][6][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][7][name]"/>
+							<description id="${row}[cal][7][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][8][name]"/>
+							<description id="${row}[cal][8][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][9][name]"/>
+							<description id="${row}[cal][9][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][10][name]"/>
+							<description id="${row}[cal][10][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][11][name]"/>
+							<description id="${row}[cal][11][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][12][name]"/>
+							<description id="${row}[cal][12][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][13][name]"/>
+							<description id="${row}[cal][13][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][14][name]"/>
+							<description id="${row}[cal][14][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][15][name]"/>
+							<description id="${row}[cal][15][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][16][name]"/>
+							<description id="${row}[cal][16][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][17][name]"/>
+							<description id="${row}[cal][17][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][18][name]"/>
+							<description id="${row}[cal][18][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][19][name]"/>
+							<description id="${row}[cal][19][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][20][name]"/>
+							<description id="${row}[cal][20][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][21][name]"/>
+							<description id="${row}[cal][21][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][22][name]"/>
+							<description id="${row}[cal][22][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][23][name]"/>
+							<description id="${row}[cal][23][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][24][name]"/>
+							<description id="${row}[cal][24][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][25][name]"/>
+							<description id="${row}[cal][25][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][26][name]"/>
+							<description id="${row}[cal][26][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][27][name]"/>
+							<description id="${row}[cal][27][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][28][name]"/>
+							<description id="${row}[cal][28][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][29][name]"/>
+							<description id="${row}[cal][29][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][30][name]"/>
+							<description id="${row}[cal][30][desc]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox class="sm_cal_mo_it">
+							<description id="${row}[cal][31][name]"/>
+							<description id="${row}[cal][31][desc]"/>
+						</vbox>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.calendar.header" template="" lang="" group="0" version="0.0.001">
+		<button statustext="Edit" label="früher" id="button[previous]" image="previous" background_image="1" onclick="app.schulmanager.calChangeMonth"/>
+		<textbox id="cal[sel]" readonly="true"/>
+		<button statustext="Edit" label="später" id="button[forward]" image="forward" background_image="1" onclick="app.schulmanager.calChangeMonth"/>
+		<!--<button statustext="Edit" label="Edit" id="edit" image="edit" background_image="1" onclick="window.location.replace(egw::link('/index.php','menuaction=schulmanager.notenmanager_ui.edit'));"/>		-->
+	</template>
+	<template id="schulmanager.calendar" template="" lang="" group="0" version="0.0.001">
+		<nextmatch id="nm" no_lang="1" template="schulmanager.calendar.month.rows" header_left="schulmanager.calendar.header" />
+	</template>
+
+</overlay>

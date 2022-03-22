@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.accounts.edit" template="" lang="" group="0" version="0.0.1">
+		<box id="editcontentmodal" class="modalbg">
+			<vbox id="editcontent">
+				<description value="Bearbeiten:" class="et2_label sm_label"/>
+				<grid class="details-grid-edit">
+					<columns>
+						<column/>
+						<column/>
+					</columns>
+					<rows>
+						<row>
+							<description label="Name: " class="sm_label"/>
+							<description id="ls_asv_familienname" class="sm_label"/>
+						</row>
+						<row>
+							<description label="Vorname: " class="sm_label"/>
+							<description id="ls_asv_rufname" class="sm_label"/>
+						</row>
+						<row>
+							<description label="EGroupware Benutzer: " class="sm_label"/>
+							<menulist>
+								<menupopup type="select-account"  id="account_id" no_lang="true" readonly="false"/>
+							</menulist>
+						</row>
+					</rows>
+				</grid>
+				<hbox>
+					<button label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="app.schulmanager.onTeacherAccountLinkCommit" image="check" background_image="true"/>
+					<button label="Cancel" tabindex="6" id="button[cancel]" class="button_cancel" onclick="jQuery('#schulmanager-accounts_editcontentmodal').css('display','none');return false;" image="cancel" background_image="true"/>
+				</hbox>
+			</vbox>
+		</box>
+	</template>
+
+	<template id="schulmanager.accounts.rows" template="" lang="" group="0" version="0.0.1">
+		<grid width="100%" border="0" spacing="0" padding="0">
+			<columns>
+				<column width="5%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox>
+						<description value="Nr."/>
+					</vbox>
+					<vbox>
+						<description value="Name"/>
+					</vbox>
+					<vbox>
+						<description value="Vorname"/>
+					</vbox>
+					<vbox>
+						<description value="EGroupware Benutzer"/>
+					</vbox>
+				</row>
+				<row class="$row_cont[cat_id] $row_cont[class]">
+					<vbox>
+						<description id="${row}[row_id]"/>
+					</vbox>					
+					<vbox>
+						<description id="${row}[ls_asv_familienname]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[ls_asv_rufname]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[account_lid]"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	
+	<template id="schulmanager.accounts.header" template="" lang="" group="0" version="0.0.001">
+		<button label="Auto-Mapping" id="button[automapping]" class="button_add" onclick="app.schulmanager.onTeacherAutoLinking"/>
+	</template>
+	<template id="schulmanager.accounts" template="" lang="" group="0" version="0.0.001">
+		<hidden id="token"/>
+		<template id="schulmanager.accounts.edit"/>
+		<nextmatch id="nm" no_lang="1" template="schulmanager.accounts.rows" header_left="schulmanager.accounts.header" />
+	</template>
+
+</overlay>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.substitution.add" template="" lang="" group="0" version="0.0.1">
+		<description value="Vertretung"/>
+		<menulist>
+			<menupopup type="select-account"  id="add_kennung" no_lang="1" readonly="false"/>
+		</menulist>
+		<description value="Lehrer"/>
+		<menulist>
+			<menupopup type="select-account"  id="add_kennung_orig" no_lang="1" readonly="false" onchange="app.schulmanager.subs_TeacherChanged"/>
+		</menulist>
+		<description value="Unterricht:" no_lang="1"/>
+		<menulist>
+			<menupopup no_lang="1" type="select" statustext="Art des Eintrags" id="add_lesson_list"/>
+		</menulist>		
+		<button label="Add" id="button[add]" class="button_add" image="add" background_image="1"/>
+	</template>
+
+	<template id="schulmanager.substitution.rows" template="" lang="" group="0" version="0.0.1">
+		<grid width="100%" border="0" spacing="0" padding="0">
+			<columns>
+				<column width="5%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+				<column width="15%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox>
+						<description value=""/>
+					</vbox>
+					<vbox>
+						<description value="Vertretung"/>
+					</vbox>
+					<vbox>
+						<description value="Lehrer"/>
+					</vbox>
+					<vbox>
+						<description value="Klasse"/>
+					</vbox>
+					<vbox>
+						<description value="Kg"/>
+					</vbox>
+					<vbox>
+						<description value="Fach"/>
+					</vbox>
+				</row>
+				<row class="$row_cont[cat_id] $row_cont[class]">
+					<vbox>
+						<description id="${row}[nr]"/>						
+					</vbox>					
+					<vbox>
+						<description id="${row}[asv_kennung]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[asv_kennung_orig]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[kl_asv_klassenname]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[kg_asv_kennung]"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[sf_asv_kurzform]"/>
+					</vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	
+	<template id="schulmanager.substitution.header" template="" lang="" group="0" version="0.0.001">
+			
+	</template>
+	<template id="schulmanager.substitution" template="" lang="" group="0" version="0.0.001">
+		<template id="schulmanager.substitution.add"/>
+		<nextmatch id="nm" no_lang="1" template="schulmanager.substitution.rows" header_left="schulmanager.substitution.header" />
+	</template>
+
+</overlay>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.calendar.access" template="" lang="" group="0" version="0.0.001">
+		<grid width="100%" class="admin-config egwGridView_grid">
+			<columns>
+				<column width="50%"/>
+				<column width="50%"/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Schreibrechte für Gruppen" for="sm_cal_access_groups"/>
+					<select-account account_type="groups" id="sm_cal_access_groups" multiple="true" class="et2_fullWidth" span="4" tags="true" needed="false"/>
+				</row>
+				<row>
+					<description value="Schreibrechte für Benutzer" for="sm_cal_access_accounts"/>
+					<select-account account_type="accounts" id="sm_cal_access_accounts" multiple="true" class="et2_fullWidth" span="4" tags="true" needed="false"/>
+				</row>
+			</rows>
+		</grid>
+		<button statustext="Save the changes made"  label="Save" id="button[save]" image="save" background_image="1" />
+		<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>-->
+		<button statustext="Exit without saving" label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>
+	</template>
+</overlay>

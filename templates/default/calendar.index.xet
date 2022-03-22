@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<overlay>
+	<template id="schulmanager.calendar.index.month.rows" template="" lang="" group="0" version="0.0.1">
+		<grid width="100%">
+			<columns>
+				<column width="6%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="3%"/>
+				<column width="1%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox>
+						<nextmatch-header id="klasse" value="Klassen-" label="Klasse"/>
+					</vbox>
+					<vbox>
+						<nextmatch-header id="kg" value="KG" label="KG"/>
+					</vbox>
+					<vbox id="hday_1">
+						<nextmatch-header id="col_1" value="1." label="col_1"/>
+						<description value="Mo"/>
+						<button id="day_1_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>-->
+					</vbox>
+					<vbox id="hday_2">
+						<nextmatch-header value="2." id="col_2" label="col_2"/>
+						<description value="Di"/>
+						<buttononly id="day_2_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_3">
+						<nextmatch-header value="3." id="col_3" label="col_3"/>
+						<description value="Mi"/>
+						<buttononly id="day_3_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_4">
+						<nextmatch-header value="4." id="col_4" label="col_4"/>
+						<description value="D0"/>
+						<buttononly id="day_4_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_5">
+						<nextmatch-header value="5." id="col_5" label="col_5"/>
+						<description value="Fr"/>
+						<buttononly id="day_5_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_6">
+						<nextmatch-header value="6." id="col_6" label="col_6"/>
+						<description value="Mo"/>
+						<buttononly id="day_6_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_7">
+						<nextmatch-header value="7." id="col_7" label="col_7"/>
+						<description value="Di"/>
+						<buttononly id="day_7_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_8">
+						<nextmatch-header value="8." id="col_8" label="col_8"/>
+						<description value="Mi"/>
+						<buttononly id="day_8_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_9">
+						<nextmatch-header value="9." id="col_9" label="col_9"/>
+						<description value="Do"/>
+						<buttononly id="day_9_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_10">
+						<nextmatch-header value="10." id="col_10" label="col_10"/>
+						<description value="Fr"/>
+						<buttononly id="day_10_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_11">
+						<nextmatch-header value="11." id="col_11" label="col_11"/>
+						<description value="Mo"/>
+						<buttononly id="day_11_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_12">
+						<nextmatch-header value="12." id="col_12" label="col_12"/>
+						<description value="Di"/>
+						<buttononly id="day_12_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_13">
+						<nextmatch-header value="13." id="col_13" label="col_13"/>
+						<description value="Mi"/>
+						<buttononly id="day_13_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_14">
+						<nextmatch-header value="14." id="col_14" label="col_14"/>
+						<description value="Do"/>
+						<buttononly id="day_14_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_15">
+						<nextmatch-header value="15." id="col_15" label="col_15"/>
+						<description value="Mo"/>
+						<buttononly id="day_15_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_16">
+						<nextmatch-header value="16." id="col_16" label="col_16"/>
+						<description value="Mo"/>
+						<buttononly id="day_16_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_17">
+						<nextmatch-header value="17." id="col_17" label="col_17"/>
+						<description value="Di"/>
+						<buttononly id="day_17_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_18">
+						<nextmatch-header value="18." id="col_18" label="col_18"/>
+						<description value="Mi"/>
+						<buttononly id="day_18_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_19">
+						<nextmatch-header value="19." id="col_19" label="col_19"/>
+						<description value="Do"/>
+						<buttononly id="day_19_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_20">
+						<nextmatch-header value="20." id="col_20" label="col_20"/>
+						<description value="Fr"/>
+						<buttononly id="day_20_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_21">
+						<nextmatch-header value="21." id="col_21" label="col_21"/>
+						<description value="Mo"/>
+						<buttononly id="day_21_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_22">
+						<nextmatch-header value="22." id="col_22" label="col_22"/>
+						<description value="Di"/>
+						<buttononly id="day_22_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_23">
+						<nextmatch-header value="23." id="col_23" label="col_23"/>
+						<description value="Mi"/>
+						<buttononly id="day_23_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_24">
+						<nextmatch-header value="24." id="col_24" label="col_24"/>
+						<description value="Do"/>
+						<buttononly id="day_24_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_25">
+						<nextmatch-header value="25." id="col_25" label="col_25"/>
+						<description value="Fr"/>
+						<buttononly id="day_25_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_26">
+						<nextmatch-header value="26." id="col_26" label="col_26"/>
+						<description value="Mo"/>
+						<buttononly id="day_26_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_27">
+						<nextmatch-header value="27." id="col_27" label="col_27"/>
+						<description value="Di"/>
+						<buttononly id="day_27_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_28">
+						<nextmatch-header value="28." id="col_28" label="col_28"/>
+						<description value="Mi"/>
+						<buttononly id="day_28_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_29">
+						<nextmatch-header value="29." id="col_29" label="col_29"/>
+						<description value="Do"/>
+						<buttononly id="day_29_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_30">
+						<nextmatch-header value="30." id="col_30" label="col_30"/>
+						<description value="Fr"/>
+						<buttononly id="day_30_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<vbox id="hday_31">
+						<nextmatch-header value="31." id="col_31" label="col_31"/>
+						<description value="Mo"/>
+						<buttononly id="day_31_add" class="sm_cal_btn" label="Alle Zellen in dieser Spalte bearbeiten" onclick="app.schulmanager.calEditMultiple" image="add"/>
+					</vbox>
+					<nextmatch-header id="dummy" label=""/>
+				</row>
+				<row class="$row_cont[cat_id] $row_cont[class]">
+					<hbox>
+						<vbox>
+							<description id="${row}[kg][klasse]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<description id="${row}[kg][kennung]"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][1][teaser]" class="$row_cont[cal][1][class] $row_cont[cal][1][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][2][teaser]" class="$row_cont[cal][2][class] $row_cont[cal][2][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][3][teaser]" class="$row_cont[cal][3][class] $row_cont[cal][3][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][4][teaser]" class="$row_cont[cal][4][class] $row_cont[cal][4][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][5][teaser]" class="$row_cont[cal][5][class] $row_cont[cal][5][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][6][teaser]" class="$row_cont[cal][6][class] $row_cont[cal][6][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][7][teaser]" class="$row_cont[cal][7][class] $row_cont[cal][7][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][8][teaser]" class="$row_cont[cal][8][class] $row_cont[cal][8][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][9][teaser]" class="$row_cont[cal][9][class] $row_cont[cal][9][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][10][teaser]" class="$row_cont[cal][10][class] $row_cont[cal][10][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][11][teaser]" class="$row_cont[cal][11][class] $row_cont[cal][11][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][12][teaser]" class="$row_cont[cal][12][class] $row_cont[cal][12][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][13][teaser]" class="$row_cont[cal][13][class] $row_cont[cal][13][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][14][teaser]" class="$row_cont[cal][14][class] $row_cont[cal][14][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<!--<textbox id="${row}[cal][15][teaser]" class="$row_cont[cal][15][class] $row_cont[cal][15][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>-->
+							<textbox id="${row}[cal][15][teaser]" class="$row_cont[cal][15][class] $row_cont[cal][15][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][16][teaser]" class="$row_cont[cal][16][class] $row_cont[cal][16][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][17][teaser]" class="$row_cont[cal][17][class] $row_cont[cal][17][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][18][teaser]" class="$row_cont[cal][18][class] $row_cont[cal][18][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][19][teaser]" class="$row_cont[cal][19][class] $row_cont[cal][19][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][20][teaser]" class="$row_cont[cal][20][class] $row_cont[cal][20][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][21][teaser]" class="$row_cont[cal][21][class] $row_cont[cal][21][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][22][teaser]" class="$row_cont[cal][22][class] $row_cont[cal][22][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][23][teaser]" class="$row_cont[cal][23][class] $row_cont[cal][23][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][24][teaser]" class="$row_cont[cal][24][class] $row_cont[cal][24][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][25][teaser]" class="$row_cont[cal][25][class] $row_cont[cal][25][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][26][teaser]" class="$row_cont[cal][26][class] $row_cont[cal][26][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][27][teaser]" class="$row_cont[cal][27][class] $row_cont[cal][27][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][28][teaser]" class="$row_cont[cal][28][class] $row_cont[cal][28][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][29][teaser]" class="$row_cont[cal][29][class] $row_cont[cal][29][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][30][teaser]" class="$row_cont[cal][30][class] $row_cont[cal][30][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+						<vbox>
+							<textbox id="${row}[cal][31][teaser]" class="$row_cont[cal][31][class] $row_cont[cal][31][cssmode]" onclick="return false;" onfocus="app.schulmanager.cal_focus_item"/>
+						</vbox>
+					</hbox>
+					<hbox>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.calendar.index.header" template="" lang="" group="0" version="0.0.001">
+		<button statustext="previous" label="früher" id="button[previous]" image="previous" background_image="1"/>
+		<button statustext="forward" label="später" id="button[forward]" image="forward" background_image="1"/>
+		<!--<button statustext="Save the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
+		<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
+		<button statustext="Exit without saving" label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>-->
+	</template>
+	<template id="schulmanager.calendar.index.header_right" template="" lang="" group="0" version="0.0.001">
+                <button statustext="PDF-Export" label="Export" id="button[exportpdf]" onclick="app.schulmanager.exportpdf_calm" image="mime128_application_pdf" background_image="1"/>
+		<button disabled="!@sm_coordinator" statustext="Berechtigungen" label="" id="button[access]" image="lock" background_image="1"/>
+		<button statustext="Hilfe" label="" id="button[help]" image="help" background_image="1"/>
+	</template>
+	<template id="schulmanager.calendar.index" template="" lang="" group="0" version="0.0.001">
+		<grid>
+			<columns>
+				<column width="90%"/>
+			</columns>
+			<rows>
+				<row>
+					<hbox>
+						<description id="cal_sel_month" class="sm_cal_title" align="center"/>
+						<description id="write_access_msg" class="sm_hint_red" align="center"/>
+					</hbox>
+				</row>
+				<row>
+					<nextmatch id="nm" no_lang="1" template="schulmanager.calendar.index.month.rows" header_left="schulmanager.calendar.index.header" header_right="schulmanager.calendar.index.header_right"/>
+				</row>
+			</rows>
+		</grid>
+
+	</template>
+
+</overlay>

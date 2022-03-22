@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="schulmanager.contact.header">
+        <hbox class="sm_label">
+            <description id="contact_name" class="et2_label sm_label"/>
+            <description id="contact_rufname" class="sm_label"/>
+            <description id="contact_klasse" class="sm_label"/>
+            <description id="contact_fach" class="sm_label"/>
+        </hbox>
+        <hrule/>
+    </template>
+
+    <template id="schulmanager.contact">
+        <template id="schulmanager.contact.header"/>
+        <box class="table-wrapper">
+            <description value="Kontakt" class="sm_label"/>
+            <grid id="grid-sko" class="md-table">
+                <columns>
+                    <column/>
+                    <column/>
+                    <column/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row class="th">
+                        <description label="Nr." class="sm_nm_th_label"/>
+                        <description label="Art" no_lang="true" class="sm_nm_th_label"/>
+                        <description label="Kontakt" no_lang="true" class="sm_nm_th_label"/>
+                        <description label="Bemerkung" class="sm_nm_th_label"/>
+                    </row>
+                </rows>
+            </grid>
+        </box>
+
+        <box class="table-wrapper">
+            <description value="Anschrift" class="sm_label"/>
+            <grid id="grid-san" class="md-table">
+                <columns>
+                    <column/>
+                    <column/>
+                    <column/>
+                    <column/>
+                    <column/>
+                    <column/>
+                    <column/>
+                    <column/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row class="th">
+                        <description label="Nr." class="sm_nm_th_label"/>
+                        <description label="Anrede" no_lang="true" class="sm_nm_th_label"/>
+                        <description label="Familienname" no_lang="true" class="sm_nm_th_label"/>
+                        <description label="Vornamen" class="sm_nm_th_label"/>
+                        <description label="Bezug" class="sm_nm_th_label"/>
+                        <description label="Straße" class="sm_nm_th_label"/>
+                        <description label="Nummer" class="sm_nm_th_label"/>
+                        <description label="PLZ" class="sm_nm_th_label"/>
+                        <description label="Ort" class="sm_nm_th_label"/>
+                    </row>
+                </rows>
+            </grid>
+        </box>
+
+        <button label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="jQuery('#schulmanager-notenmanager-index_showcontactmodal').css('display','none');return false;" image="check" background_image="true"/>
+    </template>
+</overlay>
