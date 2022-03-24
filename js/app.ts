@@ -6,22 +6,12 @@
  * @author Axel Wild <info-AT-wild-solutions.de>
  * @copyright (c) 2022 by info-AT-wild-solutions.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 
-import 'jquery';
-import 'jqueryui';
-import '../jsapi/egw_global';
-import '../etemplate/et2_types';
-
 import {EgwApp} from '../../api/js/jsapi/egw_app';
-//import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
-import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
-import {et2_dataview_grid} from "../../api/js/etemplate/et2_dataview_view_grid";
-// Object.defineProperty(exports, "__esModule", { value: true });
 
 export class SchulmanagerApp extends EgwApp
 {
