@@ -823,20 +823,20 @@ class schulmanager_cal_bo extends Api\Storage
 	 * @param type $firstIndex
 	 * @param type $lastIndex
 	 */
-	function getColIndizes($start, $end, $rangeStart, $rangeEnd, &$firstIndex, &$lastIndex){
+	function getColIndizes(int $start, int $end, int $rangeStart, int $rangeEnd, &$firstIndex, &$lastIndex){
 		// set first index
 		if($start <= $rangeStart && $end >= $rangeStart){
 			$firstIndex = 1; // starts before rangestart, ends after rangestart
 		}
 		elseif ($start >= $rangeStart && $start <= $rangeEnd) {
-			$firstIndex = date("j", $start);	// starts inside
+            $firstIndex = ceil(($start - $rangeStart) / 86400); // sec per day, 60*60*24, starts inside
 		}
 		else{
 			$firstIndex = -1;
 		}
 		// set last index
 		if($end >= $rangeStart && $end <= $rangeEnd){
-			$lastIndex = date("j", $end); // ends inside
+            $lastIndex = ceil(($end - $rangeStart) / 86400);
 		}
 		elseif ($start <= $rangeEnd && $end >= $rangeEnd) {
 			$lastIndex = 31;		// starts before reangeEnd, ends after rangeEnd
