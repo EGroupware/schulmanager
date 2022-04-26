@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
-<overlay>
-	<template id="schulmanager.download" template="" lang="" group="0" version="0.0.001">
-		<description value="dummy"/>
-	</template>
-
-</overlay>
