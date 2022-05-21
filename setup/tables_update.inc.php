@@ -407,3 +407,8 @@ function schulmanager_upgrade0_0_021()
     $GLOBALS['egw_setup']->oProc->query('ALTER TABLE egw_schulmanager_asv_klassengruppe CHANGE COLUMN kg_asv_bildungsgang_id kg_asv_bildungsgang_id VARCHAR(40) NULL DEFAULT NULL AFTER kg_asv_kennung');
     return $GLOBALS['setup_info']['schulmanager']['currentver'] = '0.0.022';
 }
+
+function schulmanager_upgrade0_0_022()
+{
+    return $GLOBALS['setup_info']['schulmanager']['currentver'] = '0.0.023';
+}
