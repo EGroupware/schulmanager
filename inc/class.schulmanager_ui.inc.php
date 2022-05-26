@@ -159,7 +159,7 @@ class schulmanager_ui
             if ($button)
             {
                 if($button == 'edit'){
-                    Framework::redirect_link(Egw::link('/index.php',array('menuaction' => 'schulmanager.schulmanager_ui.edit','ajax' => 'true')));
+                    Framework::redirect_link('/index.php',array('menuaction' => 'schulmanager.schulmanager_ui.edit','ajax' => 'true'));
                 }
             }
         }
@@ -194,7 +194,7 @@ class schulmanager_ui
         }
 
         $edit_grades_enabled = (bool) $config['edit_grades_enabled'];
-        $content['nm']['edit_grades_disabled'] = !$edit_grades_enabled;
+        $content['nm']['edit_grades_enabled'] = $edit_grades_enabled;
         $readonlys = array(
             'button[edit]'     => false,
         );

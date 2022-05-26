@@ -275,7 +275,7 @@
 	</template>
 
 	<template id="schulmanager.notenmanager.index.header" template="" lang="" group="0" version="0.0.001">
-		<button statustext="Edit" label="Edit" id="button[edit]" image="edit" background_image="true" disabled="@edit_credits_disabled"/>
+		<button statustext="Edit" label="Edit" id="button[edit]" image="edit" background_image="true" disabled="!@edit_grades_enabled"/>
 	</template>
 	<template id="schulmanager.notenmanager.index.header_right" template="" lang="" group="0" version="0.0.001">
 		<button  statustext="Notenübersicht" label="PDF-Export Notenübersicht" id="button[indextest]" onclick="app.schulmanager.exportpdf_nb" image="mime128_application_pdf" background_image="true"/>
@@ -292,7 +292,7 @@
 				<template id="schulmanager.contact"/>
 			</vbox>
 		</box>
-		<description id="sm_index_hint" class="sm_hint_red" align="center" label="Die Bearbeitung der Noten ist aktuell gesperrt!" no_lang="true" disabled="!@edit_credits_disabled"/>
+		<description id="sm_index_hint" class="sm_hint_red" align="center" label="Die Bearbeitung der Noten ist aktuell gesperrt!" no_lang="true" disabled="@edit_grades_enabled"/>
 		<nextmatch id="nm" no_lang="1" template="schulmanager.notenmanager.index.rows" header_left="schulmanager.notenmanager.index.header" header_right="schulmanager.notenmanager.index.header_right"/>
 	</template>
 
