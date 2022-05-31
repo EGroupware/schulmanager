@@ -401,13 +401,16 @@ class schulmanager_substitution_ui
         );
 
         $this->get_rows_lehrer($query_in, $rows, $readonlys);
-        Api\Cache::setSession('schulmanager', 'substitution_linkedit_lehrer', $rows);
 
-        if($rows[0]){
+        if($rows[$row_index]){
+            Api\Cache::setSession('schulmanager', 'substitution_linkedit_lehrer', $rows[$row_index]);
             $result['row_index'] = $row_index;
-            $result['ls_asv_familienname'] = $rows[0]['ls_asv_familienname'];
-            $result['ls_asv_rufname'] = $rows[0]['ls_asv_rufname'];
-            $result['link_account_id'] = $rows[0]['leac_account'];
+            $result['ls_asv_familienname'] = $rows[$row_index]['ls_asv_familienname'];
+            $result['ls_asv_rufname'] = $rows[$row_index]['ls_asv_rufname'];
+            $result['link_account_id'] = $rows[$row_index]['leac_account'];
+        }
+        else{
+            Api\Cache::unsetSession('schulmanager', 'substitution_linkedit_lehrer');
         }
         Api\Json\Response::get()->data($result);
     }
@@ -428,17 +431,17 @@ class schulmanager_substitution_ui
         $result = array();
         $selRowLehrer = Api\Cache::getSession('schulmanager', 'substitution_linkedit_lehrer');
 
-        if($selRowLehrer[0]) {
+        if($selRowLehrer) {
             $lehrer_account = array(
-                'leac_lehrer' => $selRowLehrer[0]['ls_asv_id'],
+                'leac_lehrer' => $selRowLehrer['ls_asv_id'],
                 'leac_account' => $account_id,
             );
             $lehrer_account_so = new schulmanager_lehrer_account_so();
-            if($selRowLehrer[0]['ls_asv_id']){
+            if($selRowLehrer['ls_asv_id']){
                 $lehrer_account_so->delete($lehrer_account);
             }
             $lehrer_account_so->saveItem($lehrer_account);
-            $result['row_index'] = $selRowLehrer[0]['row_index'];
+            $result['row_index'] = $selRowLehrer['row_index'];
         }
         Api\Json\Response::get()->data($result);
     }

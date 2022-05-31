@@ -10,6 +10,10 @@
 			</columns>
 			<rows>
 				<row>
+					<description value="Version"/>
+					<description value="2022-05-31-2330"/>
+				</row>
+				<row>
 					<description value="Schulname"/>
 					<textbox id="newsettings[schulname]" maxlength="120" width="80%"/>
 				</row>

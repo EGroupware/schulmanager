@@ -193,8 +193,8 @@ class schulmanager_ui
             );
         }
 
-        $edit_grades_enabled = (bool) $config['edit_grades_enabled'];
-        $content['nm']['edit_grades_enabled'] = $edit_grades_enabled;
+        $content['nm']['edit_grades_enabled'] = (bool) $config['edit_grades_enabled'];
+        $content['edit_grades_enabled'] = (bool) $config['edit_grades_enabled'];
         $readonlys = array(
             'button[edit]'     => false,
         );

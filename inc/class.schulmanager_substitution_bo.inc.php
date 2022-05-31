@@ -73,8 +73,10 @@ class schulmanager_substitution_bo
 	    if($lesson_index >= 0 && $lesson_index < count($lesson_list)){
 	        $lesson = $lesson_list[$lesson_index];
 	        
-	        $teacher = Api\Accounts::read($asv_kennung_id);
-	        $teacher_orig = Api\Accounts::read($asv_kennung_orig_id);
+	        // $teacher = Api\Accounts::read($asv_kennung_id);
+            $teacher = $GLOBALS['egw']->accounts->read($asv_kennung_id);
+	        //$teacher_orig = Api\Accounts::read($asv_kennung_orig_id);
+            $teacher_orig = $GLOBALS['egw']->accounts->read($asv_kennung_orig_id);
 	        
 	        $kg_asv_id = $lesson->getKlassengruppe_asv_id();
 	        $kg_asv_kennung = $lesson->getKlassengruppe_asv_kennung();
