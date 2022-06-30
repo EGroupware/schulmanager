@@ -150,17 +150,16 @@ class schulmanager_substitution_ui
 			$filter = 0;
 		}
 
-		if (is_array($content))
-		{
-            $button = @key($content['button']);
-		    unset($content['button']);
-		    if ($button)
-		    {
-		        if ($button == 'add')
-		        {
-		            $this->bo->add($content['add_kennung'], $content['add_kennung_orig'], $content['add_lesson_list']);		            
-		        }
-		    }
+		if (is_array($content)) {
+            if (is_array($content['button'])) {
+                $button = @key($content['button']);
+                unset($content['button']);
+                if ($button) {
+                    if ($button == 'add') {
+                        $this->bo->add($content['add_kennung'], $content['add_kennung_orig'], $content['add_lesson_list']);
+                    }
+                }
+            }
 		        
 			// action
 		    if ($content['nm']['action'])
