@@ -412,6 +412,8 @@
                 </row>
             </rows>
         </grid>
+        <description value="test" class="et2_label sm_label" disabled="!@isadmin"/>
+        <description id="isadmin"/>
     </template>
 
     <template id="schulmanager.schoolreport.zwischenzeugnis">

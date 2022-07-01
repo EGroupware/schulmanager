@@ -195,13 +195,19 @@
         <!--<description label="AVG:"/>
         <description id="note_avg_schnitt_hj_1"/>-->
         <!--<template id="schulmanager.schuelerview.notenbild.avg">-->
-        <nextmatch id="not_nm" no_lang="1" template="schulmanager.schuelerview.notenbild.rows"/>
+        <nextmatch id="not_nm" no_lang="1" template="schulmanager.schuelerview.notenbild.rows" header_right="schulmanager.schuelerview.notenbild.header_right"/>
+        <description label="testadmin" disabled="!@isadmin"/>
     </template>
 
 
     <template id="schulmanager.schuelerview.notenbild.avg">
         <description label="AVG:"/>
         <description id="note_avg_schnitt_hj_1"/>
+    </template>
+
+    <template id="schulmanager.schuelerview.notenbild.header_right" template="" lang="" group="0" version="0.0.1">
+        <button statustext="Noten 1.HJ löschen" label="LNW 1.HJ Löschen" id="button[lnw1del]" onclick="app.schulmanager.delLnwPerA" disabled="!@isadmin"/>
+        <button statustext="Noten 2.HJ löschen" label="LNW 2.HJ Löschen" id="button[lnw1del]" onclick="app.schulmanager.delLnwPerB" disabled="!@isadmin"/>
     </template>
 
     <template id="schulmanager.schuelerview.notenbild.rows" template="" lang="" group="0" version="0.0.1">
@@ -375,6 +381,7 @@
 
     <template id="schulmanager.schuelerview" template="" lang="" group="0" version="0.0.001">
         <template id="schulmanager.schuelerview.navi"/>
+        <hidden id="token"/>
         <grid width="100%">
             <columns>
                 <column/>

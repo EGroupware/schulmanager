@@ -1175,7 +1175,49 @@ export class SchulmanagerApp extends EgwApp
 		}).sendRequest(true);
 	}
 
+	delLnwPerA(){
+		var et2 = this.et2;
+		var egw = this.egw;
+		var tokenDiv = <HTMLInputElement> document.getElementById('schulmanager-schuelerview_token');
+		var token = tokenDiv.value;
+		et2_dialog.show_dialog(function(button_id,value)
+		{
+			if (button_id == et2_dialog.OK_BUTTON)
+			{
+				egw.loading_prompt('schulmanager',true,egw.lang('please wait...'));
+				var func = 'schulmanager.schulmanager_ui.ajax_delLnwPerA';
+				egw.json(func, [token], function (result) {
+					var not_nm = <et2_nextmatch>et2.getWidgetById('not_nm');
+					not_nm.applyFilters();
+				}).sendRequest(true);
+				egw.loading_prompt('schulmanager',false);
+			}
 
+		}, egw.lang('Confirmation required'), egw.lang('Confirmation required'), {}, et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.QUESTION_MESSAGE);
+	}
+
+	delLnwPerB(){
+		var et2 = this.et2;
+		var egw = this.egw;
+		var tokenDiv = <HTMLInputElement> document.getElementById('schulmanager-schuelerview_token');
+		var token = tokenDiv.value;
+		et2_dialog.show_dialog(function(button_id,value)
+		{
+			if (button_id == et2_dialog.OK_BUTTON)
+			{
+				var func = 'schulmanager.schulmanager_ui.ajax_delLnwPerB';
+				egw.json(func, [token], function (result) {
+				}).sendRequest(true);
+			}
+			var not_nm = <et2_nextmatch>et2.getWidgetById('not_nm');
+			not_nm.applyFilters();
+		}, egw.lang('Confirmation required'), egw.lang('Confirmation required'), {}, et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.QUESTION_MESSAGE);
+		//var modal = document.getElementById("schulmanager-notenmanager-notendetails_editcontentmodal");
+		//modal.style.display = "none";
+	}
 }
 
 app.classes.schulmanager = SchulmanagerApp;
+
+
+

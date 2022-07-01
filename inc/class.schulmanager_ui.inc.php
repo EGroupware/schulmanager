@@ -1317,6 +1317,13 @@ class schulmanager_ui
         $content['not_nm']['row_id']	= 'not_nm_id';
         $content['not_nm']['no_columnselection'] = false;
 
+        $xrsf_token = bin2hex(random_bytes(32));
+        Api\Cache::setSession('schulmanager', 'token_schuelerview', $xrsf_token);
+        $content['token'] = $xrsf_token;
+
+        $content['not_nm']['isadmin'] = isset($GLOBALS['egw_info']['user']['apps']['admin']);
+        $content['isadmin'] = isset($GLOBALS['egw_info']['user']['apps']['admin']);
+
         $preserv = $sel_options;
 
         return $etpl->exec('schulmanager.schulmanager_ui.schuelerview',$content,$sel_options,$readonlys,$preserv);
@@ -1385,7 +1392,7 @@ class schulmanager_ui
         $schueler_id = Api\Cache::getSession('schulmanager', 'schueler_filter_id');
         $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
         $schueler = $klassen_schueler_list[$schueler_id];
-        $this->schueler_bo->getNotenAbstract($schueler, $rows, $query_in['col_filter']['schueler_id']);
+        $this->schueler_bo->getNotenAbstract($schueler, $rows, $schueler_id);//$query_in['col_filter']['schueler_id']);
 
         //return $query_in['total'];
         return count($rows);
@@ -1449,6 +1456,54 @@ class schulmanager_ui
 
         $this->getSchuelerViewSchuelerData($result);
 
+        Api\Json\Response::get()->data($result);
+    }
+
+    /**
+     * Delete LNW in first period
+     * @param $token
+     * @return void
+     * @throws Api\Json\Exception
+     */
+    function ajax_delLnwPerA($token){
+        $result = 0;
+        // xsrf check
+        if(!$this->checkToken('token_schuelerview', $token)){
+            $result['error_msg'] = 'ERROR: could not submit date!';
+            Api\Json\Response::get()->data($result);
+            return;
+        }
+        $schueler_id = Api\Cache::getSession('schulmanager', 'schueler_filter_id');
+        $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
+        $schueler = $klassen_schueler_list[$schueler_id];
+
+        $schueler_so = new schulmanager_schueler_so();
+        $schueler_so->delLnwPer($schueler, true, false);
+        $this->bo->revalidateGrades($schueler['nm_st']['st_asv_id']);
+        Api\Json\Response::get()->data($result);
+    }
+
+    /**
+     * Delete LNW in second period
+     * @param $token
+     * @return void
+     * @throws Api\Json\Exception
+     */
+    function ajax_delLnwPerB($token){
+        $result = 0;
+        // xsrf check
+        if(!$this->checkToken('token_schuelerview', $token)){
+            $result['error_msg'] = 'ERROR: could not submit date!';
+            Api\Json\Response::get()->data($result);
+            return;
+        }
+        $schueler_id = Api\Cache::getSession('schulmanager', 'schueler_filter_id');
+        $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
+        $schueler = $klassen_schueler_list[$schueler_id];
+
+        $schueler_so = new schulmanager_schueler_so();
+        $schueler_so->delLnwPer($schueler, false, true);
+        $this->bo->revalidateGrades($schueler['nm_st']['st_asv_id']);
         Api\Json\Response::get()->data($result);
     }
 

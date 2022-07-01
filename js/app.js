@@ -7,18 +7,15 @@
  * @author Axel Wild <info-AT-wild-solutions.de>
  * @copyright (c) 2022 by info-AT-wild-solutions.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id$
  */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -26,16 +23,10 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SchulmanagerApp = void 0;
-require("jquery");
-require("jqueryui");
-require("../jsapi/egw_global");
-require("../etemplate/et2_types");
 var egw_app_1 = require("../../api/js/jsapi/egw_app");
-//import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 var etemplate2_1 = require("../../api/js/etemplate/etemplate2");
 var et2_extension_nextmatch_1 = require("../../api/js/etemplate/et2_extension_nextmatch");
 var et2_widget_dialog_1 = require("../../api/js/etemplate/et2_widget_dialog");
-// Object.defineProperty(exports, "__esModule", { value: true });
 var SchulmanagerApp = /** @class */ (function (_super) {
     __extends(SchulmanagerApp, _super);
     function SchulmanagerApp() {
@@ -1023,6 +1014,40 @@ var SchulmanagerApp = /** @class */ (function (_super) {
             //nm.refresh(result['row_id'], et2_nextmatch.UPDATE);
             nm.applyFilters();
         }).sendRequest(true);
+    };
+    SchulmanagerApp.prototype.delLnwPerA = function () {
+        var et2 = this.et2;
+        var egw = this.egw;
+        var tokenDiv = document.getElementById('schulmanager-schuelerview_token');
+        var token = tokenDiv.value;
+        et2_widget_dialog_1.et2_dialog.show_dialog(function (button_id, value) {
+            if (button_id == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
+                egw.loading_prompt('schulmanager', true, egw.lang('please wait...'));
+                var func = 'schulmanager.schulmanager_ui.ajax_delLnwPerA';
+                egw.json(func, [token], function (result) {
+                    var not_nm = et2.getWidgetById('not_nm');
+                    not_nm.applyFilters();
+                }).sendRequest(true);
+                egw.loading_prompt('schulmanager', false);
+            }
+        }, egw.lang('Confirmation required'), egw.lang('Confirmation required'), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_OK_CANCEL, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
+    };
+    SchulmanagerApp.prototype.delLnwPerB = function () {
+        var et2 = this.et2;
+        var egw = this.egw;
+        var tokenDiv = document.getElementById('schulmanager-schuelerview_token');
+        var token = tokenDiv.value;
+        et2_widget_dialog_1.et2_dialog.show_dialog(function (button_id, value) {
+            if (button_id == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
+                var func = 'schulmanager.schulmanager_ui.ajax_delLnwPerB';
+                egw.json(func, [token], function (result) {
+                }).sendRequest(true);
+            }
+            var not_nm = et2.getWidgetById('not_nm');
+            not_nm.applyFilters();
+        }, egw.lang('Confirmation required'), egw.lang('Confirmation required'), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_OK_CANCEL, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
+        //var modal = document.getElementById("schulmanager-notenmanager-notendetails_editcontentmodal");
+        //modal.style.display = "none";
     };
     return SchulmanagerApp;
 }(egw_app_1.EgwApp));

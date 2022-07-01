@@ -112,6 +112,35 @@ class schulmanager_bo
 	}
 
     /**
+     * revalidates auto calculated avg and grades
+     * @param $st_asv_id student id
+     * @return void
+     */
+    function revalidateGrades($st_asv_id){
+        $schueler_so = new schulmanager_schueler_so();
+
+        $kg_asv_ids = array();
+        $sf_asv_ids = array();
+
+        $schueler_so->getKlassenGruppen($st_asv_id, $kg_asv_ids);
+        $schueler_so->getSchuelerFaecher($st_asv_id, $sf_asv_ids);
+
+        $gew_bo = new schulmanager_note_gew_bo();
+        $lehrer_so = new schulmanager_lehrer_so();
+        $query_in = array(
+            'total' => 1000,
+        );
+        foreach($kg_asv_ids as $kg_asv_id){
+            foreach($sf_asv_ids as $sf_asv_id){
+                $gewichtungen = array();
+                $rows = array();
+                $gew_bo->loadGewichtungen($kg_asv_id, $sf_asv_id, $gewichtungen);
+                $lehrer_so->loadSchuelerNotenList($query_in, $kg_asv_id, $sf_asv_id, $rows, $gewichtungen);
+            }
+        }
+    }
+
+    /**
      * Save modified grades
      * @param array $inputInfo
      * @return bool allways true
