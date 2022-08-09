@@ -1049,6 +1049,22 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         //var modal = document.getElementById("schulmanager-notenmanager-notendetails_editcontentmodal");
         //modal.style.display = "none";
     };
+    SchulmanagerApp.prototype.resetAllGrades = function () {
+        var et2 = this.et2;
+        var tokenDiv = document.getElementById('schulmanager-mntc_token');
+        var token = tokenDiv.value;
+        et2_widget_dialog_1.et2_dialog.show_prompt(function (button_id, value) {
+            if (button_id == et2_widget_dialog_1.et2_dialog.OK_BUTTON) {
+                var func = 'schulmanager.schulmanager_mntc_ui.ajax_resetAllGrades';
+                egw.json(func, [token, value], function (result) {
+                    if (result.error_msg) {
+                        egw(window).message(result.error_msg, 'error');
+                    }
+                    egw(window).message(result.msg, 'success');
+                }).sendRequest(true);
+            }
+        }, egw.lang('Confirmation required'), egw.lang('Absolut sicher, dass alle Noten gelöscht werden sollen?'), {}, et2_widget_dialog_1.et2_dialog.BUTTONS_OK_CANCEL, et2_widget_dialog_1.et2_dialog.QUESTION_MESSAGE);
+    };
     return SchulmanagerApp;
 }(egw_app_1.EgwApp));
 exports.SchulmanagerApp = SchulmanagerApp;

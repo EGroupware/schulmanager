@@ -133,10 +133,7 @@ class schulmanager_hooks
                 'text' => 'Schulaufgabenplan',
                 'icon' => Api\Image::find('schulmanager', 'calendar'),
                 'app'  => 'schulmanager',
-                'link' =>  Egw::link('/index.php',array(
-                    'menuaction' => 'schulmanager.schulmanager_cal_ui.index',
-                    'ajax' => 'true',
-                ))
+                'link' =>  Egw::link('/index.php','menuaction=schulmanager.schulmanager_cal_ui.index', '&ajax=true'),
             );
 
 			display_sidebox($appname,$title,$file);
@@ -165,9 +162,14 @@ class schulmanager_hooks
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			$file = Array(
-				'Site Configuration' => Egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname,'&ajax=true'),
-			);
+            $file = Array();
+            $file['Wartungsaufgaben'] = Egw::link('/index.php',
+                    'menuaction=schulmanager.schulmanager_mntc_ui.index',
+                    '&ajax=true',
+                );
+			$file['Site Configuration'] = Egw::link('/index.php','menuaction=admin.admin_config.index&appname=' . $appname,'&ajax=true');
+
+
 			if ($location == 'admin')
 			{
 				display_section($appname,$file);

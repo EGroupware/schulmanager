@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!-- $Id$ -->
+<overlay>
+    <template id="schulmanager.mntc" template="" lang="" group="0" version="0.0.001">
+        <hidden id="token"/>
+        <grid width="80%" border="0" spacing="0" padding="0">
+            <columns>
+                <column width="20%"/>
+                <column width="80%"/>
+            </columns>
+            <rows>
+                <row class="th">
+                    <vbox>
+                        <description value=""/>
+                    </vbox>
+                    <vbox>
+                        <description value=""/>
+                    </vbox>
+                </row>
+                <row class="$row_cont[class]">
+                    <vbox>
+                        <button statustext="Alle Noten entfernen" label="Alle Noten entfernen" id="button[resetAllGrades]" onclick="app.schulmanager.resetAllGrades" background_image="true"/>
+                    </vbox>
+                    <vbox>
+                        <description value="Alle Noten und Gewichtungen werden gelöscht!"  no_lang="1"/>
+                    </vbox>
+                </row>
+            </rows>
+        </grid>
+
+    </template>
+
+</overlay>

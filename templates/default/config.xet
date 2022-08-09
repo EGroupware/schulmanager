@@ -201,6 +201,10 @@
 					<description value="Art kleine Leistungsnachweise (Trennzeichen: ';')" for="groups"/>
 					<textbox id="newsettings[typlist_klnw]" class="et2_fullWidth" span="4"/>
 				</row>
+				<row>
+					<description value="secret to protect the grades from accidental deletion"/>
+					<textbox id="newsettings[delete_grades_secret]" maxlength="20"/>
+				</row>
 			</rows>
 		</grid>
 	</template>

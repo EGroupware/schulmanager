@@ -220,4 +220,9 @@ class schulmanager_note_so extends Api\Storage {
 			$xml->setIndent(--$in);
 		}
 	}
+
+    function truncate(){
+        $sql = "TRUNCATE egw_schulmanager_note";
+        return $this->db->query($sql, __LINE__, __FILE__);
+    }
 }

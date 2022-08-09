@@ -1215,6 +1215,25 @@ export class SchulmanagerApp extends EgwApp
 		//var modal = document.getElementById("schulmanager-notenmanager-notendetails_editcontentmodal");
 		//modal.style.display = "none";
 	}
+
+	resetAllGrades(){
+		let et2 = this.et2;
+		let tokenDiv = <HTMLInputElement> document.getElementById('schulmanager-mntc_token');
+		let token = tokenDiv.value;
+
+		et2_dialog.show_prompt(function(button_id, value){
+			if (button_id == et2_dialog.OK_BUTTON)
+			{
+				let func = 'schulmanager.schulmanager_mntc_ui.ajax_resetAllGrades';
+				egw.json(func, [token, value], function (result) {
+					if(result.error_msg){
+						egw(window).message(result.error_msg, 'error');
+					}
+					egw(window).message(result.msg, 'success');
+				}).sendRequest(true);
+			}
+		}, egw.lang('Confirmation required'), egw.lang('Absolut sicher, dass alle Noten gelöscht werden sollen?'), {}, et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.QUESTION_MESSAGE);
+	}
 }
 
 app.classes.schulmanager = SchulmanagerApp;

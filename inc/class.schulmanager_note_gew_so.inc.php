@@ -164,4 +164,9 @@ class schulmanager_note_gew_so extends Api\Storage {
 			}
 		}
 	}
+
+    function truncate(){
+        $sql = "TRUNCATE $this->sm_note_gew_table";
+        return $this->db->query($sql, __LINE__, __FILE__);
+    }
 }
