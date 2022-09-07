@@ -175,7 +175,7 @@ function createSQLImport($fhandle, $table, &$sql, $csv_sep, $db, $tableDef){
         $quotedValues = array();
         foreach($data as $key => $val){
             $type = $fd[$key]['type'];
-            $val = utf8_encode(stripcslashes($val));
+            $val = stripcslashes($val);
             $quotedValues[] = $db->quote($val, $type);
         }
         $sql .= '('.implode(',', $quotedValues).')';
