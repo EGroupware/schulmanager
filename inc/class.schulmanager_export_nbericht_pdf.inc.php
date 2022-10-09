@@ -372,22 +372,41 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
         $result = '';
         $config = Api\Config::read('schulmanager');
         if($glnw){
-            $lnw_config = $config['lnw_glnw_json'];
+            //$lnw_config = $config['lnw_glnw_json'];
+            $lnw_config = "{\"S\": \"Schulaufgabe\"}";
         }
         else{
-            $lnw_config = $config['lnw_klnw_json'];
+            //$lnw_config = $config['lnw_klnw_json'];
+            $lnw_config = "{
+              \"KA\": \"Kurzarbeit\",
+              \"T\": \"Test\",
+              \"ksL\": [
+                \"Stegreifaufgabe\",
+                \"kleiner schiftlicher LNW\"
+              ],
+              \"M\": [
+                \"Rechenschaftsablage\",
+                \"Unterrichtsbeitrag\",
+                \"Referat\",
+                \"kleiner mündl. LNW\"
+              ]
+        }";
         }
-        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($lnw_config));
-        foreach($iterator as $key => $value) {
-            $keyOut = $key;
-            if($iterator->getDepth() > 0){
-                $keyOut = $iterator->getSubIterator(0)->key();
-            }
-            if($value == $gradeType){
-                $result = $keyOut.':';
-                break;
+        if(isset($lnw_config)){
+            $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator(json_decode($lnw_config, true)));
+            //$iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($lnw_config));
+            foreach($iterator as $key => $value) {
+                $keyOut = $key;
+                if($iterator->getDepth() > 0){
+                    $keyOut = $iterator->getSubIterator(0)->key();
+                }
+                if($value == $gradeType){
+                    $result = $keyOut.':';
+                    break;
+                }
             }
         }
+
         return $result;
     }
 

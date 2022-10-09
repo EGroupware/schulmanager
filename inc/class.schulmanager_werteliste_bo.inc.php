@@ -84,12 +84,12 @@ class schulmanager_werteliste_bo {
     public static function getNotenArtList(bool $glnw = true){
         $config = Api\Config::read('schulmanager');
 
-        /*if($glnw){
+        if($glnw){
             $list = explode(';', $config['typlist_glnw']);
         }
         else{
             $list = explode(';', $config['typlist_klnw']);
-        }*/
+        }
         $lnw_glnw_json = "{\"S\": \"Schulaufgabe\"}";
         $lnw_klnw_json = "{
               \"KA\": \"Kurzarbeit\",
