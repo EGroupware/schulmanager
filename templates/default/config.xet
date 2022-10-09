@@ -27,15 +27,15 @@
 				</row>
 				<row>
 					<description value="Schulleitung"/>
-					<select-account account_type="accounts" id="newsettings[schulmanager_schulleiter]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
+					<select-account account_type="accounts" id="newsettings[schulleiter]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
 				</row>
 				<row>
 					<description value="Stellvertretung Schulleitung"/>
-					<select-account account_type="accounts" id="newsettings[schulmanager_schulleiter_stlvtr]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
+					<select-account account_type="accounts" id="newsettings[schulleiter_stlvtr]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
 				</row>
 				<row>
 					<description value="Mitarbeiter Schulleitung"/>
-					<select-account account_type="accounts" id="newsettings[schulmanager_schulleitung_mitarb]" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+					<select-account account_type="accounts" id="newsettings[schulleitung_mitarb]" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
 				</row>
 				<row>
 					<description value="Aktuelles Schuljahr"/>
@@ -75,6 +75,10 @@
 				<row>
 					<description value="EGroupware-Benutzer für den Schulmanager (Lehrer benötigen Lese-Rechte an dessen Kalender)" for="newsettings[schulmanager_user]"/>
 					<select-account account_type="accounts" id="newsettings[schulmanager_user]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row>
+					<description value="Schulaufgabenkalender anzeigen"/>
+					<checkbox id="newsettings[show_exam_calendar]"/>
 				</row>
 				<row>
 					<groupbox id="stundenraster" colspan="2">

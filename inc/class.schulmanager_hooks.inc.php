@@ -129,12 +129,14 @@ class schulmanager_hooks
 			}
 			*/
 
-            $file[] = array(
-                'text' => 'Schulaufgabenplan',
-                'icon' => Api\Image::find('schulmanager', 'calendar'),
-                'app'  => 'schulmanager',
-                'link' =>  Egw::link('/index.php','menuaction=schulmanager.schulmanager_cal_ui.index', '&ajax=true'),
-            );
+            if($config['show_exam_calendar']){
+                $file[] = array(
+                    'text' => 'Schulaufgabenplan',
+                    'icon' => Api\Image::find('schulmanager', 'calendar'),
+                    'app'  => 'schulmanager',
+                    'link' =>  Egw::link('/index.php','menuaction=schulmanager.schulmanager_cal_ui.index', '&ajax=true'),
+                );
+            }
 
 			display_sidebox($appname,$title,$file);
 
