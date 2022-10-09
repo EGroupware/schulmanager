@@ -93,7 +93,7 @@ class schulmanager_lehrer_so extends Api\Storage{
         $sql = "SELECT
 					egw_schulmanager_asv_klassengruppe.kg_asv_id AS kg_asv_id,
 					egw_schulmanager_asv_klassengruppe.kg_asv_klasse_id AS kl_asv_id,
-                    egw_schulmanager_asv_klassengruppe.kg_asv_kennung AS kg_asv_kennung,
+                    egw_schulmanager_asv_klassengruppe.kg_asv_kennung AS kg_asv_kennung,                                
 					egw_schulmanager_asv_klasse.kl_asv_klassenname AS kl_asv_klassenname,
 					egw_schulmanager_asv_schuelerfach.sf_asv_id AS sf_asv_id,
 					egw_schulmanager_asv_schuelerfach.sf_asv_kurzform AS sf_asv_kurzform,
@@ -352,7 +352,7 @@ class schulmanager_lehrer_so extends Api\Storage{
 		$rowid = 0;
 		$id = 1;
 
-		$note_empty = array(
+		/*$note_empty = array(
             'note'   => '',
             'note_id'=> '',
             'update_date' => '',
@@ -360,7 +360,7 @@ class schulmanager_lehrer_so extends Api\Storage{
             'art' => '',
             'definition_date' => '',
             'description' => '',
-        );
+        );*/
 
 		foreach($rs as $row){
 			//$rows[] = array(
@@ -374,7 +374,7 @@ class schulmanager_lehrer_so extends Api\Storage{
 					'st_asv_austrittsdatum' => $row['st_asv_austrittsdatum'],
 					'nm_st_class'		=> ''
 				),
-				'noten'		=> array(
+				/*'noten'		=> array(
 					'alt_b' => array(
 						-1 => array(
 							'note'   => false,
@@ -501,8 +501,10 @@ class schulmanager_lehrer_so extends Api\Storage{
 							'note_id'=> ''
 						)
 					)
-				)
+				)*/
 			);
+
+            $schueler['noten'] = $this->getNotenTemplate();
 
 			$this->loadNotenBySchuljahrFach($row['asv_schueler_schuljahr_id'], $row['asv_schuelerfach_id'], $schueler);
 			self::beforeSendToClient($schueler, $gewichtungen);
@@ -516,7 +518,147 @@ class schulmanager_lehrer_so extends Api\Storage{
 		return $total;
 	}
 
+    function getNotenTemplate(){
+        $note_empty = array(
+            'note'   => '',
+            'note_id'=> '',
+            'update_date' => '',
+            'update_user' => '',
+            'art' => '',
+            'definition_date' => '',
+            'description' => '',
+        );
 
+        $tmpl = array(
+            'alt_b' => array(
+                -1 => array(
+                    'note'   => false,
+                    'note_id'=> '',
+                    'img' => '',
+                    'checked' => false
+                ),
+            ),
+            'glnw_hj_1' => array(
+                'avgclass' => '',
+                -1 => array(
+                    'note'   => '',
+                    'note_id'=> '',
+                    'manuell' => '0',
+                ),
+                0 => $note_empty,
+                1 => $note_empty,
+                2 => $note_empty,
+            ),
+            'klnw_hj_1' => array(
+                'avgclass' => '',
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> '',
+                    'manuell' => '0'
+                ),
+                0 => $note_empty,
+                1 => $note_empty,
+                2 => $note_empty,
+                3 => $note_empty,
+                4 => $note_empty,
+                5 => $note_empty,
+                6 => $note_empty,
+                7 => $note_empty,
+                8 => $note_empty,
+                9 => $note_empty,
+                10 => $note_empty,
+                11 => $note_empty,
+            ),
+            'schnitt_hj_1' =>  array(
+                'avgclass' => '',
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> '',
+                    'manuell' => '0'
+                )
+            ),
+            'note_hj_1' =>  array(
+                'avgclass' => '',
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> '',
+                    'manuell' => '0'
+                )
+            ),
+            'm_hj_1' =>  array(
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> ''
+                )
+            ),
+            'v_hj_1' =>  array(
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> ''
+                )
+            ),
+            'glnw_hj_2' => array(
+                'avgclass' => '',
+                -1 => array(
+                    'note'   => '',
+                    'note_id'=> '',
+                    'manuell' => '0',
+                ),
+                0 => $note_empty,
+                1 => $note_empty,
+                2 => $note_empty,
+            ),
+            'klnw_hj_2' => array(
+                'avgclass' => '',
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> '',
+                    'manuell' => '0'
+                ),
+                0 => $note_empty,
+                1 => $note_empty,
+                2 => $note_empty,
+                3 => $note_empty,
+                4 => $note_empty,
+                5 => $note_empty,
+                6 => $note_empty,
+                7 => $note_empty,
+                8 => $note_empty,
+                9 => $note_empty,
+                10 => $note_empty,
+                11 => $note_empty,
+            ),
+            'schnitt_hj_2' =>  array(
+                'avgclass' => '',
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> '',
+                    'manuell' => '0'
+                )
+            ),
+            'note_hj_2' =>  array(
+                'avgclass' => '',
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> '',
+                    'manuell' => false
+                )
+            ),
+            'm_hj_2' =>  array(
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> ''
+                )
+            ),
+            'v_hj_2' =>  array(
+                -1 =>  array(
+                    'note'   => '',
+                    'note_id'=> ''
+                )
+            )
+        );
+        return $tmpl;
+    }
 
 	/**
 	 *
@@ -532,6 +674,8 @@ class schulmanager_lehrer_so extends Api\Storage{
 					egw_schulmanager_asv_schueler_stamm.sch_asv_rufname AS st_asv_rufname,
 					egw_schulmanager_asv_schueler_stamm.sch_asv_austrittsdatum AS st_asv_austrittsdatum,
 					egw_schulmanager_asv_schueler_stamm.sch_asv_id AS st_asv_id,
+					egw_schulmanager_asv_schueler_stamm.sch_asv_vornamen AS st_asv_vornamen,
+					egw_schulmanager_asv_schueler_stamm.sch_asv_wl_geschlecht_id AS st_asv_wl_geschlecht_id,
 					egw_schulmanager_asv_schueler_schuljahr.ss_asv_id AS asv_schueler_schuljahr_id
 				FROM egw_schulmanager_asv_klasse
 				INNER JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_asv_klassengruppe.kg_asv_klasse_id = egw_schulmanager_asv_klasse.kl_asv_id
@@ -545,6 +689,7 @@ class schulmanager_lehrer_so extends Api\Storage{
 
 		$id = 0;
 		foreach($rs as $row){
+            $geschlecht = schulmanager_werteliste_bo::getGeschlecht($row['st_asv_wl_geschlecht_id'], 'kurzform');
 			$schueler = array(
 				'rownr'		=> $id + 1,
 				'nm_id'		=> $id,
@@ -552,9 +697,12 @@ class schulmanager_lehrer_so extends Api\Storage{
 					'st_asv_id'			  => $row['st_asv_id'],
 					'sch_schuljahr_asv_id' => $row['asv_schueler_schuljahr_id'],
 					'st_asv_familienname' => $row['st_asv_familienname'],
+                    'st_asv_vornamen' => $row['st_asv_vornamen'],
 					'st_asv_rufname'	  => $row['st_asv_rufname'],
+                    'st_asv_wl_geschlecht_id'	  => $row['st_asv_wl_geschlecht_id'],
 					'st_asv_austrittsdatum' => $row['st_asv_austrittsdatum'],
-					'nm_st_class'		=> ''
+					'nm_st_class'		=> '',
+                    'geschlecht' => $geschlecht
 				),
 				'is_par' => 1
 			);
@@ -670,6 +818,44 @@ class schulmanager_lehrer_so extends Api\Storage{
 			}
 		}
 	}
+
+    /**
+     * Load the teacher of a given unterrichtselement
+     * @param $gk_asv_id
+     * @param $fs_asv_id
+     * @return void
+     */
+    function getLehrerByUnterricht($kg_asv_id, $sf_asv_id, &$teacher){
+        $result = array();
+        $sql = "SELECT DISTINCT
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_rufname,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_familienname,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_wl_geschlecht_id,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_zeugnisname1,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_zeugnisname2,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_amtsbezeichnung_id
+                FROM egw_schulmanager_asv_unterrichtselement
+                INNER JOIN egw_schulmanager_asv_lehrer_schuljahr_schule ON egw_schulmanager_asv_lehrer_schuljahr_schule.lss_asv_id = egw_schulmanager_asv_unterrichtselement.ue_asv_lehrer_schuljahr_schule_id
+                INNER JOIN egw_schulmanager_asv_lehrer_schuljahr ON egw_schulmanager_asv_lehrer_schuljahr.lsj_asv_id = egw_schulmanager_asv_lehrer_schuljahr_schule.lss_asv_lehrer_schuljahr_id
+                INNER JOIN egw_schulmanager_asv_lehrer_stamm ON egw_schulmanager_asv_lehrer_stamm.ls_asv_id = egw_schulmanager_asv_lehrer_schuljahr.lsj_asv_lehrer_stamm_id
+                INNER JOIN egw_schulmanager_asv_fachgruppe ON egw_schulmanager_asv_fachgruppe.fg_asv_id = egw_schulmanager_asv_unterrichtselement.ue_asv_fachgruppe_id
+                INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_asv_fachgruppe.fg_asv_schuelerfach_id
+                WHERE egw_schulmanager_asv_unterrichtselement.ue_asv_klassengruppe_id = '".$kg_asv_id."'
+                    AND egw_schulmanager_asv_schuelerfach.sf_asv_id = '".$sf_asv_id."'";
+        $rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
+
+        foreach($rs as $row) {
+            $teacher[] = array(
+                'ls_asv_rufname' => $row['ls_asv_rufname'],
+                'ls_asv_familienname' => $row['ls_asv_familienname'],
+                'ls_asv_wl_geschlecht_id' => $row['ls_asv_wl_geschlecht_id'],
+                'ls_asv_zeugnisname1' => $row['ls_asv_zeugnisname1'],
+                'ls_asv_zeugnisname2' => $row['ls_asv_zeugnisname2'],
+                'ls_asv_amtsbezeichnung_id' => $row['ls_asv_amtsbezeichnung_id'],
+                'geschlecht' => schulmanager_werteliste_bo::getGeschlecht($row['ls_asv_wl_geschlecht_id'], 'kurzform')
+            );
+        }
+    }
 
 	/**
 	 * Nur als aktuelle Notloesung
@@ -912,6 +1098,69 @@ class schulmanager_lehrer_so extends Api\Storage{
 
         if($query_in['start'] == 0){
             $query_in['total'] = $result;
+        }
+    }
+
+    function getTeacherByEGWUserID($egw_uid){
+        $teacher = null;
+        $sql = "SELECT egw_schulmanager_asv_lehrer_stamm.ls_asv_rufname,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_familienname,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_wl_geschlecht_id,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_zeugnisname1,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_zeugnisname2,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_amtsbezeichnung_id                    
+                    FROM egw_schulmanager_asv_lehrer_stamm
+                    INNER JOIN egw_schulmanager_lehrer_account ON egw_schulmanager_lehrer_account.leac_lehrer = egw_schulmanager_asv_lehrer_stamm.ls_asv_id
+                    WHERE egw_schulmanager_lehrer_account.leac_account = '".$egw_uid."'";
+        $rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
+
+        foreach($rs as $row) {
+            $teacher = array(
+                'ls_asv_rufname' => $row['ls_asv_rufname'],
+                'ls_asv_familienname' => $row['ls_asv_familienname'],
+                'ls_asv_wl_geschlecht_id' => $row['ls_asv_wl_geschlecht_id'],
+                'ls_asv_zeugnisname1' => $row['ls_asv_zeugnisname1'],
+                'ls_asv_zeugnisname2' => $row['ls_asv_zeugnisname2'],
+                'ls_asv_amtsbezeichnung_id' => $row['ls_asv_amtsbezeichnung_id'],
+                'geschlecht' => schulmanager_werteliste_bo::getGeschlecht($row['ls_asv_wl_geschlecht_id'], 'kurzform')
+            );
+            break;
+        }
+        return $teacher;
+    }
+
+
+    /**
+     * Return an array with class leaders
+     * @param $klasse_id
+     * @return void
+     */
+    function getKlassenleitungen($klasse_id, &$kls){
+        $sql = "SELECT DISTINCT
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_rufname,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_familienname,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_wl_geschlecht_id,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_zeugnisname1,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_zeugnisname2,
+                    egw_schulmanager_asv_lehrer_stamm.ls_asv_amtsbezeichnung_id
+                FROM egw_schulmanager_asv_klassenleitung
+                INNER JOIN egw_schulmanager_asv_lehrer_schuljahr_schule ON egw_schulmanager_asv_lehrer_schuljahr_schule.lss_asv_id = egw_schulmanager_asv_klassenleitung.kl_lehrer_schuljahr_schule_id
+                INNER JOIN egw_schulmanager_asv_lehrer_schuljahr ON egw_schulmanager_asv_lehrer_schuljahr.lsj_asv_id = egw_schulmanager_asv_lehrer_schuljahr_schule.lss_asv_lehrer_schuljahr_id
+                INNER JOIN egw_schulmanager_asv_lehrer_stamm ON egw_schulmanager_asv_lehrer_stamm.ls_asv_id = egw_schulmanager_asv_lehrer_schuljahr.lsj_asv_lehrer_stamm_id                
+                WHERE egw_schulmanager_asv_klassenleitung.kl_klasse_id = '".$klasse_id."' 
+                ORDER BY egw_schulmanager_asv_klassenleitung.kl_art";
+        $rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
+
+        foreach($rs as $row) {
+            $kls[] = array(
+                'ls_asv_rufname' => $row['ls_asv_rufname'],
+                'ls_asv_familienname' => $row['ls_asv_familienname'],
+                'ls_asv_wl_geschlecht_id' => $row['ls_asv_wl_geschlecht_id'],
+                'ls_asv_zeugnisname1' => $row['ls_asv_zeugnisname1'],
+                'ls_asv_zeugnisname2' => $row['ls_asv_zeugnisname2'],
+                'ls_asv_amtsbezeichnung_id' => $row['ls_asv_amtsbezeichnung_id'],
+                'geschlecht' => schulmanager_werteliste_bo::getGeschlecht($row['ls_asv_wl_geschlecht_id'], 'kurzform')
+            );
         }
     }
 

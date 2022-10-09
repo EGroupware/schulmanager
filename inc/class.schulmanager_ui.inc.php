@@ -445,6 +445,23 @@ class schulmanager_ui
                 );
             }
         }
+
+        $klsOptions = array();
+        $kls = array();
+        $selected_klasse_index = Api\Cache::getSession('schulmanager', 'klassen_filter_id');
+        if(!isset($selected_klasse_index)) {
+            $selected_klasse_index = 0;
+        }
+        $klassenasvids = Api\Cache::getSession('schulmanager', 'klassen_asv_ids');
+        $kl_asv_id = $klassenasvids[$selected_klasse_index];
+        $this->bo->getKlassenleitungen($kl_asv_id, $kls);
+        Api\Cache::setSession('schulmanager', 'klassenleitungen', $kls);
+        foreach($kls as $key => $value){
+            $klsOptions[] = $value['ls_asv_zeugnisname1'];
+        }
+        $sel_options['klassleiter'] = $klsOptions;
+        $content['klassleiter'] = $klsOptions;
+
         $preserv = $sel_options;
         return $etpl->exec('schulmanager.schulmanager_ui.klassenview',$content,$sel_options,$readonlys,$preserv);
     }
@@ -936,6 +953,25 @@ class schulmanager_ui
         $result['san_nm_rows'] = $san_nm_rows;
 
         Api\Json\Response::get()->data($result);
+    }
+
+    function ajax_nbericht_prepare(){
+        $klsOptions = array();
+        $kls = array();
+        $selected_klasse_index = Api\Cache::getSession('schulmanager', 'klassen_filter_id');
+        if(!isset($selected_klasse_index)) {
+            $selected_klasse_index = 0;
+        }
+        $klassenasvids = Api\Cache::getSession('schulmanager', 'klassen_asv_ids');
+        $kl_asv_id = $klassenasvids[$selected_klasse_index];
+        $this->bo->getKlassenleitungen($kl_asv_id, $kls);
+        Api\Cache::setSession('schulmanager', 'klassenleitungen', $kls);
+        foreach($kls as $key => $value){
+            $klsOptions[] = $value['ls_asv_zeugnisname1'];
+        }
+        $content = array();
+        $content['klassleiter'] = $klsOptions;
+        Api\Json\Response::get()->data($content);
     }
 
     /**

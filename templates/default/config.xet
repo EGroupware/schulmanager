@@ -22,6 +22,22 @@
 					<textbox id="newsettings[schulname_sub]" maxlength="120" width="80%"/>
 				</row>
 				<row>
+					<description value="Ort"/>
+					<textbox id="newsettings[schule_ort]" maxlength="120" width="80%"/>
+				</row>
+				<row>
+					<description value="Schulleitung"/>
+					<select-account account_type="accounts" id="newsettings[schulmanager_schulleiter]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row>
+					<description value="Stellvertretung Schulleitung"/>
+					<select-account account_type="accounts" id="newsettings[schulmanager_schulleiter_stlvtr]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row>
+					<description value="Mitarbeiter Schulleitung"/>
+					<select-account account_type="accounts" id="newsettings[schulmanager_schulleitung_mitarb]" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+				</row>
+				<row>
 					<description value="Aktuelles Schuljahr"/>
 					<select id="newsettings[schuljahr]">
 						<option value="2018">2018/19</option>
@@ -30,10 +46,10 @@
 						<option value="2021">2021/22</option>
 						<option value="2022">2022/23</option>
 						<option value="2023">2023/24</option>
-						<option value="2023">2024/25</option>
-						<option value="2023">2025/26</option>
-						<option value="2023">2026/27</option>
-						<option value="2023">2027/28</option>
+						<option value="2024">2024/25</option>
+						<option value="2025">2025/26</option>
+						<option value="2026">2026/27</option>
+						<option value="2027">2027/28</option>
 					</select>
 				</row>
 				<row>
@@ -205,6 +221,18 @@
 					<description value="secret to protect the grades from accidental deletion"/>
 					<textbox id="newsettings[delete_grades_secret]" maxlength="20"/>
 				</row>
+				<row>
+					<description value="Art der großen Leistungsnachweise (JSON-Format)"/>
+					<textbox id="newsettings[lnw_glnw_json]" multiline="true" height="100"/>
+				</row>
+				<row>
+					<description value="Art der kleinen Leistungsnachweise (JSON-Format)"/>
+					<textbox id="newsettings[lnw_klnw_json]" multiline="true" height="100"/>
+				</row>
+				<row>
+					<description value="Infotext für Typ der Leistungsnachweise (z. B. auf dem Notenbericht)"/>
+					<textbox id="newsettings[lnw_infotext]"/>
+				</row>
 			</rows>
 		</grid>
 	</template>
@@ -235,8 +263,12 @@
 			</columns>
 			<rows>
 				<row>
-					<description value="dummy"/>
-					<textbox id="newsettings[dummy]"/>
+					<description value="Notenbild Stichtag"/>
+					<date id="newsettings[notenbild_stichtag]" readonly="false" class="et2_fullWidth" span="4"/>
+				</row>
+				<row>
+					<description value="Zeichnungsdatum"/>
+					<date id="newsettings[notenbild_zeichnungstag]" readonly="false"  class="et2_fullWidth" span="4"/>
 				</row>
 			</rows>
 		</grid>
@@ -260,7 +292,7 @@
 							<tab id="general" label="Allgemein" statustext="General"/>
 							<tab id="noten" label="Leistungsnachweise" statustext="Leistungsnachweise"/>
 							<tab id="calendar" label="Termine" statustext="Termine"/>
-							<tab id="zeugni" label="Zeugnis" statustext="Zeugnis"/>
+							<tab id="zeugni" label="Zeugnis" statustext="Zeugnis, Notenberichte"/>
 						</tabs>
 						<tabpanels>
 							<template id="schulmanager.config.general"/>

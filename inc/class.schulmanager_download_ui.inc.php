@@ -23,6 +23,7 @@ class schulmanager_download_ui
 	var $public_functions = array(
 		'exportpdf_nb'	  => True,
 		'exportpdf_kv' => true,
+        'exportpdf_nbericht' => true,
         'exportpdf_calm' => true,
         //'exportpdf_test' => true,
 	);
@@ -112,6 +113,59 @@ class schulmanager_download_ui
 		$exportpdf = new schulmanager_export_kv_pdf($session_rows, $klassenname, $mode);
 		return $exportpdf->createPDFklassenNotenListe();
 	}
+
+    /**
+     * Creates PDF-Notenbericht
+     * @param array $content
+     * @param type $msg
+     */
+    function exportpdf_nbericht(array $content = null,$msg='')
+    {
+        $config = Api\Config::read('schulmanager');
+
+        $sm_bo = new schulmanager_bo();
+
+        $showReturnInfo = false;
+        $signed = false;
+        $signerID = 0;
+        if ($_REQUEST['showReturnInfo']) $showReturnInfo = $_REQUEST['showReturnInfo'];
+        if ($_REQUEST['signed']) $signed = $_REQUEST['signed'];
+        if ($_REQUEST['signerid']) $signerID = $_REQUEST['signerid'];
+
+        $session_rows = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
+        $kls = Api\Cache::getSession('schulmanager', 'klassenleitungen');
+
+        $schueler_bo = new schulmanager_schueler_bo();
+        $myLehrer = new schulmanager_lehrer_bo();
+        $klasse_id = Api\Cache::getSession('schulmanager', 'klassen_filter_id');
+
+        $klassenArray = $myLehrer->getClassLeaderClasses();
+        $klassenname = '';
+        if(array_key_exists($klasse_id, $klassenArray)){
+            $klassenname = $klassenArray[$klasse_id];
+        }
+
+        foreach($session_rows as &$schueler)
+        {
+            // load subjects, grades and eights
+            $schueler_bo->loadSubjectsAndGrades($schueler);
+        }
+
+        $schulleitung = $sm_bo->getSchulleitung();
+
+        $reportConfig = array(
+            'showReturnInfo' => filter_var($showReturnInfo, FILTER_VALIDATE_BOOLEAN),
+            'signed' => filter_var($signed, FILTER_VALIDATE_BOOLEAN),
+            'signer' => $kls[$signerID],
+            'schulleitung' => $schulleitung,
+            'notenbild_stichtag' => $config['notenbild_stichtag'],
+            'notenbild_zeichnungstag' => $config['notenbild_zeichnungstag'],
+            'schule_ort' => $config['schule_ort'],
+        );
+
+        $exportpdf = new schulmanager_export_nbericht_pdf($session_rows, $klassenname, $reportConfig);
+        return $exportpdf->createPDFklassenNotenbericht();
+    }
 
     /**
 	 * Creates PDF-Schulaufgabenkalender Monatsübersicht

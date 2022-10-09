@@ -49,10 +49,6 @@ class schulmanager_schueler_so {
 		}
     }
 
-//SELECT egw_schulmanager_asv_schueler_schuljahr.ss_asv_klassengruppe_id
-//FROM egw_schulmanager_asv_schueler_stamm
-//INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_schueler_stamm_id = egw_schulmanager_asv_schueler_stamm.sch_asv_id
-//WHERE egw_schulmanager_asv_schueler_stamm.sch_asv_id = '40289d85/465baa0a/0146/5cffec5b/03a3'
     /**
      * returns an array with all class groups
      * @param $st_asv_id
@@ -87,9 +83,7 @@ class schulmanager_schueler_so {
      */
     function getSchuelerFaecher($st_asv_id, &$rows){
         $tables = $this->sm_schueler_table."_stamm";
-
         $cols =  'bf_asv_schuelerfach_id';
-
         $where = array(
             "sch_asv_id = ".$this->db->quote($st_asv_id),
         );
@@ -104,6 +98,38 @@ class schulmanager_schueler_so {
         $rowIndex = 0;
         foreach($result as $item){
             $rows[$rowIndex] = $item['bf_asv_schuelerfach_id'];
+            $rowIndex++;
+        }
+    }
+
+    /**
+     * returns an array with all subjects and its data
+     * @param $st_asv_id
+     * @return void
+     */
+    function getSchuelerFaecherData($st_asv_id, &$fach){
+        $tables = $this->sm_schueler_table."_stamm";
+        $cols =  'sf_asv_id,sf_asv_kurzform,sf_asv_anzeigeform,bf_asv_wl_belegart_id,bf_asv_unterrichtsart';
+        $where = array(
+            "sch_asv_id = ".$this->db->quote($st_asv_id),
+        );
+
+        $join = "INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_schueler_stamm_id = egw_schulmanager_asv_schueler_stamm.sch_asv_id "
+            ."INNER JOIN egw_schulmanager_asv_besuchtes_fach ON egw_schulmanager_asv_besuchtes_fach.bf_asv_schueler_schuljahr_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_id "
+            ."INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_asv_besuchtes_fach.bf_asv_schuelerfach_id "
+            ."INNER JOIN egw_schulmanager_config ON egw_schulmanager_asv_schuelerfach.sf_asv_kurzform = egw_schulmanager_config.cnf_val ";
+
+        $append = "ORDER BY egw_schulmanager_config.cnf_extra, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform";
+
+        $result = $this->db->select($tables, $cols, $where, '', '', False, $append, False, 0, $join);
+
+        $rowIndex = 0;
+        $colsArr = explode(',', $cols);
+        foreach($result as $item){
+            $fach[$rowIndex] = array();
+            foreach($colsArr as $colName){
+                $fach[$rowIndex][$colName] = $item[$colName];
+            }
             $rowIndex++;
         }
     }
@@ -404,19 +430,11 @@ class schulmanager_schueler_so {
             $where = "note_asv_schueler_schuljahr_id = '" . $schueler_schuljahr_id . "'
                 AND note_blockbezeichner IN ('klnw_hj_1', 'glnw_hj_1', 'schnitt_hj_1', 'note_hj_1', 'm_hj_1', 'v_hj_1')";
             $rs = $this->db->delete('egw_schulmanager_note', $where, __LINE__, __FILE__, 0, -1);
-
-            //$where = "note_asv_schueler_schuljahr_id = '" . $schueler_schuljahr_id . "'
-            //    AND note_index_im_block = -1 AND note_asv_note_manuell = 1";
-            //rs = $this->db->delete('egw_schulmanager_note', $where, __LINE__, __FILE__, 0, -1);
         }
         elseif ($perB){
             $where = "note_asv_schueler_schuljahr_id = '" . $schueler_schuljahr_id . "'
                 AND note_blockbezeichner IN ('klnw_hj_2', 'glnw_hj_2', 'schnitt_hj_2', 'note_hj_2', 'm_hj_2', 'v_hj_2', 'schnitt_hj_2', 'note_hj_2', 'm_hj_2', 'v_hj_2')";
             $rs = $this->db->delete('egw_schulmanager_note', $where, __LINE__, __FILE__, 0, -1);
-
-            //$where = "note_asv_schueler_schuljahr_id = '" . $schueler_schuljahr_id . "'
-            //    AND note_index_im_block = -1 AND note_asv_note_manuell = 1"";
-            //$rs = $this->db->delete('egw_schulmanager_note', $where, __LINE__, __FILE__, 0, -1);
         }
     }
 }

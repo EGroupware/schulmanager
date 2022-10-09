@@ -12,17 +12,17 @@
 			<rows>
 				<row>
 					<description label="Datum der Leistungserhebung: " for="inputinfo_date" class="sm_label"/>
-					<date statustext="Datum der Leistungserhebung" id="date"/>
+					<date statustext="Datum der Leistungserhebung" id="date" needed="true"/>
 				</row>
 				<row>
 					<description label="Art der Leistungserhebung: " for="inputinfo_type" class="sm_label"/>
 					<menulist>
-						<menupopup type="select" id="notgebart"/>
+						<menupopup type="select" id="notgebart" needed="true"/>
 					</menulist>
 				</row>
 				<row>
 					<description label="Beschreibung: " for="inputinfo_desc" class="sm_label"/>
-					<textbox id="desc" size="140" statustext="Beschreibung der Leistungserhebung" maxlength="150"/>
+					<textbox id="desc" size="140" statustext="Beschreibung der Leistungserhebung" maxlength="150" needed="true"/>
 				</row>
 			</rows>
 		</grid>
@@ -306,7 +306,7 @@
 			<button statustext="Save the changes made" label="Save" id="button[save]" image="save" background_image="1"/>
 			<button statustext="Apply the changes" label="Apply" id="button[apply]" image="apply" background_image="1"/>
 			<!--<buttononly statustext="Exit without saving" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel" background_image="1"/>-->
-			<button statustext="Exit without saving" label="Cancel" id="button[cancel]" image="cancel" background_image="1"/>
+			<button statustext="Exit without saving" label="Cancel" id="button[cancel]" image="cancel" background_image="1" novalidate="true"/>
 			<hidden id="token"/>
 		</hbox>
 	</template>
@@ -317,15 +317,6 @@
 				<column width="90%"/>
 			</columns>
 			<rows>
-				<!--<row class="dialogHeader">
-					<description value="Fach/-gruppe" for="sm_fach"/>
-					<textbox readonly="true" id="sm_fach" no_lang="1" size="20" maxlength="64" value="Inf"/>
-					<description value="Fach/-gruppe" for="sm_fach"/>
-					<textbox readonly="true" id="sm_fach" no_lang="1" size="20" maxlength="64" value="test"/>
-				</row>
-				<row class="et2_toolbar">
-					<description id="spacer"/>
-				</row>-->
 				<row>
 					<description id="sm_nm_edit_hint" class="sm_hint_red" align="center" label="Änderungen müssen aktiv über Speichern oder Übernehmen bestätigt werden! Dateum, Art und Beschreibung werden nur für neue Eintragungen übernommen!" no_lang="1"/>
 				</row>

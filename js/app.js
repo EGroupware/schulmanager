@@ -118,26 +118,12 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         req.send();
     };
     /**
-     * test download pdf
+     * download all grades in all subjects of all students as pdf
      * @param {type} _id
      * @param {type} _widget
      * @returns {undefined}
      */
     SchulmanagerApp.prototype.exportpdf_kv = function (_id, _widget) {
-        /**
-        // running DO NOT DELETE
-        egw.loading_prompt('schulmanager',true,egw.lang('please wait...'),this.baseDiv, egwIsMobile()?'horizental':'spinner');
-        var a = document.createElement('a');
-        var url = egw.link('/index.php','menuaction=schulmanager.schulmanager_download_ui.exportpdf_kv');
-        a.href = url;
-        a.download = 'filename.pdf';
-        document.body.append(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-        alert("Download wird im Hintergrund gestartet!")
-        egw.loading_prompt('schulmanager',false);
-        */
         var id = _widget.id;
         var params = 'mode=stud';
         if (id == "button[pdfexportteacherzz]") {
@@ -151,6 +137,78 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         this.egw.loading_prompt('schulmanager', true, egw.lang('please wait...'));
         var req = new XMLHttpRequest();
         req.open("POST", egw.link('/index.php', 'menuaction=schulmanager.schulmanager_download_ui.exportpdf_kv&' + params), true);
+        req.responseType = "blob";
+        req.onreadystatechange = function () {
+            if (req.readyState === 4 && req.status === 200) {
+                //var filename = "PdfName-" + new Date().getTime() + ".pdf";
+                var header = req.getResponseHeader('Content-Disposition');
+                var startIndex = header.indexOf("filename=") + 10;
+                var endIndex = header.length - 1;
+                var filename = header.substring(startIndex, endIndex);
+                if (typeof window.chrome !== 'undefined') {
+                    // Chrome version
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(req.response);
+                    //link.download = "PdfName-" + new Date().getTime() + ".pdf";
+                    link.download = filename;
+                    link.click();
+                }
+                else if (typeof window.navigator.msSaveBlob !== 'undefined') {
+                    // IE version
+                    var blob = new Blob([req.response], { type: 'application/pdf' });
+                    window.navigator.msSaveBlob(blob, filename);
+                }
+                else {
+                    // Firefox version
+                    var file = new File([req.response], filename, { type: 'application/force-download' });
+                    window.open(URL.createObjectURL(file));
+                }
+            }
+            egw.loading_prompt('schulmanager', false);
+        };
+        req.send();
+    };
+    /**
+     * reload klassleiter before pdf export
+     * @param _id
+     * @param _widget
+     */
+    SchulmanagerApp.prototype.exportpdf_nbericht_prepare = function (_id, _widget) {
+        var modal = document.getElementById("schulmanager-notenmanager-klassenview_showexportmodal");
+        modal.style.display = "block";
+        var func = 'schulmanager.schulmanager_ui.ajax_nbericht_prepare';
+        this.egw.json(func, [], function (result) {
+            var widget = document.getElementById('schulmanager-notenmanager-klassenview_klassleiter');
+            if (widget) {
+                var length = widget.options.length;
+                for (var i = length - 1; i >= 0; i--) {
+                    widget.options[i] = null;
+                }
+                for (var key in result['klassleiter']) {
+                    var opt = document.createElement("option");
+                    opt.value = key;
+                    opt.text = result['klassleiter'][key];
+                    widget.options.add(opt);
+                }
+            }
+        }).sendRequest(true);
+    };
+    /**
+     * download all grades in all subjects of all students as pdf handout for students
+     * @param {type} _id
+     * @param {type} _widget
+     * @returns {undefined}
+     */
+    SchulmanagerApp.prototype.exportpdf_nbericht = function (_id, _widget) {
+        var modal = document.getElementById("schulmanager-notenmanager-klassenview_showexportmodal");
+        modal.style.display = "none";
+        this.egw.loading_prompt('schulmanager', true, egw.lang('please wait...'));
+        var req = new XMLHttpRequest();
+        var showReturn = document.getElementById('schulmanager-notenmanager-klassenview_add_return_block').checked;
+        var showSigned = document.getElementById('schulmanager-notenmanager-klassenview_add_signed_block').checked;
+        var signerWidget = document.getElementById('schulmanager-notenmanager-klassenview_klassleiter');
+        var signerid = signerWidget.value;
+        req.open("POST", egw.link('/index.php', 'menuaction=schulmanager.schulmanager_download_ui.exportpdf_nbericht&showReturnInfo=' + showReturn + '&signed=' + showSigned + '&signerid=' + signerid), true);
         req.responseType = "blob";
         req.onreadystatechange = function () {
             if (req.readyState === 4 && req.status === 200) {

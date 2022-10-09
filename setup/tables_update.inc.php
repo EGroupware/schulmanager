@@ -412,3 +412,14 @@ function schulmanager_upgrade0_0_022()
 {
     return $GLOBALS['setup_info']['schulmanager']['currentver'] = '0.0.023';
 }
+
+function schulmanager_upgrade0_0_023()
+{
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_asv_schueler_stamm','sch_asv_vornamen',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'vornamen'));
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_asv_schueler_stamm','sch_asv_wl_geschlecht_id',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'werteliste geschlecht id'));
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_asv_lehrer_stamm','ls_asv_wl_geschlecht_id',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'werteliste geschlecht id'));
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_asv_lehrer_stamm','ls_asv_zeugnisname1',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'zeugnisname1'));
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_asv_lehrer_stamm','ls_asv_zeugnisname2',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'zeugnisname2'));
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_asv_lehrer_stamm','ls_asv_amtsbezeichnung_id',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'amtsbezeichnungt id'));
+    return $GLOBALS['setup_info']['schulmanager']['currentver'] = '0.0.024';
+}

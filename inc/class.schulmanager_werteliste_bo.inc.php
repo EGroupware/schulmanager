@@ -20,17 +20,11 @@ use EGroupware\Api;
 class schulmanager_werteliste_bo {
 
     /**
-     * Instance of  so object
-     * @var schulmanager_so
-     */
-    var $so;
-
-    /**
      * Constructor
      */
     function __construct()
     {
-        $this->so = new schulmanager_werteliste_so();
+
     }
 
     /**
@@ -38,11 +32,12 @@ class schulmanager_werteliste_bo {
      * @param $rows
      * @return int
      */
-    public function loadWerteliste($asv_wl_schluessel, &$rows, bool $onlyKeyVal = false){
+    public static function loadWerteliste($asv_wl_schluessel, &$rows, bool $onlyKeyVal = false){
         $wl = Api\Cache::getSession('schulmanager', 'wl_'.$asv_wl_schluessel);
         if(!isset($wl)) {
             $wl = array();
-            $this->so->loadWerteliste($asv_wl_schluessel, $wl, $onlyKeyVal);
+            $so = new schulmanager_werteliste_so();
+            $so->loadWerteliste($asv_wl_schluessel, $wl, $onlyKeyVal);
             Api\Cache::setSession('schulmanager', 'wl_'.$asv_wl_schluessel, $wl);
         }
 
@@ -66,9 +61,7 @@ class schulmanager_werteliste_bo {
         $result = array();
         $wl = Api\Cache::getSession('schulmanager', 'wl_NOTGEBART');
         if(!isset($wl)) {
-            $bo = new schulmanager_werteliste_bo();
-            $wl = array();
-            $bo->loadWerteliste('NOTGEBART', $wl, true);
+            self::loadWerteliste('NOTGEBART', $wl, true);
         }
 
         foreach($wl as $w) {
@@ -91,13 +84,53 @@ class schulmanager_werteliste_bo {
     public static function getNotenArtList(bool $glnw = true){
         $config = Api\Config::read('schulmanager');
 
-        if($glnw){
+        /*if($glnw){
             $list = explode(';', $config['typlist_glnw']);
         }
         else{
             $list = explode(';', $config['typlist_klnw']);
+        }*/
+        $lnw_glnw_json = "{\"S\": \"Schulaufgabe\"}";
+        $lnw_klnw_json = "{
+              \"KA\": \"Kurzarbeit\",
+              \"T\": \"Test\",
+              \"ksL\": [
+                \"Stegreifaufgabe\",
+                \"kleiner schiftlicher LNW\"
+              ],
+              \"M\": [
+                \"Rechenschaftsablage\",
+                \"Unterrichtsbeitrag\",
+                \"Referat\",
+                \"kleiner mündl. LNW\"
+              ]
+        }";
+
+        if($glnw){
+            //$lnw_glnw = json_decode($config['lnw_glnw_json'], true);
+            $lnw_glnw = json_decode($lnw_glnw_json, true);
+            $list = self::getRecursiveArrayValues($lnw_glnw);
+        }
+        else{
+            //$lnw_klnw = json_decode($config['lnw_klnw_json'], true);
+            $lnw_klnw = json_decode($lnw_klnw_json, true);
+            $list = self::getRecursiveArrayValues($lnw_klnw);
         }
         return $list;
+    }
+
+    /**
+     * Return an array with all values of the given multidimensional array
+     * @param array $arr
+     * @return void
+     */
+    private static function getRecursiveArrayValues(array $arr){
+        $iter_object = new RecursiveIteratorIterator(new RecursiveArrayIterator($arr));
+        $flatten_array= array();
+        foreach($iter_object as $value) {
+            array_push($flatten_array,$value);
+        }
+        return $flatten_array;
     }
 
     /**
@@ -120,5 +153,29 @@ class schulmanager_werteliste_bo {
         //php 8:$list = self::getNotenArt(str_starts_with($blockname, 'glnw'));
         $list = self::getNotenArtList(substr( $blockname, 0, 4 ) === "glnw");
         return $list[$index];
+    }
+
+    /**
+     * @param $wl_geschlecht_id wl id
+     * @param $outputkey 'kurzform' | 'anzeigeform' | 'langform' | 'schluessel'
+     * @return mixed|string
+     */
+    public static function getGeschlecht($wl_geschlecht_id, $outputkey){
+        $result = '';
+        $wertelisten = Api\Cache::getSession('schulmanager', 'wertelisten');
+        if(!isset($wertelisten['GESCHLECHT'])){
+            $wl_geschlecht = array();
+            self::loadWerteliste('GESCHLECHT', $wl_geschlecht);
+            $wertelisten['GESCHLECHT'] = $wl_geschlecht;
+            Api\Cache::setSession('schulmanager', 'wertelisten', $wertelisten);
+        }
+
+        foreach($wertelisten['GESCHLECHT'] as $key => $value){
+            if($value['asv_wert_id'] == $wl_geschlecht_id){
+                $result = $value['asv_wert_'.$outputkey];
+                break;
+            }
+        }
+        return $result;
     }
 }

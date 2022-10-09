@@ -208,4 +208,12 @@ class schulmanager_lehrer_bo
 		$asvid = $klassenasvids[$filter];
 		$this->so->loadKlassenSchuelerList($asvid, $rows);
 	}
+
+    function getKlassenleitungen($klasse_id, &$kls){
+        return $this->so->getKlassenleitungen($klasse_id, $kls);
+    }
+
+    function getTeacherByEGWUserID($egw_uid){
+        return $this->so->getTeacherByEGWUserID($egw_uid);
+    }
 }

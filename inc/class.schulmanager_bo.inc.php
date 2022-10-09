@@ -285,4 +285,31 @@ class schulmanager_bo
 		$index = array_pop($block);
 		$block = implode('_', $block);
 	}
+
+    function getKlassenleitungen($klasse_id, &$kls){
+        $this->myLehrer->getKlassenleitungen($klasse_id, $kls);
+    }
+
+    function getSchulleitung(){
+        $config = Api\Config::read('schulmanager');
+        $sl = $config['schulleiter'];
+        return $this->myLehrer->getTeacherByEGWUserID($sl);
+    }
+
+    function getSchulleitung_Stlvtr(){
+        $config = Api\Config::read('schulmanager');
+        $stlvtr = $config['schulleiter_stlvtr'];
+        return $this->myLehrer->getTeacherByEGWUserID($stlvtr);
+    }
+
+    function getSchulleitung_Mitarb(){
+        $result = array();
+        $config = Api\Config::read('schulmanager');
+        $mitarb = $config['schulleiter_mitarb'];
+        foreach($mitarb as $val){
+            $result[] = $this->myLehrer->getTeacherByEGWUserID($val);
+        }
+
+        return $result;
+    }
 }
