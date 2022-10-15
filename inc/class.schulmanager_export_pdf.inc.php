@@ -24,6 +24,7 @@ class schulmanager_export_pdf extends FPDF
 	protected $rows;
 	protected $title;
 	protected $schuljahr;
+    protected $klassenname;
 
 	protected $header_repeat;
 
@@ -38,6 +39,7 @@ class schulmanager_export_pdf extends FPDF
 		parent::__construct();
 		$this->rows = $rows;
 		$this->title = $klassenname;
+        $this->klassenname = $klassenname;
 		$this->schuljahr = schulmanager_ui::getSchuljahrXXXXYY();
 		$this->header_repeat = false;
 	}

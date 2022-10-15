@@ -82,40 +82,14 @@ var SchulmanagerApp = /** @class */ (function (_super) {
     };
     // export notenbuch
     SchulmanagerApp.prototype.exportpdf_nb = function (_id, _widget) {
-        var $egw = this.egw;
-        this.egw.loading_prompt('schulmanager', true, egw.lang('please wait...'));
-        var req = new XMLHttpRequest();
-        req.open("POST", this.egw.link('/index.php', 'menuaction=schulmanager.schulmanager_download_ui.exportpdf_nb'), true);
-        req.responseType = "blob";
-        req.onreadystatechange = function () {
-            if (req.readyState === 4 && req.status === 200) {
-                //var filename = "PdfName-" + new Date().getTime() + ".pdf";
-                var header = req.getResponseHeader('Content-Disposition');
-                var startIndex = header.indexOf("filename=") + 10;
-                var endIndex = header.length - 1;
-                var filename = header.substring(startIndex, endIndex);
-                if (typeof window.chrome !== 'undefined') {
-                    // Chrome version
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(req.response);
-                    //link.download = "PdfName-" + new Date().getTime() + ".pdf";
-                    link.download = filename;
-                    link.click();
-                }
-                else if (typeof window.navigator.msSaveBlob !== 'undefined') {
-                    // IE version
-                    var blob = new Blob([req.response], { type: 'application/pdf' });
-                    window.navigator.msSaveBlob(blob, filename);
-                }
-                else {
-                    // Firefox version
-                    var file = new File([req.response], filename, { type: 'application/force-download' });
-                    window.open(URL.createObjectURL(file));
-                }
-            }
-            $egw.loading_prompt('schulmanager', false);
-        };
-        req.send();
+        this.egw.loading_prompt('schulmanager', true, this.egw.lang('please wait...'));
+        var $a = jQuery(document.createElement('a')).appendTo('body').hide();
+        var url = window.egw.webserverUrl + '/index.php?menuaction=schulmanager.schulmanager_download_ui.exportpdf_nb';
+        $a.prop('href', url);
+        $a.prop('download', '');
+        $a[0].click();
+        $a.remove();
+        this.egw.loading_prompt('schulmanager', false);
     };
     /**
      * download all grades in all subjects of all students as pdf
@@ -135,38 +109,13 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         var modal = document.getElementById("schulmanager-notenmanager-klassenview_showexportmodal");
         modal.style.display = "none";
         this.egw.loading_prompt('schulmanager', true, egw.lang('please wait...'));
-        var req = new XMLHttpRequest();
-        req.open("POST", egw.link('/index.php', 'menuaction=schulmanager.schulmanager_download_ui.exportpdf_kv&' + params), true);
-        req.responseType = "blob";
-        req.onreadystatechange = function () {
-            if (req.readyState === 4 && req.status === 200) {
-                //var filename = "PdfName-" + new Date().getTime() + ".pdf";
-                var header = req.getResponseHeader('Content-Disposition');
-                var startIndex = header.indexOf("filename=") + 10;
-                var endIndex = header.length - 1;
-                var filename = header.substring(startIndex, endIndex);
-                if (typeof window.chrome !== 'undefined') {
-                    // Chrome version
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(req.response);
-                    //link.download = "PdfName-" + new Date().getTime() + ".pdf";
-                    link.download = filename;
-                    link.click();
-                }
-                else if (typeof window.navigator.msSaveBlob !== 'undefined') {
-                    // IE version
-                    var blob = new Blob([req.response], { type: 'application/pdf' });
-                    window.navigator.msSaveBlob(blob, filename);
-                }
-                else {
-                    // Firefox version
-                    var file = new File([req.response], filename, { type: 'application/force-download' });
-                    window.open(URL.createObjectURL(file));
-                }
-            }
-            egw.loading_prompt('schulmanager', false);
-        };
-        req.send();
+        var $a = jQuery(document.createElement('a')).appendTo('body').hide();
+        var url = window.egw.webserverUrl + '/index.php?menuaction=schulmanager.schulmanager_download_ui.exportpdf_kv&' + params;
+        $a.prop('href', url);
+        $a.prop('download', '');
+        $a[0].click();
+        $a.remove();
+        egw.loading_prompt('schulmanager', false);
     };
     /**
      * reload klassleiter before pdf export
@@ -180,8 +129,8 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         this.egw.json(func, [], function (result) {
             var widget = document.getElementById('schulmanager-notenmanager-klassenview_klassleiter');
             if (widget) {
-                var length = widget.options.length;
-                for (var i = length - 1; i >= 0; i--) {
+                var length_1 = widget.options.length;
+                for (var i = length_1 - 1; i >= 0; i--) {
                     widget.options[i] = null;
                 }
                 for (var key in result['klassleiter']) {
@@ -202,43 +151,18 @@ var SchulmanagerApp = /** @class */ (function (_super) {
     SchulmanagerApp.prototype.exportpdf_nbericht = function (_id, _widget) {
         var modal = document.getElementById("schulmanager-notenmanager-klassenview_showexportmodal");
         modal.style.display = "none";
-        this.egw.loading_prompt('schulmanager', true, egw.lang('please wait...'));
-        var req = new XMLHttpRequest();
+        this.egw.loading_prompt('schulmanager', true, this.egw.lang('please wait...'));
         var showReturn = document.getElementById('schulmanager-notenmanager-klassenview_add_return_block').checked;
         var showSigned = document.getElementById('schulmanager-notenmanager-klassenview_add_signed_block').checked;
         var signerWidget = document.getElementById('schulmanager-notenmanager-klassenview_klassleiter');
         var signerid = signerWidget.value;
-        req.open("POST", egw.link('/index.php', 'menuaction=schulmanager.schulmanager_download_ui.exportpdf_nbericht&showReturnInfo=' + showReturn + '&signed=' + showSigned + '&signerid=' + signerid), true);
-        req.responseType = "blob";
-        req.onreadystatechange = function () {
-            if (req.readyState === 4 && req.status === 200) {
-                //var filename = "PdfName-" + new Date().getTime() + ".pdf";
-                var header = req.getResponseHeader('Content-Disposition');
-                var startIndex = header.indexOf("filename=") + 10;
-                var endIndex = header.length - 1;
-                var filename = header.substring(startIndex, endIndex);
-                if (typeof window.chrome !== 'undefined') {
-                    // Chrome version
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(req.response);
-                    //link.download = "PdfName-" + new Date().getTime() + ".pdf";
-                    link.download = filename;
-                    link.click();
-                }
-                else if (typeof window.navigator.msSaveBlob !== 'undefined') {
-                    // IE version
-                    var blob = new Blob([req.response], { type: 'application/pdf' });
-                    window.navigator.msSaveBlob(blob, filename);
-                }
-                else {
-                    // Firefox version
-                    var file = new File([req.response], filename, { type: 'application/force-download' });
-                    window.open(URL.createObjectURL(file));
-                }
-            }
-            egw.loading_prompt('schulmanager', false);
-        };
-        req.send();
+        var $a = jQuery(document.createElement('a')).appendTo('body').hide();
+        var url = window.egw.webserverUrl + '/index.php?menuaction=schulmanager.schulmanager_download_ui.exportpdf_nbericht&showReturnInfo=' + showReturn + '&signed=' + showSigned + '&signerid=' + signerid;
+        $a.prop('href', url);
+        $a.prop('download', '');
+        $a[0].click();
+        $a.remove();
+        this.egw.loading_prompt('schulmanager', false);
     };
     /**
      * export notenbuch
@@ -248,37 +172,13 @@ var SchulmanagerApp = /** @class */ (function (_super) {
     SchulmanagerApp.prototype.exportpdf_calm = function (_id, _widget) {
         var egw = this.egw;
         egw.loading_prompt('schulmanager', true, egw.lang('please wait...'));
-        var req = new XMLHttpRequest();
-        req.open("POST", egw.link('/index.php', 'menuaction=schulmanager.schulmanager_download_ui.exportpdf_calm'), true);
-        req.responseType = "blob";
-        req.onreadystatechange = function () {
-            if (req.readyState === 4 && req.status === 200) {
-                //var filename = "PdfName-" + new Date().getTime() + ".pdf";
-                var header = req.getResponseHeader('Content-Disposition');
-                var startIndex = header.indexOf("filename=") + 10;
-                var endIndex = header.length - 1;
-                var filename = header.substring(startIndex, endIndex);
-                if (typeof window.chrome !== 'undefined') {
-                    // Chrome version
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(req.response);
-                    link.download = filename;
-                    link.click();
-                }
-                else if (typeof window.navigator.msSaveBlob !== 'undefined') {
-                    // IE version
-                    var blob = new Blob([req.response], { type: 'application/pdf' });
-                    window.navigator.msSaveBlob(blob, filename);
-                }
-                else {
-                    // Firefox version
-                    var file = new File([req.response], filename, { type: 'application/force-download' });
-                    window.open(URL.createObjectURL(file));
-                }
-            }
-            egw.loading_prompt('schulmanager', false);
-        };
-        req.send();
+        var $a = jQuery(document.createElement('a')).appendTo('body').hide();
+        var url = window.egw.webserverUrl + '/index.php?menuaction=schulmanager.schulmanager_download_ui.exportpdf_calm';
+        $a.prop('href', url);
+        $a.prop('download', '');
+        $a[0].click();
+        $a.remove();
+        this.egw.loading_prompt('schulmanager', false);
     };
     /**
      * laden der weekdays
@@ -354,11 +254,9 @@ var SchulmanagerApp = /** @class */ (function (_super) {
     };
     SchulmanagerApp.prototype.add_list_event = function (widget, prefix) {
         var et2 = this.et2;
-        //alert(prefix.concat('sm_type_options_list'));
         var type_id = prefix.concat('sm_type_options_list');
         var fach_id = prefix.concat('sm_fach_options_list');
         var user_id = prefix.concat('sm_user_list');
-        //alert(type_id);
         var type = document.getElementById(type_id).value;
         var fach = document.getElementById(fach_id).value;
         var user = null;
@@ -369,9 +267,6 @@ var SchulmanagerApp = /** @class */ (function (_super) {
             user_id = prefix.concat('sm_activeuserID');
             user = document.getElementById(user_id).value;
         }
-        //alert(type);
-        //alert(fach);
-        //alert(user);
         var _send = function () {
             egw().json('schulmanager.schulmanager_cal_ui.ajax_addEventToList', [
                 type,
@@ -388,17 +283,12 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         _send();
     };
     SchulmanagerApp.prototype.calShowAddEvent = function (action, selected) {
-        //alert("test");
         jQuery('table.addnewevent').css('display', 'inline');
     };
     SchulmanagerApp.prototype.nmEditGew = function (_action, widget) {
-        //alert("test");
-        //alert(widget.id);
         jQuery('table.editgew').css('display', 'inline');
-        //	jQuery('table.editgew-content').css('display','inline');
     };
     SchulmanagerApp.prototype.changeNote = function (action, _senders) {
-        var et2 = this.et2;
         var tokenDiv = document.getElementById('schulmanager-notenmanager-edit_token');
         var inputinfo_date = document.getElementById('schulmanager-notenmanager-edit_date').firstChild;
         var inputinfo_type = document.getElementById('schulmanager-notenmanager-edit_notgebart');
@@ -499,8 +389,8 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         this.egw.json(func, [teacher_id], function (result) {
             var widget = document.getElementById('schulmanager-substitution_add_lesson_list');
             if (widget) {
-                var length = widget.options.length;
-                for (var i = length - 1; i >= 0; i--) {
+                var length_2 = widget.options.length;
+                for (var i = length_2 - 1; i >= 0; i--) {
                     widget.options[i] = null;
                 }
                 for (var key in result) {
@@ -511,9 +401,6 @@ var SchulmanagerApp = /** @class */ (function (_super) {
                 }
             }
         }).sendRequest(true);
-    };
-    SchulmanagerApp.prototype.onClickNote = function (_action, _senders) {
-        alert("test");
     };
     /**
      * AJAX loading student
@@ -527,7 +414,6 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         var stud_id = _senders[0]._index;
         var func = 'schulmanager.schulmanager_ui.ajax_getStudentDetails';
         this.egw.json(func, [stud_id], function (result) {
-            //alert(result);
             var modal = document.getElementById("schulmanager-notenmanager-index");
             modal.style.display = "block";
             for (var key in result) {
@@ -545,7 +431,6 @@ var SchulmanagerApp = /** @class */ (function (_super) {
             }
             jQuery('#schulmanager-notenmanager-index_schulmanager-notenmanager-details').css('display', 'inline');
         }).sendRequest(true);
-        //alert("test");
     };
     /**
      * AJAX loading student
@@ -572,7 +457,6 @@ var SchulmanagerApp = /** @class */ (function (_super) {
                     widget.innerText = result[key];
                 }
             }
-            //jQuery('#schulmanager-notenmanager-index_schulmanager-notenmanager-contact').css('display','inline');
             jQuery('#schulmanager-notenmanager-index_schulmanager-contact').css('display', 'inline');
         }).sendRequest(true);
     };
@@ -590,8 +474,8 @@ var SchulmanagerApp = /** @class */ (function (_super) {
             // update schueler select
             var widget = document.getElementById('schulmanager-notenmanager-notendetails_select_schueler');
             if (widget) {
-                var length = widget.options.length;
-                for (var i = length - 1; i >= 0; i--) {
+                var length_3 = widget.options.length;
+                for (var i = length_3 - 1; i >= 0; i--) {
                     widget.options[i] = null;
                 }
                 for (var key in result['select_schueler']) {
@@ -610,10 +494,6 @@ var SchulmanagerApp = /** @class */ (function (_super) {
                     var widgetItem = document.getElementById('schulmanager-notenmanager-notendetails_' + key);
                     if (widgetItem) {
                         widgetItem.innerText = result[key];
-                    }
-                    else {
-                        //alert(key);
-                        //return;
                     }
                 }
             }
@@ -640,8 +520,7 @@ var SchulmanagerApp = /** @class */ (function (_super) {
                         widgetItem.innerText = result[key];
                     }
                     else {
-                        alert(key);
-                        //return;
+                        //alert(key);
                     }
                 }
             }
@@ -676,7 +555,6 @@ var SchulmanagerApp = /** @class */ (function (_super) {
      */
     SchulmanagerApp.prototype.onDetailsNotenEdit = function (_action, _senders) {
         var idPostfix = _senders.id.substring(4);
-        //alert(idPostfix);
         var isGlnw = _senders.id.substring(5, 9) == 'glnw';
         var modal = document.getElementById("schulmanager-notenmanager-notendetails_editcontentmodal");
         modal.style.display = "block";
@@ -838,46 +716,6 @@ var SchulmanagerApp = /** @class */ (function (_super) {
         modal.style.display = "none";
     };
     /**
-     * export notenbuch
-     * @param _id
-     * @param _widget
-     */
-    SchulmanagerApp.prototype.exportpdf_test = function (_id, _widget) {
-        var egw = this.egw;
-        egw.loading_prompt('schulmanager', true, egw.lang('please wait...'));
-        var req = new XMLHttpRequest();
-        req.open("POST", egw.link('/index.php', 'menuaction=schulmanager.schulmanager_download_ui.exportpdf_test'), true);
-        req.responseType = "blob";
-        req.onreadystatechange = function () {
-            if (req.readyState === 4 && req.status === 200) {
-                //var filename = "PdfName-" + new Date().getTime() + ".pdf";
-                var header = req.getResponseHeader('Content-Disposition');
-                var startIndex = header.indexOf("filename=") + 10;
-                var endIndex = header.length - 1;
-                var filename = header.substring(startIndex, endIndex);
-                if (typeof window.chrome !== 'undefined') {
-                    // Chrome version
-                    var link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(req.response);
-                    link.download = filename;
-                    link.click();
-                }
-                else if (typeof window.navigator.msSaveBlob !== 'undefined') {
-                    // IE version
-                    var blob = new Blob([req.response], { type: 'application/pdf' });
-                    window.navigator.msSaveBlob(blob, filename);
-                }
-                else {
-                    // Firefox version
-                    var file = new File([req.response], filename, { type: 'application/force-download' });
-                    window.open(URL.createObjectURL(file));
-                }
-            }
-            egw.loading_prompt('schulmanager', false);
-        };
-        req.send();
-    };
-    /**
      * select students for a new class changed, reload list
      */
     SchulmanagerApp.prototype.onSchuelerViewKlasseChanged = function (_action, _senders) {
@@ -907,8 +745,8 @@ var SchulmanagerApp = /** @class */ (function (_super) {
             // update schueler select
             var widget = document.getElementById('schulmanager-schuelerview_select_schueler');
             if (widget) {
-                var length = widget.options.length;
-                for (var i = length - 1; i >= 0; i--) {
+                var length_4 = widget.options.length;
+                for (var i = length_4 - 1; i >= 0; i--) {
                     widget.options[i] = null;
                 }
                 for (var key in result['select_schueler']) {

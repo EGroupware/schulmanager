@@ -25,7 +25,6 @@ class schulmanager_download_ui
 		'exportpdf_kv' => true,
         'exportpdf_nbericht' => true,
         'exportpdf_calm' => true,
-        //'exportpdf_test' => true,
 	);
 
 	/**
@@ -68,15 +67,21 @@ class schulmanager_download_ui
 	 */
 	function exportpdf_nb(array $content = null,$msg='')
 	{
-		$meta = array();
-		$session_rows = Api\Cache::getSession('schulmanager', 'notenmanager_rows');
-		$filter = Api\Cache::getSession('schulmanager', 'filter');
+		$path = '';
+        $mime = '';
+        $length = 0;
 
-		$myLehrer = new schulmanager_lehrer_bo();
-		$klasse_fach = $myLehrer->getKlasseUnterrichtList()[$filter];
-		$exportpdf = new schulmanager_export_pdf($session_rows, $klasse_fach, $meta);
+        $meta = array();
+        $session_rows = Api\Cache::getSession('schulmanager', 'notenmanager_rows');
+        $filter = Api\Cache::getSession('schulmanager', 'filter');
+        $myLehrer = new schulmanager_lehrer_bo();
+        $klasse_fach = $myLehrer->getKlasseUnterrichtList()[$filter];
+        $exportpdf = new schulmanager_export_pdf($session_rows, $klasse_fach, $meta);
 
-		return $exportpdf->createPDFFachNotenListe();
+        $pdfOutput =  $exportpdf->createPDFFachNotenListe();
+        Api\Header\Content::safe($pdfOutput, $path, $mime, $length, True, True);
+        echo $pdfOutput;
+        exit();
 	}
 
 	/**
@@ -86,6 +91,10 @@ class schulmanager_download_ui
 	 */
 	function exportpdf_kv(array $content = null,$msg='')
 	{
+        $path = '';
+        $mime = '';
+        $length = 0;
+
 	    $mode = 'stud';
         if ($_REQUEST['mode']) $mode = $_REQUEST['mode'];
 
@@ -111,7 +120,10 @@ class schulmanager_download_ui
 		}
 
 		$exportpdf = new schulmanager_export_kv_pdf($session_rows, $klassenname, $mode);
-		return $exportpdf->createPDFklassenNotenListe();
+		$pdfOutput = $exportpdf->createPDFklassenNotenListe();
+        Api\Header\Content::safe($pdfOutput, $path, $mime, $length, True, True);
+        echo $pdfOutput;
+        exit();
 	}
 
     /**
@@ -164,7 +176,10 @@ class schulmanager_download_ui
         );
 
         $exportpdf = new schulmanager_export_nbericht_pdf($session_rows, $klassenname, $reportConfig);
-        return $exportpdf->createPDFklassenNotenbericht();
+        $pdfOutput = $exportpdf->createPDFklassenNotenbericht();
+        Api\Header\Content::safe($pdfOutput, $path, $mime, $length, True, True);
+        echo $pdfOutput;
+        exit();
     }
 
     /**
@@ -180,21 +195,7 @@ class schulmanager_download_ui
             $days =  Api\Cache::getSession('schulmanager', 'cal_weekdays');
 
             $exportpdf = new schulmanager_export_cal_pdf($session_rows, $days, strftime('%B %Y', $dateSelected->getTimestamp()));
-            return $exportpdf->createPDFCalendarMonth();
+            echo $exportpdf->createPDFCalendarMonth();
+            exit();
 	}
-
-    // Maybe this will be used for school reports
-    /*
-    function exportpdf_test(array $content = null,$msg='')
-    {
-        $fields = array(
-            'testabc' => 'TEST abc',
-        );
-        // getcwd().
-        $pdf = new FPDM('schulmanager/inc/pdftempl/formtest2.pdf');
-        $pdf->Load($fields, false); // second parameter: false if field values are in ISO-8859-1, true if UTF-8
-        $pdf->Merge();
-        return $pdf->Output();
-    }
-    */
 }
