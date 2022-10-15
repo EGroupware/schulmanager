@@ -199,7 +199,7 @@ class schulmanager_schueler_so {
 
 		$rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
 
-		$id = 0;
+		$id = ($rowid +1) * 100;
 		foreach($rs as $row){
 			//$rows[] = array(
 			$schueler = array(
