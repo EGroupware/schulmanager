@@ -22,7 +22,7 @@
 				</row>
 				<row>
 					<description label="Beschreibung: " for="inputinfo_desc" class="sm_label"/>
-					<textbox id="desc" size="140" statustext="Beschreibung der Leistungserhebung" maxlength="150" needed="true"/>
+					<textbox id="desc" size="140" statustext="Beschreibung der Leistungserhebung" maxlength="150" needed="false"/>
 				</row>
 			</rows>
 		</grid>
@@ -318,7 +318,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="sm_nm_edit_hint" class="sm_hint_red" align="center" label="Änderungen müssen aktiv über Speichern oder Übernehmen bestätigt werden! Dateum, Art und Beschreibung werden nur für neue Eintragungen übernommen!" no_lang="1"/>
+					<description id="sm_nm_edit_hint" class="sm_hint_red" align="center" label="Änderungen müssen aktiv über Speichern oder Übernehmen bestätigt werden! Datum, Art und Beschreibung werden nur für neue Eintragungen übernommen!" no_lang="1"/>
 				</row>
 				<row>
 					<template id="schulmanager.notenmanager.edit.inputinfo"/>

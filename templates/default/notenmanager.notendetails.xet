@@ -34,7 +34,7 @@
 
 						<row>
 							<description label="Beschreibung: " for="inputinfo_desc" class="sm_label"/>
-							<textbox id="edit_desc" size="140" statustext="Beschreibung der Leistungserhebung" maxlength="150" needed="true"/>
+							<textbox id="edit_desc" size="140" statustext="Beschreibung der Leistungserhebung" maxlength="150" needed="false"/>
 						</row>
 					</rows>
 				</grid>
