@@ -109,9 +109,10 @@ class schulmanager_schueler_so {
      */
     function getSchuelerFaecherData($st_asv_id, &$fach){
         $tables = $this->sm_schueler_table."_stamm";
-        $cols =  'sf_asv_id,sf_asv_kurzform,sf_asv_anzeigeform,bf_asv_wl_belegart_id,bf_asv_unterrichtsart';
+        $cols =  'DISTINCT sf_asv_id,sf_asv_kurzform,sf_asv_anzeigeform,bf_asv_wl_belegart_id,bf_asv_unterrichtsart';
         $where = array(
             "sch_asv_id = ".$this->db->quote($st_asv_id),
+            "bf_asv_unterrichtsart = 'P'"
         );
 
         $join = "INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_schueler_stamm_id = egw_schulmanager_asv_schueler_stamm.sch_asv_id "
