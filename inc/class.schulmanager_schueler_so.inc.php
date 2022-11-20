@@ -109,7 +109,7 @@ class schulmanager_schueler_so {
      */
     function getSchuelerFaecherData($st_asv_id, &$fach){
         $tables = $this->sm_schueler_table."_stamm";
-        $cols =  'DISTINCT sf_asv_id,sf_asv_kurzform,sf_asv_anzeigeform,bf_asv_wl_belegart_id,bf_asv_unterrichtsart';
+        $cols =  'sf_asv_id,sf_asv_kurzform,sf_asv_anzeigeform,bf_asv_wl_belegart_id,bf_asv_unterrichtsart';
         $where = array(
             "sch_asv_id = ".$this->db->quote($st_asv_id),
             "bf_asv_unterrichtsart = 'P'"
@@ -122,7 +122,7 @@ class schulmanager_schueler_so {
 
         $append = "ORDER BY egw_schulmanager_config.cnf_extra, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform";
 
-        $result = $this->db->select($tables, $cols, $where, '', '', False, $append, False, 0, $join);
+        $result = $this->db->select($tables, 'DISTINCT '.$cols, $where, '', '', False, $append, False, 0, $join);
 
         $rowIndex = 0;
         $colsArr = explode(',', $cols);
