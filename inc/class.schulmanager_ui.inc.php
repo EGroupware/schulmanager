@@ -30,6 +30,7 @@ class schulmanager_ui
         'exportasv_zz'	  => True,
         //'calendar_week' => True,
         'schuelerview' => True,
+        'devtest' => True,
     );
     /**
      * reference to the infolog preferences of the user
@@ -128,7 +129,30 @@ class schulmanager_ui
         return "Unknown action '$action'!";
     }
 
+    /**
+     * DevTest
+     *
+     * @param array $content
+     * @param string $msg
+     */
+    function devtest(array $content = null,$msg='')
+    {
+        Api\Header\ContentSecurityPolicy::add('script-src', "unsafe-inline");
+        $config = Api\Config::read('schulmanager');
+        $etpl = new Etemplate('schulmanager.devtest');
 
+        $content = array(
+            'nm' => Api\Cache::getSession('schulmanager', 'devtest'),
+            'msg' => $msg,
+        );
+
+        $sel_options = array();
+        $preserv = array();
+        $readonlys = array();
+        $preserv = $sel_options;
+
+        return $etpl->exec('schulmanager.schulmanager_ui.devtest', $content, $sel_options, $readonlys, $preserv);
+    }
 
     /**
      * List Schulmanager entries

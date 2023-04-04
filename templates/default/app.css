@@ -64,8 +64,6 @@ table, td, th {
 	padding:0px 0px 0px 0px!important;
 }
 
-
-
 .schulmanager_note_input
 {
 	width:30px !important;
@@ -107,7 +105,7 @@ table, td, th {
 #schulmanager-notenmanager-index_nm table tr td:nth-child(1),
 #schulmanager-notenmanager-edit_nm table tr td:nth-child(1)
 {
-	text-align:right;
+	text-align:left;
 }
 
 /* 2021-03-07 */
@@ -628,4 +626,6 @@ div.gridCont_2_div_col_1.innerContainer{
 .md-table tr:nth-child(even) {
 	background: #F8F8F8;
 }
+
+
 

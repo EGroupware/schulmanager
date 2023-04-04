@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.devtest" template="" lang="" group="0" version="1.9.001">
+		<et2-vbox>
+			<et2-description label="devtest"></et2-description>
+		</et2-vbox>
+	</template>
+</overlay>

@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
-<!-- $Id$ -->
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
-
 	<template id="schulmanager.contact.header">
-		<hbox class="sm_label">
-			<description id="details_name" class="et2_label sm_label"/>
-			<description id="details_rufname" class="sm_label"/>
-			<description id="details_klasse" class="sm_label"/>
-			<description id="details_fach" class="sm_label"/>
-		</hbox>
-		<hrule/>
+		<et2-hbox class="sm_label">
+			<description id="details_name" class="et2_label sm_label"></description>
+			<description id="details_rufname" class="sm_label"></description>
+			<description id="details_klasse" class="sm_label"></description>
+			<description id="details_fach" class="sm_label"></description>
+		</et2-hbox>
+		<hrule></hrule>
 	</template>
-
-
-
-
 	<template id="schulmanager.contact" template="" lang="" group="0" version="0.0.001">
-
-		<template id="schulmanager.contact.header"/>
-		<button label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="jQuery('#schulmanager-notenmanager-index_showcontactmodal').css('display','none');return false;" image="check" background_image="1"/>
-
+		<template id="schulmanager.contact.header"></template>
+		<et2-button label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="jQuery('#schulmanager-notenmanager-index_showcontactmodal').css('display','none');return false;" image="check" background_image="1"></et2-button>
 	</template>
-
-
 </overlay>

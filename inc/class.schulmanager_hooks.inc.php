@@ -105,9 +105,17 @@ class schulmanager_hooks
                 'link' =>  Egw::link('/index.php','menuaction=schulmanager.schulmanager_merge.show_replacements'),
             );
 
-			/*
+
             if (self::showModulesWhileDeveloping()) {
-                $file[] = array(
+            /*    $file[] = array(
+                    'text' => 'devtest',
+                    'app'  => 'schulmanager',
+                    'link' =>  Egw::link('/index.php',array(
+                        'menuaction' => 'schulmanager.schulmanager_ui.devtest',
+                        'ajax' => 'true',
+                    ))
+                );*/
+            /*    $file[] = array(
                     'text' => 'Anwesenheit',
                     'icon' => Api\Image::find('schulmanager', 'presence'),
                     'app'  => 'schulmanager',
@@ -126,8 +134,9 @@ class schulmanager_hooks
                         'ajax' => 'true',
                     ))
                 );
+            */
 			}
-			*/
+
 
             if($config['show_exam_calendar']){
                 $file[] = array(
