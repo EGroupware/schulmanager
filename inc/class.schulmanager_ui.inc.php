@@ -141,9 +141,30 @@ class schulmanager_ui
         $config = Api\Config::read('schulmanager');
         $etpl = new Etemplate('schulmanager.devtest');
 
-        $content = array(
-            'nm' => Api\Cache::getSession('schulmanager', 'devtest'),
-            'msg' => $msg,
+
+        if (!is_array($content))
+        {
+            $content = array('nm' => Api\Cache::getSession('schulmanager', 'devtest'));
+            if (!is_array($content['nm']) || !$content['nm']['get_devtest_rows'])
+            {
+                if (!is_array($content['nm'])) $content['nm'] = array();
+                $content['nm'] += array(
+                    'get_rows'   => 'schulmanager.schulmanager_ui.get_devtest_rows',
+                    'no_cat'     => true,
+                    'no_filter'  => true,
+                    'no_filter2' => true,
+                    'num_rows'   => 999,
+                    'order'      => 'start_order',
+                    'sort'       => 'ASC',
+                    'show_result'=> 1,
+                    'hide_header'=> true,
+                );
+            }
+            if ($_GET['msg']) $msg = $_GET['msg'];
+        }
+
+        $content += array(
+            'devtest' => 'weertz'
         );
 
         $sel_options = array();
@@ -151,7 +172,28 @@ class schulmanager_ui
         $readonlys = array();
         $preserv = $sel_options;
 
+        // fake call to get_rows()
+        if (!$content['no_list'])
+        {
+            $this->get_devtest_rows($content['nm'], $content['nm']['rows'], $readonlys);
+            array_unshift($content['nm']['rows'], false);	// 1 header rows
+        }
+
         return $etpl->exec('schulmanager.schulmanager_ui.devtest', $content, $sel_options, $readonlys, $preserv);
+    }
+
+    function get_devtest_rows(&$query_in,&$rows,&$readonlys)
+    {
+        $rows[0] = array(
+          'nr' => '1',
+          'nachname' => 'Maier'
+        );
+
+        $rows[1] = array(
+            'nr' => '2',
+            'nachname' => 'Huber'
+        );
+        return 2;
     }
 
     /**

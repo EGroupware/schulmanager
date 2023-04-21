@@ -67,7 +67,7 @@ table, td, th {
 .schulmanager_note_input
 {
 	width:30px !important;
-	height: 1.0rem !important;
+	/*height: 1.0rem !important;*/
 
 	vertical-align: middle;
 
