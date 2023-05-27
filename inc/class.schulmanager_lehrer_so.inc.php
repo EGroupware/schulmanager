@@ -352,16 +352,6 @@ class schulmanager_lehrer_so extends Api\Storage{
 		$rowid = 0;
 		$id = 1;
 
-		/*$note_empty = array(
-            'note'   => '',
-            'note_id'=> '',
-            'update_date' => '',
-            'update_user' => '',
-            'art' => '',
-            'definition_date' => '',
-            'description' => '',
-        );*/
-
 		foreach($rs as $row){
 			//$rows[] = array(
 			$schueler = array(
@@ -374,134 +364,6 @@ class schulmanager_lehrer_so extends Api\Storage{
 					'st_asv_austrittsdatum' => $row['st_asv_austrittsdatum'],
 					'nm_st_class'		=> ''
 				),
-				/*'noten'		=> array(
-					'alt_b' => array(
-						-1 => array(
-							'note'   => false,
-							'note_id'=> '',
-							'img' => '',
-							'checked' => false
-						),
-					),
-					'glnw_hj_1' => array(
-						'avgclass' => '',
-						-1 => array(
-							'note'   => '',
-							'note_id'=> '',
-							'manuell' => '0',
-						),
-						0 => $note_empty,
-						1 => $note_empty,
-						2 => $note_empty,
-					),
-					'klnw_hj_1' => array(
-						'avgclass' => '',
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> '',
-							'manuell' => '0'
-						),
-                        0 => $note_empty,
-                        1 => $note_empty,
-                        2 => $note_empty,
-                        3 => $note_empty,
-                        4 => $note_empty,
-                        5 => $note_empty,
-                        6 => $note_empty,
-                        7 => $note_empty,
-                        8 => $note_empty,
-                        9 => $note_empty,
-                        10 => $note_empty,
-                        11 => $note_empty,
-					),
-					'schnitt_hj_1' =>  array(
-						'avgclass' => '',
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> '',
-							'manuell' => '0'
-						)
-					),
-					'note_hj_1' =>  array(
-						'avgclass' => '',
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> '',
-							'manuell' => '0'
-						)
-					),
-					'm_hj_1' =>  array(
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> ''
-						)
-					),
-					'v_hj_1' =>  array(
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> ''
-						)
-					),
-					'glnw_hj_2' => array(
-						'avgclass' => '',
-						-1 => array(
-							'note'   => '',
-							'note_id'=> '',
-							'manuell' => '0',
-						),
-                        0 => $note_empty,
-                        1 => $note_empty,
-                        2 => $note_empty,
-					),
-					'klnw_hj_2' => array(
-						'avgclass' => '',
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> '',
-							'manuell' => '0'
-						),
-                        0 => $note_empty,
-                        1 => $note_empty,
-                        2 => $note_empty,
-                        3 => $note_empty,
-                        4 => $note_empty,
-                        5 => $note_empty,
-                        6 => $note_empty,
-                        7 => $note_empty,
-                        8 => $note_empty,
-                        9 => $note_empty,
-                        10 => $note_empty,
-                        11 => $note_empty,
-					),
-					'schnitt_hj_2' =>  array(
-						'avgclass' => '',
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> '',
-							'manuell' => '0'
-						)
-					),
-					'note_hj_2' =>  array(
-						'avgclass' => '',
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> '',
-							'manuell' => false
-						)
-					),
-					'm_hj_2' =>  array(
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> ''
-						)
-					),
-					'v_hj_2' =>  array(
-						-1 =>  array(
-							'note'   => '',
-							'note_id'=> ''
-						)
-					)
-				)*/
 			);
 
             $schueler['noten'] = $this->getNotenTemplate();
@@ -793,7 +655,7 @@ class schulmanager_lehrer_so extends Api\Storage{
             $index_im_block = $row['index_im_block'];
             $note = $row['note'];
             $manuell = $row['asv_note_manuell'];
-            $schueler['noten'][$blockbezeichner][$index_im_block]['note'] = $note;
+            $schueler['noten'][$blockbezeichner][$index_im_block]['note'] = str_replace(",", ".", $note);
             $schueler['noten'][$blockbezeichner][$index_im_block]['note_id'] = $note_id;
             $schueler['noten'][$blockbezeichner][$index_im_block]['asv_id'] = $asv_id;
             $schueler['noten'][$blockbezeichner][$index_im_block]['update_date'] = substr($row['update_date'],  0,10);
@@ -891,6 +753,7 @@ class schulmanager_lehrer_so extends Api\Storage{
 	 * @param type $schueler
 	 */
 	static function beforeSendToClient(&$schueler, $gewichtungen){
+        $decimal_separator = '.';
 		if(isset($schueler['noten'])){
 			foreach($schueler['noten'] as $blockname => &$notenblock){
 				if(is_array($notenblock)){
@@ -905,18 +768,21 @@ class schulmanager_lehrer_so extends Api\Storage{
 						}
 					}
 					if((!isset($notenblock[-1]['note']) || empty($notenblock[-1]['note']) || $notenblock[-1]['manuell']==0) && isset($notenblock['##anz##']) && $notenblock['##anz##'] > 0){
-						// calculate average, because it is emtpty, not edited manually
+						// calculate average, because it is empty, not edited manually
 						//$notenblock[-1]['value'] = floor(floatval($notenblock['##sum##']) / $notenblock['##anz##'] * 100) / 100;
 						$notenblock[-1]['value'] = self::getNotenBlockSchnitt($notenblock['##sum##'], $notenblock['##anz##']);
-						$notenblock[-1]['note'] = number_format(floatval($notenblock[-1]['value']), 2, ',', '');
+						$notenblock[-1]['note'] = number_format(floatval($notenblock[-1]['value']), 2, $decimal_separator, '');
+                        $notenblock[-1]['label'] = number_format(floatval($notenblock[-1]['value']), 2, ',', '');
 					}
-					elseif(!empty($notenblock[-1]['note']) && $notenblock[-1]['manuell']==1){
+					elseif(!empty($notenblock[-1]['note']) && $notenblock[-1]['manuell'] == 1){
 						// manuelle Eingabe
 						$notenblock[-1]['value'] = floatval(str_replace(',', '.',$notenblock[-1]['note']));
+                        $notenblock[-1]['label'] = $notenblock[-1]['note'];
 					}
 					else{
 						$notenblock[-1]['note'] = '';
 						$notenblock[-1]['value'] = '';
+                        $notenblock[-1]['label'] = '';
 					}
 					//if(isset($notenblock[-1]['note']) and !empty($notenblock[-1]['note'])){
 					//	$notenblock[-1]['note'] = number_format(floor($notenblock[-1]['note'] * 100)/100, 2, ',', '');
@@ -926,11 +792,13 @@ class schulmanager_lehrer_so extends Api\Storage{
 			// alternative Berechnung
 			if($schueler['noten']['alt_b'][-1]['note'] == 1){
 				$schueler['noten']['alt_b'][-1]['checked'] = true;
-				$schueler['noten']['alt_b'][-1]['img'] = 'done';
+				$schueler['noten']['alt_b'][-1]['img'] = 'check.svg';
+                $schueler['noten']['alt_b'][-1]['label'] = '(1:1)';
 			}
 			else{
 				$schueler['noten']['alt_b'][-1]['checked'] = false;
 				$schueler['noten']['alt_b'][-1]['img'] = '';
+                $schueler['noten']['alt_b'][-1]['label'] = '';
 			}
 			// Gesamtschnitt 1. HJ
 			$glnw = $schueler['noten']['glnw_hj_1'][-1]['value'];
@@ -954,7 +822,8 @@ class schulmanager_lehrer_so extends Api\Storage{
 				}
 			}
 			if($schueler['noten']['schnitt_hj_1'][-1]['value'] > 0){
-				$schueler['noten']['schnitt_hj_1'][-1]['note'] = number_format(floatval($schueler['noten']['schnitt_hj_1'][-1]['value']), 2, ',', '');
+				$schueler['noten']['schnitt_hj_1'][-1]['note'] = number_format(floatval($schueler['noten']['schnitt_hj_1'][-1]['value']), 2, $decimal_separator, '');
+                $schueler['noten']['schnitt_hj_1'][-1]['label'] = number_format(floatval($schueler['noten']['schnitt_hj_1'][-1]['value']), 2, ',', '');
 			}
 			if(empty($schueler['noten']['note_hj_1'][-1]['note']) || $schueler['noten']['note_hj_1'][-1]['manuell'] == 0){
 				if($schueler['noten']['schnitt_hj_1'][-1]['value'] > 0){
@@ -971,7 +840,8 @@ class schulmanager_lehrer_so extends Api\Storage{
 			if($schueler['noten']['glnw_hj_2']['##anz##'] !== 0 && $schueler['noten']['glnw_hj_2'][-1]['manuell'] == 0){
 				//$schueler['noten']['glnw_hj_2'][-1]['value'] = floor(floatval($schueler['noten']['glnw_hj_2']['##sum##']) / $schueler['noten']['glnw_hj_2']['##anz##'] * 100) / 100;
 				$schueler['noten']['glnw_hj_2'][-1]['value'] = self::getNotenBlockSchnitt($schueler['noten']['glnw_hj_2']['##sum##'], $schueler['noten']['glnw_hj_2']['##anz##']);
-				$schueler['noten']['glnw_hj_2'][-1]['note'] = number_format(floatval($schueler['noten']['glnw_hj_2'][-1]['value']), 2, ',', '');
+				$schueler['noten']['glnw_hj_2'][-1]['note'] = number_format(floatval($schueler['noten']['glnw_hj_2'][-1]['value']), 2, $decimal_separator, '');
+                $schueler['noten']['glnw_hj_2'][-1]['label'] = number_format(floatval($schueler['noten']['glnw_hj_2'][-1]['value']), 2, ',', '');
 			}
 			// klnw 2. HJ
 			$schueler['noten']['klnw_hj_2']['##sum##'] = $schueler['noten']['klnw_hj_1']['##sum##'] + $schueler['noten']['klnw_hj_2']['##sum##'];
@@ -979,7 +849,8 @@ class schulmanager_lehrer_so extends Api\Storage{
 			if($schueler['noten']['klnw_hj_2']['##anz##'] !== 0 && $schueler['noten']['klnw_hj_2'][-1]['manuell'] == 0){
 				//$schueler['noten']['klnw_hj_2'][-1]['value'] = floor(floatval($schueler['noten']['klnw_hj_2']['##sum##']) / $schueler['noten']['klnw_hj_2']['##anz##'] * 100) / 100;
 				$schueler['noten']['klnw_hj_2'][-1]['value'] = self::getNotenBlockSchnitt($schueler['noten']['klnw_hj_2']['##sum##'], $schueler['noten']['klnw_hj_2']['##anz##']);
-				$schueler['noten']['klnw_hj_2'][-1]['note'] = number_format(floatval($schueler['noten']['klnw_hj_2'][-1]['value']), 2, ',', '');
+				$schueler['noten']['klnw_hj_2'][-1]['note'] = number_format(floatval($schueler['noten']['klnw_hj_2'][-1]['value']), 2, $decimal_separator, '');
+                $schueler['noten']['klnw_hj_2'][-1]['label'] = number_format(floatval($schueler['noten']['klnw_hj_2'][-1]['value']), 2, ',', '');
 			}
 
 			// Gesamtschnitt 2. HJ
@@ -1003,7 +874,8 @@ class schulmanager_lehrer_so extends Api\Storage{
 			}
 			// value to note, value contains string like '1.23'
 			if(floatval($schueler['noten']['schnitt_hj_2'][-1]['value']) > 0){
-				$schueler['noten']['schnitt_hj_2'][-1]['note'] = number_format(floatval($schueler['noten']['schnitt_hj_2'][-1]['value']), 2, ',', '');
+				$schueler['noten']['schnitt_hj_2'][-1]['note'] = number_format(floatval($schueler['noten']['schnitt_hj_2'][-1]['value']), 2, $decimal_separator, '');
+                $schueler['noten']['schnitt_hj_2'][-1]['label'] = number_format(floatval($schueler['noten']['schnitt_hj_2'][-1]['value']), 2, ',', '');
 			}
 			if(empty($schueler['noten']['note_hj_2'][-1]['note']) || $schueler['noten']['note_hj_2'][-1]['manuell'] == 0){
 				if($schueler['noten']['schnitt_hj_2'][-1]['value'] > 0){

@@ -176,8 +176,9 @@
 						<et2-description id="${row}[nm_st][st_asv_rufname]" class="$row_cont[nm_st][nm_st_class] et2_label"  no_lang="1"></et2-description>
 					</et2-vbox>
 					<et2-vbox class="sm_col_info">
-						<image  label="alt. Berechnung" src="${row}[noten][alt_b][-1][img]"></image>
-						<link href="#"><et2-image  label="$row_cont[nm_st][hint][text]" src="${row}[nm_st][hint][img]"></et2-image></link>
+						<et2-description id="${row}[noten][alt_b][-1][label]" class="" no_lang="1"></et2-description>
+						<!--<et2-image  label="alt. Berechnung" src="${row}[noten][alt_b][-1][img]"></et2-image>-->
+						<link href="#"><et2-image  label="$row_cont[nm_st][hint][text]"  src="${row}[nm_st][hint][img]"></et2-image></link>
 					</et2-vbox>
 					<et2-vbox class="sm_col_glnw">
 						<et2-hbox>
@@ -210,12 +211,14 @@
 							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][11][note]" readonly="true" min="1" max="6" class="schulmanager_note_input sm_nm_klnw" align="center"></et2-textbox>
 						</et2-hbox>
 					</et2-vbox>
-					<et2-hbox class="sm_col_avg">
-						<et2-description id="${row}[noten][glnw_hj_1][-1][note]" class="$row_cont[noten][glnw_hj_1][avgclass] schulmanager_note_input sm_nm_glnw" align="center"></et2-description>
-						<et2-description id="${row}[noten][klnw_hj_1][-1][note]" class="$row_cont[noten][klnw_hj_1][avgclass] schulmanager_note_input sm_nm_klnw" align="center"></et2-description>
-					</et2-hbox>
+					<et2-vbox class="sm_col_avg">
+						<et2-hbox>
+							<et2-description id="${row}[noten][glnw_hj_1][-1][label]" class="$row_cont[noten][glnw_hj_1][avgclass] schulmanager_note_input sm_nm_glnw" align="center"></et2-description>
+							<et2-description id="${row}[noten][klnw_hj_1][-1][label]" class="$row_cont[noten][klnw_hj_1][avgclass] schulmanager_note_input sm_nm_klnw" align="center"></et2-description>
+						</et2-hbox>
+					</et2-vbox>
 					<et2-hbox class="sm_col_note">
-						<et2-description id="${row}[noten][schnitt_hj_1][-1][note]" class="$row_cont[noten][schnitt_hj_1][avgclass] schulmanager_note_input sm_nm_znote_schnitt" align="center"></et2-description>
+						<et2-description id="${row}[noten][schnitt_hj_1][-1][label]" class="$row_cont[noten][schnitt_hj_1][avgclass] schulmanager_note_input sm_nm_znote_schnitt" align="center"></et2-description>
 						<et2-description id="${row}[noten][note_hj_1][-1][note]" class="$row_cont[noten][note_hj_1][avgclass] schulmanager_note_input sm_nm_znote sm_nm_znote_note" align="center"></et2-description>
 					</et2-hbox>
 					<et2-hbox class="sm_col_mv">
@@ -255,11 +258,11 @@
 						</et2-hbox>
 					</et2-vbox>
 					<et2-hbox class="sm_col_avg">
-						<et2-description id="${row}[noten][glnw_hj_2][-1][note]" class="$row_cont[noten][glnw_hj_2][avgclass] schulmanager_note_input sm_nm_glnw" align="center"></et2-description>
-						<et2-description id="${row}[noten][klnw_hj_2][-1][note]" class="$row_cont[noten][klnw_hj_2][avgclass] schulmanager_note_input sm_nm_klnw" align="center"></et2-description>
+						<et2-description id="${row}[noten][glnw_hj_2][-1][label]" class="$row_cont[noten][glnw_hj_2][avgclass] schulmanager_note_input sm_nm_glnw" align="center"></et2-description>
+						<et2-description id="${row}[noten][klnw_hj_2][-1][label]" class="$row_cont[noten][klnw_hj_2][avgclass] schulmanager_note_input sm_nm_klnw" align="center"></et2-description>
 					</et2-hbox>
 					<et2-hbox class="sm_col_note">
-						<et2-description id="${row}[noten][schnitt_hj_2][-1][note]" class="$row_cont[noten][schnitt_hj_2][avgclass] schulmanager_note_input sm_nm_znote_schnitt"  align="center"></et2-description>
+						<et2-description id="${row}[noten][schnitt_hj_2][-1][label]" class="$row_cont[noten][schnitt_hj_2][avgclass] schulmanager_note_input sm_nm_znote_schnitt"  align="center"></et2-description>
 						<et2-description id="${row}[noten][note_hj_2][-1][note]" class="$row_cont[noten][note_hj_2][avgclass] schulmanager_note_input sm_nm_znote sm_nm_znote_note" align="center"></et2-description>
 					</et2-hbox>
 					<et2-hbox class="sm_col_mv">

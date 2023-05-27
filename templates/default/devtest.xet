@@ -7,15 +7,18 @@
 			<columns>
 				<column/>
 				<column/>
+				<column/>
 			</columns>
 			<rows>
 				<row class="th" part="header">
 					<nextmatch-sortheader align="center" label="Rank" id="result_rank"/>
 					<nextmatch-sortheader label="Lastname" id="nachname" class="leftPad5"/>
+					<nextmatch-sortheader label="test" id="nachname" class="leftPad5"/>
 				</row>
 				<row class="row ">
-					<description align="center" id="{$row}[nr]" no_lang="1" readonly="true" class="place"></description>
-					<et2-button id="{$row}[nachname]" no_lang="1" font_style="" class="lastname leftPad5" label="{$row}[nachname]"></et2-button>
+					<et2-textbox align="center" id="${row}[nr]" no_lang="1" readonly="false" class="place"></et2-textbox>
+					<et2-button id="${row}[nachname]" no_lang="1" font_style="" class="lastname leftPad5" label="{$row}[nachname]"></et2-button>
+					<et2-checkbox id="${row}[test]"></et2-checkbox>
 				</row>
 			</rows>
 		</grid>

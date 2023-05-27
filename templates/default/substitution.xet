@@ -3,18 +3,33 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="schulmanager.substitution.add" template="" lang="" group="0" version="0.0.1">
-		<description value="Vertretung"/>
-		<menulist>
-			<menupopup type="select-account"  id="add_kennung" no_lang="1" readonly="false"/>
-		</menulist>
-		<description value="Lehrer"/>
-		<menulist>
-			<menupopup type="select-account"  id="add_kennung_orig" no_lang="1" readonly="false" onchange="app.schulmanager.subs_TeacherChanged"/>
-		</menulist>
-		<description value="Unterricht:" no_lang="1"/>
-		<menulist>
-			<menupopup no_lang="1" type="select" statustext="Art des Eintrags" id="add_lesson_list"/>
-		</menulist>		
+
+		<grid width="50%">
+			<columns>
+				<column width="40%"/>
+				<column width="60%"/>
+			</columns>
+			<rows>
+				<row>
+					<description value="Vertretung:"/>
+					<menulist>
+						<menupopup type="select-account"  id="add_kennung" no_lang="1" readonly="false"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="zu vertretender Lehrer:"/>
+					<menulist>
+						<menupopup type="select-account"  id="add_kennung_orig" no_lang="1" readonly="false" onchange="app.schulmanager.subs_TeacherChanged"/>
+					</menulist>
+				</row>
+				<row>
+					<description value="Unterricht:" no_lang="1"/>
+					<menulist>
+						<menupopup no_lang="1" type="select" statustext="Art des Eintrags" id="add_lesson_list"/>
+					</menulist>
+				</row>
+			</rows>
+		</grid>
 		<button label="Add" id="button[add]" class="button_add" image="add" background_image="1"/>
 	</template>
 

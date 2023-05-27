@@ -186,12 +186,14 @@ class schulmanager_ui
     {
         $rows[0] = array(
           'nr' => '1',
-          'nachname' => 'Maier'
+          'nachname' => 'Maier',
+          'test' => 'ckecked'
         );
 
         $rows[1] = array(
             'nr' => '2',
-            'nachname' => 'Huber'
+            'nachname' => 'Huber',
+            'test' => false
         );
         return 2;
     }
@@ -349,15 +351,15 @@ class schulmanager_ui
         $sel_options = array();
         if (is_array($content))
         {
-            $button = @key($content['nm']['button']);
+            $button = @key($content['button']);
 
-            unset($content['nm']['button']);
+            unset($content['button']);
             if ($button)
             {
                 if ($button == 'save' || $button == 'apply')
                 {
                     // check token for security purpose
-                    if(!$this->checkToken('token_note_modified', $content['nm']['token'])){
+                    if(!$this->checkToken('token_note_modified', $content['token'])){
                         $msg  = 'ERROR: could not save date!';
                     }
                     else {
@@ -440,11 +442,15 @@ class schulmanager_ui
         $content['nm']['no_columnselection'] = false;
         $content['nm']['favorites'] = false;
         $content['nm']['options-filter'] = $this->bo->getKlassenFachList();
+        // only grid
+        $content['nm']['num_rows'] = 999;
+        //$content['nm']['template'] = 'schulmanager.notenmanager.edit.rows';
 
         $xrsf_token = bin2hex(random_bytes(32));
         Api\Cache::setSession('schulmanager', 'token_note_modified', $xrsf_token);
 
-        $content['nm']['token'] = $xrsf_token;
+        //$content['nm']['token'] = $xrsf_token;
+        $content['token'] = $xrsf_token;
 
         $content['inputinfo']['date'] = new DateTime();
         $content['inputinfo']['desc'] = '';
@@ -458,6 +464,18 @@ class schulmanager_ui
         );
 
         $preserv = $content;
+
+        // fake call to get_rows()
+        if (!$content['no_list'])
+        {
+            if(!is_array($content['nm']['rows'])){
+                $content['nm']['rows'] = array();
+            }
+            $content['nm']['total'] = 0; // nm loads twice, here not usefull
+            $this->get_rows_edit($content['nm'], $content['nm']['rows'], $readonlys);
+            array_unshift($content['nm']['rows'], false);	// 1 header rows
+        }
+
         // TODO 1. oder 2. Halbjahr eingeben
         return $etpl->exec('schulmanager.schulmanager_ui.edit',$content,$sel_options,$readonlys,$preserv);
     }
@@ -736,8 +754,11 @@ class schulmanager_ui
             // maybe first modified record
             $modified_records = array();
         }
+        // inc key because of array shift
+        $keys = preg_split('/\\]\\[|\\[|\\]/', $noteKey, -1, PREG_SPLIT_NO_EMPTY);
+        $modNoteKey = ($keys[0] - 1).'['.$keys[1].']['.$keys[2].']['.$keys[3].']['.$keys[4].']';
         //$modified_records[$noteKey] = $noteVal;
-        $modified_records[$noteKey] = array(
+        $modified_records[$modNoteKey] = array(
             'val' => $noteVal,
             'date' => strtotime($definition_date),
             'art' => $art,
@@ -749,8 +770,9 @@ class schulmanager_ui
         $rows = Api\Cache::getSession('schulmanager', 'notenmanager_temp_rows');
         $gewichtungen = Api\Cache::getSession('schulmanager', 'notenmanager_gewichtungen');
 
-        $keys = preg_split('/\\]\\[|\\[|\\]/', $noteKey, -1, PREG_SPLIT_NO_EMPTY);
 
+
+        $keys[0] = $keys[0] - 1; // shifted in grid!!!!
         $schueler = $rows[$keys[0]];
 
         // clean up
@@ -782,7 +804,10 @@ class schulmanager_ui
         $rows[$keys[0]] = $schueler;
         Api\Cache::setSession('schulmanager', 'notenmanager_temp_rows', $rows);
 
-        $this->setAVGNoten($result, $keys[0], $schueler);
+        // $keys[0] + 1 backshift to view in grid
+        $this->setAVGNoten($result, $keys[0] + 1, $schueler);
+
+
 
         Api\Json\Response::get()->data($result);
     }
@@ -1160,12 +1185,14 @@ class schulmanager_ui
         // reset avg grades
         foreach($rows as $key => $schueler){
             if(is_array($schueler) && array_key_exists('noten', $schueler)){
+                $grid_row = $key + 1;
                 $this->resetAVGNoten($schueler);
                 schulmanager_lehrer_so::beforeSendToClient($schueler, $gewichtungen);
-                // to result
-                $this->setAVGNoten($result, $key, $schueler);
+                // to result, $key + 1 shift in grid, first row is the header
+                $this->setAVGNoten($result, $grid_row, $schueler);
             }
         }
+
         Api\Cache::setSession('schulmanager', 'notenmanager_gewichtungen', $gewichtungen);
         Api\Cache::setSession('schulmanager', 'notenmanager_temp_rows', $rows);
         Api\Json\Response::get()->data($result);
@@ -1223,12 +1250,13 @@ class schulmanager_ui
 
         foreach($rows as $key => &$schueler){
             if(is_array($schueler) && array_key_exists('noten', $schueler)){
+                $grid_row = $key + 1; // first row is the header in grid, not nm
                 $this->resetAVGNoten($schueler);
                 schulmanager_lehrer_so::beforeSendToClient($schueler, $gewichtungen);
                 // to result
-                $this->setAVGNoten($result, $key, $schueler);
+                $this->setAVGNoten($result, $grid_row, $schueler);
                 //TODO: test ob geändert wurde
-                $result[$key.'[noten][alt_b]']['[-1][checked]'] = $altb_Val == 1;
+                $result[$grid_row.'[noten][alt_b]']['[-1][checked]'] = $altb_Val == 1;
             }
         }
 
@@ -1239,7 +1267,10 @@ class schulmanager_ui
 
     /**
      * set all avg grades to result array
-     * @param type $schueler
+     * @param array $result
+     * @param $key
+     * @param array $schueler
+     * @return void
      */
     private function setAVGNoten(array &$result, $key, array $schueler){
         $result[$key.'[noten][glnw_hj_1]'] = array(

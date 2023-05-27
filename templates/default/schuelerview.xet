@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id$ -->
 <overlay>
-
     <template id="schulmanager.schuelerview.navi">
-        <hbox class="sm_label">
-            <description value="Klasse:" class="et2_label sm_label"/>
+        <et2-hbox class="sm_label">
+            <et2-description value="Klasse:" class="et2_label sm_label"></et2-description>
             <menulist>
                 <menupopup type="select" id="select_klasse" onchange="app.schulmanager.onSchuelerViewKlasseChanged"/>
             </menulist>
-            <description value="Schüler:" class="et2_label sm_label"/>
+            <et2-description value="Schüler:" class="et2_label sm_label"></et2-description>
             <menulist>
                 <menupopup type="select" id="select_schueler" onchange="app.schulmanager.onSchuelerViewSchuelerChanged"/>
             </menulist>
-        </hbox>
+        </et2-hbox>
         <hrule/>
     </template>
 
