@@ -1,5 +1,9 @@
 /* https://isotope-theme.github.io/Isotope.github.io/colors/ */
 
+/*:root {
+	--sl-input-height-small: 12px;
+}*/
+
 /* debug */
 table, td, th {
 	/*border: 1px solid black;*/
@@ -37,13 +41,13 @@ table, td, th {
 .sm_nm_gew_th
 {
 	width:30px !important;
-	height: 1.0rem !important;
+	/*height: 1.0rem !important;*/
 	vertical-align: middle;
 	text-align:center !important;
 	border: 1px solid #ddd;
     border-radius: 5px;
 	font-size: 85%;
-	height: 0.75rem !important;
+	/*height: 0.75rem !important;*/
 
 	margin:1px 0px 0px 1px!important;
 	padding:0px 0px 0px 0px!important;
@@ -52,24 +56,24 @@ table, td, th {
 .sm_nm_gew_th_input{
 	background-color: #ffffff;
 	width:30px !important;
-	height: 1.0rem !important;
+	/*height: 1.0rem !important;*/
 	vertical-align: middle;
 	text-align:center !important;
 	border: 1px solid #ddd;
     border-radius: 5px;
 	font-size: 85%;
-	height: 0.75rem !important;
+	/*height: 0.75rem !important;*/
 
 	margin:1px 0px 0px 1px!important;
 	padding:0px 0px 0px 0px!important;
+
+	-moz-appearance: textfield;
 }
-
-
 
 .schulmanager_note_input
 {
 	width:30px !important;
-	height: 1.0rem !important;
+	/*height: 1.0rem !important;*/
 
 	vertical-align: middle;
 
@@ -79,6 +83,22 @@ table, td, th {
 
 	margin:1px 0px 0px 1px!important;
 	padding:0px 0px 0px 0px!important;
+
+	-moz-appearance: textfield;
+}
+
+/** Chrome, Edge, Safari, Opera*/
+.sm_nm_gew_th_input::-webkit-outer-spin-button,
+.sm_nm_gew_th_input::-webkit-inner-spin-button,
+.schulmanager_note_input::-webkit-outer-spin-button,
+.schulmanager_note_input::-webkit-inner-spin-button
+{
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.sm_nm_tr_border > .sm_nm_col_edit{
+	border-bottom: 1pt solid #b4b4b4;
 }
 
 #schulmanager-notenmanager-index_nm table th,
@@ -107,7 +127,7 @@ table, td, th {
 #schulmanager-notenmanager-index_nm table tr td:nth-child(1),
 #schulmanager-notenmanager-edit_nm table tr td:nth-child(1)
 {
-	text-align:right;
+	text-align:left;
 }
 
 /* 2021-03-07 */
@@ -130,7 +150,7 @@ table, td, th {
 .sm_col_glnw
 {
 	background-color: #fff47c;
-/*	min-height: 40px;*/
+	/*min-height: 40px;*/
 }
 
 .sm_nm_glnw
@@ -138,6 +158,7 @@ table, td, th {
 	font-weight: bold;
 	background-color: #fff9ba;
 	border-color: #ffdd00;
+	min-height: 19px;
 }
 
 /* klnw */
@@ -150,12 +171,13 @@ table, td, th {
 .sm_col_klnw
 {
 	background-color: #a1e684;
-/*	min-height: 19px;*/
+	/*min-height: 19px;*/
 }
 .sm_nm_klnw
 {
 	background-color: #beeaac;
 	border-color: #7ecc67;
+	min-height: 19px;
 }
 
 /* Schnitte */
@@ -174,6 +196,7 @@ table, td, th {
 {
 	background-color: #6ec6ff;
 	border-color: #808e95;
+	min-height: 19px;
 }
 .nm_avg_manuell
 {
@@ -252,6 +275,13 @@ table, td, th {
     transition: all 0.5s linear;
 }
 
+.sm_pos_relative{
+	position: relative !important;
+}
+
+.validation_error{
+	top: 30px !important;
+}
 
 
 /* Calendar */
@@ -471,6 +501,8 @@ div.gridCont_2_div_col_1.innerContainer{
 	border: 1px solid #ffdd00;
 	padding-left: 5px;
 	padding-right: 5px;
+	height: 25px;
+
 }
 
 .details-grid-klnw{
@@ -490,14 +522,14 @@ div.gridCont_2_div_col_1.innerContainer{
 	padding-left: 5px;
 	padding-right: 5px;
 }
-
+/*
 .button_details_edit{
 	background-size: 12px 12px !important;
 	height: 14px !important;
 	width: 14px !important;
-	padding: 1px !important;
+	padding: 0px !important;
 }
-
+*/
 .button_details_delete{
 	background-size: 12px 12px !important;
 	height: 14px !important;
@@ -505,13 +537,14 @@ div.gridCont_2_div_col_1.innerContainer{
 	padding: 1px !important;
 }
 
-#schulmanager-notenmanager-notendetails_editcontent{
+#schulmanager-notenmanager-notendetails_editcontentmodal_editcontent{
 	position: absolute;
 	border: 2px solid black;
 	background-color: #ffffff;
 	padding: 4px;
 	top: 55px;
 	left: 102px;
+	width: 33%;
 	z-index: 99;
 }
 
@@ -628,4 +661,6 @@ div.gridCont_2_div_col_1.innerContainer{
 .md-table tr:nth-child(even) {
 	background: #F8F8F8;
 }
+
+
 

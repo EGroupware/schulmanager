@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.devtest.rows" template="" lang="" group="0" version="1.9.001">
+		<grid width="100%" id="nm[rows]" class="egwGridView_grid">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th" part="header">
+					<nextmatch-sortheader align="center" label="Rank" id="result_rank"/>
+					<nextmatch-sortheader label="Lastname" id="nachname" class="leftPad5"/>
+					<nextmatch-sortheader label="test" id="nachname" class="leftPad5"/>
+				</row>
+				<row class="row ">
+					<et2-textbox align="center" id="${row}[nr]" no_lang="1" readonly="false" class="place"></et2-textbox>
+					<et2-button id="${row}[nachname]" no_lang="1" font_style="" class="lastname leftPad5" label="{$row}[nachname]"></et2-button>
+					<et2-checkbox id="${row}[test]"></et2-checkbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="schulmanager.devtest" template="" lang="" group="0" version="1.9.001">
+		<et2-vbox>
+			<et2-description label="ddddddd"></et2-description>
+			<et2-description id="devtest"></et2-description>
+		</et2-vbox>
+		<template id="nm" template="schulmanager.devtest.rows"></template>
+	</template>
+</overlay>

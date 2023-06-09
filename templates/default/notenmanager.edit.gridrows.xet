@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<!-- $Id$ -->
+<overlay>
+	<template id="schulmanager.notenmanager.edit.gridrows" template="" lang="" group="0" version="0.0.1">
+		<!--<grid id="sm_noten_table" width="100%">-->
+		<grid id="nm[rows]" width="100%">
+			<columns>
+				<column width="26"></column>
+				<column width="108"></column>
+				<column width="36"></column>
+				<column width="140"></column>
+				<column width="140"></column>
+				<column width="140"></column>
+				<column width="140"></column>
+				<column width="140"></column>
+				<column width="95"></column>
+				<column width="140"></column>
+				<column width="140"></column>
+				<column width="140"></column>
+				<column width="120"></column>
+				<column width="100"></column>
+				<column width="95"></column>
+				<column width="100%"></column>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-header id="nr" label="Nr."></nextmatch-header>
+					<et2-vbox>
+						<nextmatch-header id="name" label="Name" class="sm_label"></nextmatch-header>
+						<et2-description id="vorname" label="Rufname"></et2-description>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="altb" label="alt. B"></nextmatch-header>
+						<et2-checkbox id="alt_b_all" onchange="app.schulmanager.changeGewAllModified" tabindex="900"></et2-checkbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="glnw_1" label="GLNW (1.HJ)" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox class="glnw sm_pos_relative">
+							<et2-textbox type="integer" id="glnw_1_0" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="glnw_1_1" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="glnw_1_2" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="klnw_1" label="kLNW (1. HJ)" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="klnw_1_0" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_1_2" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_1_4" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="klnw_1_1" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_1_3" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_1_5" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="klnw_1_x" label="kLNW (1. HJ) erw." class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="klnw_1_6" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_1_8" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_1_10" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="klnw_1_7" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_1_9" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_1_11" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="avg_1" label="Schnitte (1.HJ)" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox>
+							<et2-vbox>
+								<et2-description label="Ø GLNW"></et2-description>
+								<et2-description id="schnitt_g" class="sm_nm_gew_th"></et2-description>
+							</et2-vbox>
+							<et2-vbox>
+								<et2-description label="Ø kLNW"></et2-description>
+								<et2-description id="schnitt_k" class="sm_nm_gew_th"></et2-description>
+							</et2-vbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="zz" label="Note ZZ" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox>
+							<et2-vbox>
+								<et2-description value="Ø" class="sm_nm_gew_th"></et2-description>
+							</et2-vbox><vbox>
+								<et2-description value="Note" class="sm_nm_gew_th" no_lang="1"></et2-description>
+							</vbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="mv_1" label="MV (1. HJ)" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox>
+							<et2-vbox>
+								<et2-description value="Mit." class="sm_nm_gew_th"></et2-description>
+							</et2-vbox>
+							<et2-vbox>
+								<et2-description value="Ver." class="sm_nm_gew_th"></et2-description>
+							</et2-vbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="glnw_2" label="GLNW (2.HJ)" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox class="glnw sm_pos_relative">
+							<et2-textbox type="integer" id="glnw_2_0" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="glnw_2_1" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="glnw_2_2" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="klnw_2" label="kLNW (2. HJ)"  class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="klnw_2_0" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_2_2" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_2_4" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="klnw_2_1" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_2_3" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_2_5" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="klnw_2_x" label="kLNW (2. HJ) erw."  class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="klnw_2_6" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_2_8" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_2_10" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="klnw_2_7" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_2_9" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+							<et2-textbox type="integer" id="klnw_2_11" readonly="false" min="1" max="3" validator="/^$|^[1-3]$/" onclick="return false;" onchange="app.schulmanager.changeGew" class="sm_nm_gew_th_input" align="center" statustext="Gewichtung"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="avg_2" label="Schnitte" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox>
+							<et2-vbox>
+								<et2-description value="Ø GLNW"></et2-description>
+								<et2-description id="schnitt_g_2" class="sm_nm_gew_th"></et2-description>
+							</et2-vbox>
+							<et2-vbox>
+								<et2-description value="Ø kLNW"></et2-description>
+								<et2-description id="schnitt_k_2" class="sm_nm_gew_th"></et2-description>
+							</et2-vbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="jz" label="Note JZ" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox>
+							<et2-vbox>
+								<et2-description value="Ø" class="sm_nm_gew_th"></et2-description>
+							</et2-vbox><vbox>
+								<et2-description value="Note" class="sm_nm_gew_th" no_lang="1"></et2-description>
+							</vbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<nextmatch-header id="mv_2" label="MV" class="sm_nm_th_label"></nextmatch-header>
+						<et2-hbox>
+							<et2-vbox>
+								<et2-description value="Mit." class="sm_nm_gew_th"></et2-description>
+							</et2-vbox>
+							<et2-vbox>
+								<et2-description value="Ver." class="sm_nm_gew_th"></et2-description>
+							</et2-vbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox>
+						<et2-description value=""></et2-description>
+					</et2-vbox>
+				</row>
+				<row class="$row_cont[nm_id] $row_cont[class] sm_nm_tr_border">
+					<et2-description id="${row}[nm_id]" class="sm_nm_col_edit" no_lang="1"></et2-description>
+					<et2-vbox class="sm_col_name sm_nm_col_edit">
+						<et2-description id="${row}[nm_st][st_asv_familienname]" class="$row_cont[nm_st][nm_st_class] et2_label sm_label" no_lang="1"></et2-description>
+						<et2-description id="${row}[nm_st][st_asv_rufname]" class="$row_cont[nm_st][nm_st_class] et2_label"  no_lang="1"></et2-description>
+					</et2-vbox>
+					<et2-vbox class="sm_col_info sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-checkbox id="${row}[noten][alt_b][-1][checked]" readonly="false" onchange="app.schulmanager.changeNote" tabindex="999"></et2-checkbox>
+						<!--<link href="#"><image  label="$row_cont[nm_st][hint][text]" src="${row}[nm_st][hint][img]"/></link>-->
+					</et2-vbox>
+					<!-- 1. HJ -->
+					<et2-vbox class="sm_col_glnw sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][glnw_hj_1][0][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1000" status="GLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][glnw_hj_1][1][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1001" status="GLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][glnw_hj_1][2][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1002" status="GLNW"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_klnw sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox align="left" class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][0][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1012" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][2][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1014" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][4][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1016" status="KLNW"></et2-textbox>
+						</et2-hbox>
+						<hbox align="left" class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][1][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1013" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][3][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1015" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][5][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1017" status="KLNW"></et2-textbox>
+						</hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_klnw sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox align="left" class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][6][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1018" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][8][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1020" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][10][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1022" status="KLNW"></et2-textbox>
+						</et2-hbox>
+						<et2-hbox align="left" class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][7][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1019" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][9][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1021" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_1][11][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1023" status="KLNW"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_avg sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox class="sm_pos_relative">
+							<et2-number type="float" id="${row}[noten][glnw_hj_1][-1][note]" readonly="false" min="1" max="6" precision="2" validator="/^$|^[1-5](.[0-9][0-9]?)?$|^6(.00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][glnw_hj_1][avgclass] schulmanager_note_input sm_nm_glnw" align="center" tabindex="1028"></et2-number>
+							<et2-number type="float" id="${row}[noten][klnw_hj_1][-1][note]" readonly="false" min="1" max="6" precision="2" validator="/^$|^[1-5](.[0-9][0-9]?)?$|^6(.00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][klnw_hj_1][avgclass] schulmanager_note_input sm_nm_klnw" align="center" tabindex="1029"></et2-number>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_note sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox class="sm_pos_relative">
+							<et2-number type="float" id="${row}[noten][schnitt_hj_1][-1][note]" readonly="false" min="1" max="6" precision="2" validator="/^$|^[1-5](.[0-9][0-9]?)?$|^6(.00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][schnitt_hj_1][avgclass] schulmanager_note_input sm_nm_znote_schnitt" align="center" tabindex="1030"></et2-number>
+							<et2-textbox type="integer" id="${row}[noten][note_hj_1][-1][note]" readonly="false" min="1" max="6" precision="0" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][note_hj_1][avgclass] schulmanager_note_input sm_nm_znote sm_nm_znote_note" align="center" tabindex="1031"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_mv sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][m_hj_1][-1][note]" readonly="false" min="1" max="5" precision="0" validator="/^$|^[1-5]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1032"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][v_hj_1][-1][note]" readonly="false" min="1" max="5" precision="0" validator="/^$|^[1-5]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1033"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<!-- 2. HJ -->
+					<et2-vbox class="sm_col_glnw sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][glnw_hj_2][0][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1040" status="GLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][glnw_hj_2][1][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1041" status="GLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][glnw_hj_2][2][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1042" status="GLNW"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_klnw sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox align="left" class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][0][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1052" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][2][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1054" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][4][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1056" status="KLNW"></et2-textbox>
+						</et2-hbox>
+						<et2-hbox align="left" class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][1][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1053" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][3][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1055" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][5][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1057" status="KLNW"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_klnw sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox align="left" class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][6][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1058" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][8][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1060" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][10][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1062" status="KLNW"></et2-textbox>
+						</et2-hbox>
+						<et2-hbox align="left" class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][7][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1059" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][9][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1061" status="KLNW"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][klnw_hj_2][11][note]" readonly="false" min="1" max="6" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1063" status="KLNW"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_avg sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox class="sm_pos_relative">
+							<et2-number type="float" id="${row}[noten][glnw_hj_2][-1][note]" readonly="false" min="1" max="6" precision="2" validator="/^$|^[1-5](.[0-9][0-9]?)?$|^6(.00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][glnw_hj_2][avgclass] schulmanager_note_input sm_nm_glnw" align="center" tabindex="1062"></et2-number>
+							<et2-number type="float" id="${row}[noten][klnw_hj_2][-1][note]" readonly="false" min="1" max="6" precision="2" validator="/^$|^[1-5](.[0-9][0-9]?)?$|^6(.00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][klnw_hj_2][avgclass] schulmanager_note_input sm_nm_klnw" align="center" tabindex="1063"></et2-number>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_note sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox class="sm_pos_relative">
+							<et2-number type="float" id="${row}[noten][schnitt_hj_2][-1][note]" readonly="false" min="1" max="6" precision="2" validator="/^$|^[1-5](.[0-9][0-9]?)?$|^6(.00?)?$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][schnitt_hj_2][avgclass] schulmanager_note_input sm_nm_znote_schnitt" align="center" tabindex="1064"></et2-number>
+							<et2-textbox type="integer" id="${row}[noten][note_hj_2][-1][note]" readonly="false" min="1" max="6" precision="0" validator="/^$|^[1-6]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="$row_cont[noten][note_hj_2][avgclass] schulmanager_note_input sm_nm_znote sm_nm_znote_note" align="center" tabindex="1065"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox class="sm_col_mv sm_nm_col_edit" onclick="ev.stopImmediatePropagation(); return false;">
+						<et2-hbox class="sm_pos_relative">
+							<et2-textbox type="integer" id="${row}[noten][m_hj_2][-1][note]" readonly="false" min="1" max="5" precision="0" validator="/^$|^[1-5]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1066"></et2-textbox>
+							<et2-textbox type="integer" id="${row}[noten][v_hj_2][-1][note]" readonly="false" min="1" max="5" precision="0" validator="/^$|^[1-5]$/" onclick="return false;" onchange="app.schulmanager.changeNote" class="schulmanager_note_input" align="center" tabindex="1067"></et2-textbox>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-vbox></et2-vbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

@@ -398,6 +398,7 @@ class schulmanager_schueler_so {
 	/**
 	 * recalculates avg and formats them
 	 * @param type $schueler
+     * @deprected
 	 */
 	function beforeSendToClient(&$schueler){
 		if(isset($schueler['noten'])){
@@ -405,11 +406,12 @@ class schulmanager_schueler_so {
 			// alternative Berechnung
 			if($schueler['noten']['alt_b'][-1]['note'] === '1'){
 				$schueler['noten']['alt_b'][-1]['checked'] = true;
-				$schueler['noten']['alt_b'][-1]['img'] = 'done';
+				$schueler['noten']['alt_b'][-1]['img'] = 'check.svg';
 			}
 			else{
 				$schueler['noten']['alt_b'][-1]['checked'] = false;
 				$schueler['noten']['alt_b'][-1]['img'] = '';
+                $schueler['noten']['alt_b'][-1]['label'] = '';
 			}
 		}
 	}

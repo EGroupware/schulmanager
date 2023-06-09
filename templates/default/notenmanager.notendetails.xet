@@ -1,49 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id$ -->
 <overlay>
 	<template id="schulmanager.notenmanager.notendetails.edit">
 		<box id="editcontentmodal" class="modalbg">
 			<vbox id="editcontent">
 				<description value="Bearbeiten:" class="et2_label sm_label"/>
-				<grid class="details-grid-edit">
+				<grid class="details-grid-edit" width="100%">
 					<columns>
-						<column/>
-						<column/>
+						<column width="40%"/>
+						<column width="60%"/>
 					</columns>
 					<rows>
 						<row>
-							<description value="Note:" class="sm_label"/>
-							<textbox id="edit_note" validator="/^$|^[1-5](,[0-9][0-9]?)?$|^6(,00?)?$/" needed="true"/>
+							<et2-description value="Note:" class="sm_label"></et2-description>
+							<et2-textbox id="edit_note" validator="/^$|^[1-5](,[0-9][0-9]?)?$|^6(,00?)?$/" needed="true"></et2-textbox>
 						</row>
 						<row>
-							<description label="Art der Leistungserhebung: " for="inputinfo_type" class="sm_label"/>
-							<hbox>
+							<et2-description label="Art der Leistungserhebung: " class="sm_label"></et2-description>
+							<et2-hbox>
 								<menulist>
 									<menupopup type="select" id="notgebart_glnw"/>
 								</menulist>
 								<menulist>
 									<menupopup type="select" id="notgebart_klnw"/>
 								</menulist>
-							</hbox>
+							</et2-hbox>
 						</row>
 						<row>
-							<description label="Datum der Leistungserhebung: " for="inputinfo_date" class="sm_label"/>
-							<date statustext="Datum der Leistungserhebung" id="edit_date" needed="true"/>
+							<et2-description label="Datum der Leistungserhebung: " for="inputinfo_date" class="sm_label"></et2-description>
+							<et2-date statustext="Datum der Leistungserhebung" id="edit_date" needed="true"></et2-date>
 						</row>
-
 						<row>
-							<description label="Beschreibung: " for="inputinfo_desc" class="sm_label"/>
-							<textbox id="edit_desc" size="140" statustext="Beschreibung der Leistungserhebung" maxlength="150" needed="false"/>
+							<et2-description label="Beschreibung: " for="inputinfo_desc" class="sm_label"></et2-description>
+							<et2-textbox id="edit_desc" size="140" statustext="Beschreibung der Leistungserhebung" maxlength="150" needed="false"></et2-textbox>
 						</row>
 					</rows>
 				</grid>
 				<hbox>
-					<hidden id="edit_type_flag"/>
-					<hidden id="edit_note_key"/>
-					<button label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="app.schulmanager.onDetailsNotenCommit" image="check" background_image="true"/>
-					<button label="Cancel" tabindex="6" id="button[cancel]" class="button_cancel" onclick="app.schulmanager.onDetailsNotenCancel" image="cancel" background_image="true" novalidate="true"/>
-					<button label="Löschen" tabindex="6" id="button[delete]" class="button_delete" onclick="app.schulmanager.onDetailsNotenDelete" image="delete" background_image="true"/>
+					<hidden id="edit_type_flag"></hidden>
+					<hidden id="edit_note_key"></hidden>
+					<button label="Ok" tabindex="6" id="button[ok]" class="button_ok" onclick="app.schulmanager.onDetailsNotenCommit" image="check" background_image="true"></button>
+					<button label="Cancel" tabindex="6" id="button[cancel]" class="button_cancel" onclick="app.schulmanager.onDetailsNotenCancel" image="cancel" background_image="true" novalidate="true"></button>
+					<button label="Löschen" tabindex="6" id="button[delete]" class="button_delete" onclick="app.schulmanager.onDetailsNotenDelete" image="delete" background_image="true"></button>
 				</hbox>
 			</vbox>
 		</box>
@@ -90,6 +89,7 @@
 		</hbox>
 		<hrule/>
 	</template>
+
 	<template id="schulmanager.notenmanager.notendetails.noten1">
 		<description value="1. Halbjahr - Große Leistungsnachweise" class="sm_label"/>
 		<grid class="details-grid-glnw">
@@ -116,7 +116,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[glnw_hj_1][0]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[glnw_hj_1][0]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[glnw_hj_1][0][note]" class="sm_label" align="center"/>
 					<description id="glnw_1_0" align="center" class="sm_nm_passiv"/>
@@ -128,7 +128,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[glnw_hj_1][1]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[glnw_hj_1][1]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[glnw_hj_1][1][note]" class="sm_label" align="center"/>
 					<description id="glnw_1_1" align="center" class="sm_nm_passiv"/>
@@ -140,7 +140,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[glnw_hj_1][2]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[glnw_hj_1][2]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[glnw_hj_1][2][note]" class="sm_label" align="center"/>
 					<description id="glnw_1_2" align="center" class="sm_nm_passiv"/>
@@ -179,7 +179,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][0]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][0]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][0][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_0" align="center" class="sm_nm_passiv"/>
@@ -191,7 +191,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][1]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][1]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][1][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_1" align="center" class="sm_nm_passiv"/>
@@ -203,7 +203,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][2]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][2]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][2][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_2" align="center" class="sm_nm_passiv"/>
@@ -215,7 +215,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][3]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][3]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][3][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_3" align="center" class="sm_nm_passiv"/>
@@ -227,7 +227,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][4]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][4]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][4][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_4" align="center" class="sm_nm_passiv"/>
@@ -239,7 +239,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][5]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][5]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][5][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_5" align="center" class="sm_nm_passiv"/>
@@ -251,7 +251,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][6]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][6]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][6][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_6" align="center" class="sm_nm_passiv"/>
@@ -263,7 +263,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][7]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][7]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][7][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_7" align="center" class="sm_nm_passiv"/>
@@ -275,7 +275,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][8]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][8]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][8][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_8" align="center" class="sm_nm_passiv"/>
@@ -287,7 +287,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][9]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][9]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][9][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_9" align="center" class="sm_nm_passiv"/>
@@ -299,7 +299,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][10]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][10]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][10][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_10" align="center" class="sm_nm_passiv"/>
@@ -311,7 +311,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_1][11]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_1][11]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_1][11][note]" class="sm_label" align="center"/>
 					<description id="klnw_1_11" align="center" class="sm_nm_passiv"/>
@@ -352,7 +352,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[glnw_hj_2][0]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[glnw_hj_2][0]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[glnw_hj_2][0][note]" class="sm_label" align="center"/>
 					<description id="glnw_2_0" align="center" class="sm_nm_passiv"/>
@@ -364,7 +364,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[glnw_hj_2][1]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[glnw_hj_2][1]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[glnw_hj_2][1][note]" class="sm_label" align="center"/>
 					<description id="glnw_2_1" align="center" class="sm_nm_passiv"/>
@@ -376,7 +376,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[glnw_hj_2][2]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[glnw_hj_2][2]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[glnw_hj_2][2][note]" class="sm_label" align="center"/>
 					<description id="glnw_2_2" align="center" class="sm_nm_passiv"/>
@@ -415,7 +415,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][0]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][0]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][0][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_0" align="center" class="sm_nm_passiv"/>
@@ -427,7 +427,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][1]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][1]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][1][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_1" align="center" class="sm_nm_passiv"/>
@@ -439,7 +439,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][2]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][2]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][2][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_2" align="center" class="sm_nm_passiv"/>
@@ -451,7 +451,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][3]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][3]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][3][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_3" align="center" class="sm_nm_passiv"/>
@@ -463,7 +463,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][4]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][4]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][4][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_4" align="center" class="sm_nm_passiv"/>
@@ -475,7 +475,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][5]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][5]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][5][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_5" align="center" class="sm_nm_passiv"/>
@@ -487,7 +487,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][6]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][6]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][6][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_6" align="center" class="sm_nm_passiv"/>
@@ -499,7 +499,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][7]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][7]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][7][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_7" align="center" class="sm_nm_passiv"/>
@@ -511,7 +511,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][8]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][8]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][8][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_8" align="center" class="sm_nm_passiv"/>
@@ -523,7 +523,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][9]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][9]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][9][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_9" align="center" class="sm_nm_passiv"/>
@@ -535,7 +535,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][10]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][10]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][10][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_10" align="center" class="sm_nm_passiv"/>
@@ -547,7 +547,7 @@
 				</row>
 				<row class="row">
 					<hbox>
-						<button statustext="Edit" label="" id="edit[klnw_hj_2][11]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled"/>
+						<button statustext="Edit" label="" id="edit[klnw_hj_2][11]" image="edit" background_image="true" class="button_details_edit" onclick="app.schulmanager.onDetailsNotenEdit" disabled="@edit_credits_disabled" size="x-small"/>
 					</hbox>
 					<description id="details_noten[klnw_hj_2][11][note]" class="sm_label" align="center"/>
 					<description id="klnw_2_11" align="center" class="sm_nm_passiv"/>
