@@ -1459,6 +1459,17 @@ class schulmanager_ui
 
         $preserv = $sel_options;
 
+        // fake call to get_rows()
+        if (!$content['no_list'])
+        {
+            if(!is_array($content['nm']['rows'])){
+                $content['not_nm']['rows'] = array();
+            }
+            $content['not_nm']['total'] = 0; // nm loads twice, here not usefull
+            $this->not_get_rows($content['not_nm'], $content['not_nm']['rows'], $readonlys);
+            array_unshift($content['not_nm']['rows'], false);	// 1 header rows
+        }
+
         return $etpl->exec('schulmanager.schulmanager_ui.schuelerview',$content,$sel_options,$readonlys,$preserv);
     }
 
@@ -1714,7 +1725,7 @@ class schulmanager_ui
         $this->schueler_bo->getNotenAbstract($schueler, $rows, $query_in['col_filter']['schueler_id']);
         $noten_nm_rows = array();
         foreach($rows as $key => $values) {
-            $noten_nm_rows[$key] = array(
+            $noten_nm_rows[] = array(
                 0 => $values['fachname'],
                 1 => $values['noten']['alt_b'][-1]['checked'],
                 2 => $values['noten']['glnw_hj_1']['concat'],

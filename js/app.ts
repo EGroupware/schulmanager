@@ -53,7 +53,7 @@ export class SchulmanagerApp extends EgwApp
 			this.header_change();
 		}
 		if (name == 'schulmanager.schuelerview') {
-			this.onSchuelerViewKlasseChanged();
+			this.onSchuelerViewKlasseChanged(null, null);
 		}
 	}
 
@@ -853,29 +853,17 @@ export class SchulmanagerApp extends EgwApp
 	onSchuelerViewKlasseChanged(_action, _senders)
 	{
 		let instance = this;
-		//let et2 = this.et2;
+		let et2 = this.et2;
 		let func = 'schulmanager.schulmanager_ui.ajax_schuelerViewKlasseChanged';
 		let klasse_id = 0;
 
-		if(_action !== null){
+		if(_senders !== null){
 			klasse_id = _senders.value;
 		}
 
 		this.egw.json(func, [klasse_id], function (result) {
-			/*
-			var sla_nm = <et2_nextmatch>et2.getWidgetById('sla_nm');
-			var sko_nm = <et2_nextmatch>et2.getWidgetById('sko_nm');
-			sla_nm.applyFilters();
-			sko_nm.applyFilters();
-			*/
-			let not_nm = <et2_nextmatch>et2.getWidgetById('not_nm');
-			not_nm.applyFilters();
-
-			// ############### new version
-			//instance.tableUpdate("schulmanager-schuelerview_grid-sla", result['sla_nm_rows']);
-			//instance.tableUpdate("schulmanager-schuelerview_grid-sko", result['sko_nm_rows']);
-			//instance.tableUpdate("schulmanager-schuelerview_grid-san", result['san_nm_rows']);
-			// ##############################
+	//		let not_nm = <et2_nextmatch>et2.getWidgetById('not_nm');
+	//		not_nm.applyFilters();
 
 			// update schueler select
 			let widget = <HTMLSelectElement> document.getElementById('schulmanager-schuelerview_select_schueler');
@@ -894,19 +882,6 @@ export class SchulmanagerApp extends EgwApp
 
 			instance.schuelerViewUpdate(instance, result);
 
-			/*for (var key in result){
-				if(key == 'details_noten'){
-				}
-				else {
-
-					var widgetItem = document.getElementById('schulmanager-schuelerview_' + key);
-					if (widgetItem) {
-						widgetItem.innerText = result[key];
-					}
-				}
-			}*/
-
-			//egw.loading_prompt('schulmanager',false);
 		}).sendRequest(true);
 	}
 
@@ -930,8 +905,8 @@ export class SchulmanagerApp extends EgwApp
 			sla_nm.applyFilters('');
 			sko_nm.applyFilters('');
 			*/
-			let not_nm = <et2_nextmatch>et2.getWidgetById('not_nm');
-			not_nm.applyFilters();
+	//		let not_nm = <et2_nextmatch>et2.getWidgetById('not_nm');
+	//		not_nm.applyFilters();
 
 			instance.schuelerViewUpdate(instance, result);
 			//egw.loading_prompt('schulmanager',false);
@@ -948,8 +923,8 @@ export class SchulmanagerApp extends EgwApp
 		instance.tableUpdate("schulmanager-schuelerview_grid-sla", result['sla_nm_rows']);
 		instance.tableUpdate("schulmanager-schuelerview_grid-sko", result['sko_nm_rows']);
 		instance.tableUpdate("schulmanager-schuelerview_grid-san", result['san_nm_rows']);
-		//instance.tableUpdate("schulmanager-schuelerview_grid-noten", result['noten_nm_rows']);
-		// ##############################
+		//instance.tableUpdate("schulmanager-schuelerview_not_nm[rows]", result['noten_nm_rows']);
+		// ################
 
 		for (let key in result){
 			if(key != 'sla_nm_rows' && key != 'sko_nm_rows' && key != 'san_nm_rows'){
