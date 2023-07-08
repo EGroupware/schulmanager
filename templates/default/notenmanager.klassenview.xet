@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.dtd">
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2//EN" "http://www.egroupware.org/etemplate2.0.dtd">
 <!-- $Id$ -->
 <overlay>
+	<template id="schulmanager.notenmanager.klassenview.export" template="" lang="" group="0" version="0.0.001">
+		<box id="showexportmodal" class="modalbg" >
+			<et2-vbox id="showexportcontent">
+				<description value="Export" class="sm_label"/>
+				<grid class="details-grid-glnw">
+					<columns>
+						<column/>
+						<column/>
+					</columns>
+					<rows>
+						<row class="row">
+							<button  statustext="Notenbericht" label="Notenbericht" id="button[pdfexportnbericht]" onclick="app.schulmanager.exportpdf_nbericht" image="mime128_application_pdf" background_image="true"/>
+							<vbox>
+								<description value="Notenbericht" class="sm_label"/>
+								<checkbox id="add_return_block" label="Rücklaufabschnitt; "/>
+								<hbox>
+									<checkbox id="add_signed_block" label="gezeichnet; "/>
+									<description value="Unterzeichner:"/>
+									<select id="klassleiter"/>
+								</hbox>
+							</vbox>
+						</row>
+						<row class="row">
+							<button  statustext="Notenbogen - Zwischenzeugnis" label="Notenbogen - Zwischenzeugnis" id="button[pdfexportteacherzz]" onclick="app.schulmanager.exportpdf_kv" image="mime128_application_pdf" background_image="true"/>
+							<hbox>
+								<description value="Notenbogen für Lehrer" class="sm_label"/><description value=", inkl. Mitarbeit, Verhalten und Blöcke für das Zwischenzeugniss."/>
+							</hbox>
+						</row>
+						<row class="row">
+							<button  statustext="Notenbogen - Jahreszeugnis" label="Notenbogen - Jahreszeugnis" id="button[pdfexportteacherjz]" onclick="app.schulmanager.exportpdf_kv" image="mime128_application_pdf" background_image="true"/>
+							<hbox>
+								<description value="Notenbogen für Lehrer" class="sm_label"/><description value=", inkl. Mitarbeit, Verhalten und Blöcke für das Jahreszeugniss."/>
+							</hbox>
+						</row>
+						<!--<row class="row">
+                            <button  statustext="Notenbild - Schüleransicht" label="Notenbild - Schüleransicht" id="button[pdfexportstud]" onclick="app.schulmanager.exportpdf_kv" image="mime128_application_pdf" background_image="true"/>
+                            <description value="Information über das Notenbild für Schüler, ohne Zeugnisnoten, ohne Mitarbeit, Verhalten und ohne Blöcke für Zwischen- und Jahreszeugnisse."/>
+                        </row>-->
+					</rows>
+				</grid><!--<button  statustext="Export" label="PDF-Export Notenbögen" id="button[indextest]" onclick="app.schulmanager.exportpdf_kv" image="mime128_application_pdf" background_image="true"/>--><button label="Cancel" id="button[cancel]" class="button_cancel" onclick="jQuery('#schulmanager-notenmanager-klassenview_showexportmodal').css('display','none');return false;" image="cancel" background_image="1"/>
+			</et2-vbox>
+		</box>
+	</template>
+
 	<template id="schulmanager.notenmanager.klassenview.rows" template="" lang="" group="0" version="0.0.1">
 		<grid id="sm_noten_table" width="100%">
 			<columns>
@@ -165,49 +209,7 @@
 		</grid>
 	</template>
 
-	<template id="schulmanager.notenmanager.klassenview.export" template="" lang="" group="0" version="0.0.001">
-		<vbox>
-			<description value="Export" class="sm_label"/>
-			<grid class="details-grid-glnw">
-				<columns>
-					<column/>
-					<column/>
-				</columns>
-				<rows>
-					<row class="row">
-						<button  statustext="Notenbericht" label="Notenbericht" id="button[pdfexportnbericht]" onclick="app.schulmanager.exportpdf_nbericht" image="mime128_application_pdf" background_image="true"/>
-						<vbox>
-							<description value="Notenbericht" class="sm_label"/>
-							<checkbox id="add_return_block" label="Rücklaufabschnitt; "/>
-							<hbox>
-								<checkbox id="add_signed_block" label="gezeichnet; "/>
-								<description value="Unterzeichner:"/>
-								<select id="klassleiter"/>
-							</hbox>
-						</vbox>
-					</row>
-					<row class="row">
-						<button  statustext="Notenbogen - Zwischenzeugnis" label="Notenbogen - Zwischenzeugnis" id="button[pdfexportteacherzz]" onclick="app.schulmanager.exportpdf_kv" image="mime128_application_pdf" background_image="true"/>
-						<hbox>
-							<description value="Notenbogen für Lehrer" class="sm_label"/><description value=", inkl. Mitarbeit, Verhalten und Blöcke für das Zwischenzeugniss."/>
-						</hbox>
-					</row>
-					<row class="row">
-						<button  statustext="Notenbogen - Jahreszeugnis" label="Notenbogen - Jahreszeugnis" id="button[pdfexportteacherjz]" onclick="app.schulmanager.exportpdf_kv" image="mime128_application_pdf" background_image="true"/>
-						<hbox>
-							<description value="Notenbogen für Lehrer" class="sm_label"/><description value=", inkl. Mitarbeit, Verhalten und Blöcke für das Jahreszeugniss."/>
-						</hbox>
-					</row>
-					<!--<row class="row">
-						<button  statustext="Notenbild - Schüleransicht" label="Notenbild - Schüleransicht" id="button[pdfexportstud]" onclick="app.schulmanager.exportpdf_kv" image="mime128_application_pdf" background_image="true"/>
-						<description value="Information über das Notenbild für Schüler, ohne Zeugnisnoten, ohne Mitarbeit, Verhalten und ohne Blöcke für Zwischen- und Jahreszeugnisse."/>
-					</row>-->
-				</rows>
-			</grid>
-		</vbox>
-		<!--<button  statustext="Export" label="PDF-Export Notenbögen" id="button[indextest]" onclick="app.schulmanager.exportpdf_kv" image="mime128_application_pdf" background_image="true"/>-->
-		<button label="Cancel" id="button[cancel]" class="button_cancel" onclick="jQuery('#schulmanager-notenmanager-klassenview_showexportmodal').css('display','none');return false;" image="cancel" background_image="1"/>
-	</template>
+
 
 
 	<template id="schulmanager.notenmanager.klassenview.header" template="" lang="" group="0" version="0.0.001">
@@ -217,12 +219,7 @@
 		<button  statustext="Export Notenbögen" label="PDF-Export Notenbögen ..." id="button[indextest]" onclick="app.schulmanager.exportpdf_nbericht_prepare" image="mime128_application_pdf" background_image="true"/>
 	</template>
 	<template id="schulmanager.notenmanager.klassenview" template="" lang="" group="0" version="0.0.001">
-		<box id="showexportmodal" class="modalbg" >
-			<vbox id="showexportcontent">
-				<template id="schulmanager.notenmanager.klassenview.export"/>
-			</vbox>
-		</box>
-
+		<template id="schulmanager.notenmanager.klassenview.export"/>
 		<nextmatch id="nm" no_lang="1" template="schulmanager.notenmanager.klassenview.rows" header_left="schulmanager.notenmanager.klassenview.header" header_right="schulmanager.notenmanager.klassenview.header_right"/>
 	</template>
 </overlay>
