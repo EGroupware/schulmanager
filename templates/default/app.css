@@ -108,7 +108,8 @@ table, td, th {
 	align: center;
 }
 
-#schulmanager-notenmanager-klassenview_showexportcontent{
+/*#schulmanager-notenmanager-klassenview_showexportcontent{*/
+#schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent{
 	position: absolute;
 	border: 2px solid black;
 	background-color: #ffffff;
