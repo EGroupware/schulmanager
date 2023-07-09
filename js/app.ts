@@ -135,18 +135,17 @@ export class SchulmanagerApp extends EgwApp
 		let func = 'schulmanager.schulmanager_ui.ajax_nbericht_prepare';
 
 		this.egw.json(func, [], function (result) {
-			let widget = <HTMLSelectElement> document.getElementById('schulmanager-notenmanager-klassenview_klassleiter');
+			let widget = <HTMLSelectElement> document.getElementById('schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent_klassleiter');
 
 			if(widget){
-				let length = widget.options.length;
-				for (let i = length-1; i >= 0; i--) {
-					widget.options[i] = null;
+				while (widget.firstChild) {
+					widget.removeChild(widget.firstChild);
 				}
 				for (let key in result['klassleiter']){
-					let opt = document.createElement("option");
-					opt.value = key;
-					opt.text = result['klassleiter'][key];
-					widget.options.add(opt);
+					let item = new SlMenuItem();
+					item.value = key;
+					item.innerText = result['klassleiter'][key];
+					widget.appendChild(item);
 				}
 			}
 		}).sendRequest(true);
@@ -162,9 +161,9 @@ export class SchulmanagerApp extends EgwApp
 		let modal = document.getElementById("schulmanager-notenmanager-klassenview_showexportmodal");
 		modal.style.display = "none";
 		this.egw.loading_prompt('schulmanager',true, this.egw.lang('please wait...'));
-		let showReturn = document.getElementById('schulmanager-notenmanager-klassenview_add_return_block').checked;
-		let showSigned = document.getElementById('schulmanager-notenmanager-klassenview_add_signed_block').checked;
-		let signerWidget = <HTMLSelectElement> document.getElementById('schulmanager-notenmanager-klassenview_klassleiter');
+		let showReturn = document.getElementById('schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent_add_return_block').checked;
+		let showSigned = document.getElementById('schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent_add_signed_block').checked;
+		let signerWidget = <HTMLSelectElement> document.getElementById('schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent_klassleiter');
 		let signerid = signerWidget.value;
 		let $a = jQuery(document.createElement('a')).appendTo('body').hide();
 		let url = window.egw.webserverUrl+'/index.php?menuaction=schulmanager.schulmanager_download_ui.exportpdf_nbericht&showReturnInfo='+showReturn+'&signed='+showSigned+'&signerid='+signerid;

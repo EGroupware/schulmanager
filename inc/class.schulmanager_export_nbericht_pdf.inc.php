@@ -196,8 +196,6 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
         $this->Ln();
 
         $name = iconv('UTF-8', 'windows-1252//TRANSLIT', $row['nm_st']['st_asv_vornamen']) . ' ' . iconv('UTF-8', 'windows-1252//TRANSLIT', $row['nm_st']['st_asv_familienname']);
-        //$name = $row['nm_st']['st_asv_vornamen'] . ' ' . $row['nm_st']['st_asv_familienname'];
-        $name = $this->normalize($name);
         $this->SetFont('Arial', 'B', 10);
         if ($row['nm_st']['geschlecht'] == 'M') {
             $title = iconv('UTF-8', 'windows-1252', 'Information über das Notenbild bis zum '.$this->notenbild_stichtag.' für den Schüler');
@@ -284,12 +282,12 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
             $this->writeGrades($x + 61, $y + 7, $fach['noten_out_klnw']);
             // Ø Gl KL
             $this->SetXY($x + 130, $y);
-            $this->Cell(12, 4, $fach['noten']['glnw_hj_2'][-1]['note'], 'LB', 'L', 'C');
+            $this->Cell(12, 4, str_replace('.', ',', $fach['noten']['glnw_hj_2'][-1]['note']), 'LB', 'L', 'C');
             $this->SetXY($x + 130, $y + 4);
-            $this->Cell(12, 4, $fach['noten']['klnw_hj_2'][-1]['note'], 'L', 'L', 'C');
+            $this->Cell(12, 4, str_replace('.', ',', $fach['noten']['klnw_hj_2'][-1]['note']), 'L', 'L', 'C');
             // Gesamt
             $this->SetXY($x + 142, $y);
-            $this->Cell(31, 8, $fach['noten']['schnitt_hj_2'][-1]['note'], 'L', 'L', 'C');
+            $this->Cell(31, 8, str_replace('.', ',', $fach['noten']['schnitt_hj_2'][-1]['note']), 'L', 'L', 'C');
             $this->SetXY($x, $y + 8);
             //$this->SetXY($x + 50,$y);
             //$this->Ln();
