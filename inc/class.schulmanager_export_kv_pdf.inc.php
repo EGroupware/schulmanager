@@ -127,8 +127,9 @@ class schulmanager_export_kv_pdf extends schulmanager_export_pdf //FPDF
 		$this->Ln();
 		$this->SetTextColor(0);
 		$this->SetFont('Arial','B',14);
-		$name = iconv('UTF-8', 'windows-1252', $row['nm_st']['st_asv_familienname']).' '.iconv('UTF-8', 'windows-1252', $row['nm_st']['st_asv_rufname']);
-		$this->Cell(120,8,$this->title.' '.$name,0,0,'L');
+		$name = iconv('UTF-8', 'windows-1252//TRANSLIT', $row['nm_st']['st_asv_familienname']).' '.iconv('UTF-8', 'windows-1252//TRANSLIT', $row['nm_st']['st_asv_rufname']);
+
+        $this->Cell(120,8, $this->title.' '.$name,0,0,'L');
 		// Title
 		$this->Cell(30,8,$this->typeTitle,0,0,'C');
 		$date = new DateTime();

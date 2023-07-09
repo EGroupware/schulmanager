@@ -195,7 +195,9 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
         $this->Ln();
         $this->Ln();
 
-        $name = iconv('UTF-8', 'windows-1252', $row['nm_st']['st_asv_vornamen']) . ' ' . iconv('UTF-8', 'windows-1252', $row['nm_st']['st_asv_familienname']);
+        $name = iconv('UTF-8', 'windows-1252//TRANSLIT', $row['nm_st']['st_asv_vornamen']) . ' ' . iconv('UTF-8', 'windows-1252//TRANSLIT', $row['nm_st']['st_asv_familienname']);
+        //$name = $row['nm_st']['st_asv_vornamen'] . ' ' . $row['nm_st']['st_asv_familienname'];
+        $name = $this->normalize($name);
         $this->SetFont('Arial', 'B', 10);
         if ($row['nm_st']['geschlecht'] == 'M') {
             $title = iconv('UTF-8', 'windows-1252', 'Information über das Notenbild bis zum '.$this->notenbild_stichtag.' für den Schüler');
