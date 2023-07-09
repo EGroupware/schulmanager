@@ -161,13 +161,13 @@ class schulmanager_export_kv_pdf extends schulmanager_export_pdf //FPDF
 			$klnw_hj_1 = $fach['noten']['klnw_hj_1']['concat'];
             $klnw_hj_1 = is_null($klnw_hj_1) ? null : $this->trimString($klnw_hj_1, 7);
 
-			$glnw_hj_1_avg = $fach['noten']['glnw_hj_1']['-1']['note'];
+			$glnw_hj_1_avg = str_replace('.', ',', $fach['noten']['glnw_hj_1']['-1']['note']);
 			$glnw_hj_1_avg_manuell = $fach['noten']['glnw_hj_1']['-1']['manuell'];
 
-			$klnw_hj_1_avg = $fach['noten']['klnw_hj_1']['-1']['note'];
+			$klnw_hj_1_avg = str_replace('.', ',', $fach['noten']['klnw_hj_1']['-1']['note']);
 			$klnw_hj_1_avg_manuell = $fach['noten']['klnw_hj_1']['-1']['manuell'];
 
-			$schnitt_hj_1 = $this->isTeacherMod() ? $fach['noten']['schnitt_hj_1']['-1']['note'] : '';
+			$schnitt_hj_1 = $this->isTeacherMod() ? str_replace('.', ',', $fach['noten']['schnitt_hj_1']['-1']['note']) : '';
 			$schnitt_hj_1_manuell = $this->isTeacherMod() ? $fach['noten']['schnitt_hj_1']['-1']['manuell'] : '';
 
 			$note_hj_1 = $this->isTeacherMod() ? $fach['noten']['note_hj_1']['-1']['note'] : '';
@@ -180,13 +180,13 @@ class schulmanager_export_kv_pdf extends schulmanager_export_pdf //FPDF
 			$klnw_hj_2 = $this->isTeacherModJZ() ? $fach['noten']['klnw_hj_2']['concat'] : '';
             $klnw_hj_2 = is_null($klnw_hj_2) ? null : $this->trimString($klnw_hj_2, 7);
 
-			$glnw_hj_2_avg =		 $this->isTeacherModJZ() ? $fach['noten']['glnw_hj_2']['-1']['note'] : '';
+			$glnw_hj_2_avg =		 $this->isTeacherModJZ() ? str_replace('.', ',', $fach['noten']['glnw_hj_2']['-1']['note']) : '';
 			$glnw_hj_2_avg_manuell = $this->isTeacherModJZ() ? $fach['noten']['glnw_hj_2']['-1']['manuell'] : '';
 
-			$klnw_hj_2_avg = $this->isTeacherModJZ() ? $fach['noten']['klnw_hj_2']['-1']['note'] : '';
+			$klnw_hj_2_avg = $this->isTeacherModJZ() ? str_replace('.', ',', $fach['noten']['klnw_hj_2']['-1']['note']) : '';
 			$klnw_hj_2_avg_manuell = $this->isTeacherModJZ() ? $fach['noten']['klnw_hj_2']['-1']['manuell'] : '';
 
-			$schnitt_hj_2 = $this->isTeacherModJZ() ? $fach['noten']['schnitt_hj_2']['-1']['note'] : '';
+			$schnitt_hj_2 = $this->isTeacherModJZ() ? str_replace('.', ',', $fach['noten']['schnitt_hj_2']['-1']['note']) : '';
 			$schnitt_hj_2_manuell = $this->isTeacherModJZ() ? $fach['noten']['schnitt_hj_2']['-1']['manuell'] : '';
 
 			$note_hj_2 = $this->isTeacherModJZ() ? $fach['noten']['note_hj_2']['-1']['note'] : '';

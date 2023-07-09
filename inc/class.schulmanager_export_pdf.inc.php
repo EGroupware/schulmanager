@@ -226,11 +226,11 @@ class schulmanager_export_pdf extends FPDF
 			// trim?
             $klnw_hj_1 = is_null($klnw_hj_1) ? null : $this->trimString($klnw_hj_1, 7);
 
-			$glnw_hj_1_avg = $row['noten']['glnw_hj_1']['-1']['note'];
+			$glnw_hj_1_avg = str_replace('.', ',', $row['noten']['glnw_hj_1']['-1']['note']);
 			$glnw_hj_1_avg_manuell = $row['noten']['glnw_hj_1']['-1']['manuell'];
-			$klnw_hj_1_avg = $row['noten']['klnw_hj_1']['-1']['note'];
+			$klnw_hj_1_avg = str_replace('.', ',', $row['noten']['klnw_hj_1']['-1']['note']);
 			$klnw_hj_1_avg_manuell = $row['noten']['klnw_hj_1']['-1']['manuell'];
-			$schnitt_hj_1 = $row['noten']['schnitt_hj_1']['-1']['note'];
+			$schnitt_hj_1 = str_replace('.', ',', $row['noten']['schnitt_hj_1']['-1']['note']);
 			$schnitt_hj_1_manuell = $row['noten']['schnitt_hj_1']['-1']['manuell'];
 			$note_hj_1 = $row['noten']['note_hj_1']['-1']['note'];
 			$note_hj_1_manuell = $row['noten']['note_hj_1']['-1']['manuell'];
@@ -240,11 +240,11 @@ class schulmanager_export_pdf extends FPDF
 			$glnw_hj_2 = $this->createNotenContent($row['noten']['glnw_hj_2'], 3);
 			$klnw_hj_2 = $this->createNotenContent($row['noten']['klnw_hj_2'], 12);
             $klnw_hj_2 = is_null($klnw_hj_2) ? null : $this->trimString($klnw_hj_2, 7);
-			$glnw_hj_2_avg = $row['noten']['glnw_hj_2']['-1']['note'];
+			$glnw_hj_2_avg = str_replace('.', ',', $row['noten']['glnw_hj_2']['-1']['note']);
 			$glnw_hj_2_avg_manuell = $row['noten']['glnw_hj_2']['-1']['manuell'];
-			$klnw_hj_2_avg = $row['noten']['klnw_hj_2']['-1']['note'];
+			$klnw_hj_2_avg = str_replace('.', ',', $row['noten']['klnw_hj_2']['-1']['note']);
 			$klnw_hj_2_avg_manuell = $row['noten']['klnw_hj_2']['-1']['manuell'];
-			$schnitt_hj_2 = $row['noten']['schnitt_hj_2']['-1']['note'];
+			$schnitt_hj_2 = str_replace('.', ',', $row['noten']['schnitt_hj_2']['-1']['note']);
 			$schnitt_hj_2_manuell = $row['noten']['schnitt_hj_2']['-1']['manuell'];
 			$note_hj_2 = $row['noten']['note_hj_2']['-1']['note'];
 			$note_hj_2_manuell = $row['noten']['note_hj_2']['-1']['manuell'];
