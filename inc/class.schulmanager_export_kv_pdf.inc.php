@@ -446,7 +446,7 @@ class schulmanager_export_kv_pdf extends schulmanager_export_pdf //FPDF
 	    $this->Ln(6);
 	    $x = $this->GetX();
 	    $y = $this->GetY();
-	    $this->Rect($x + 2, $y + 1, 3, 3);
+	    $this->Rect($x + 2, $y, 3, 3);
 	    $this->Cell(8,4,'',0,0,'C');
 	    $this->Cell( 98,4,utf8_decode('Die Erlaubnis zum Vorrücken in die nächsthöhere Jahrgangsstufe hat er/sie'),0,0,'L');
 	    $this->Cell(20,4,'','B',0,'C');
@@ -455,14 +455,23 @@ class schulmanager_export_kv_pdf extends schulmanager_export_pdf //FPDF
 	    //$this->MultiCell(57,3,$content,0,'L',0);
 	    
 	    // 3. checkbox
-	    $this->Ln(6);	   
+	    $this->Ln(6);
 	    $x = $this->GetX();
 	    $y = $this->GetY();
-	    $this->Rect($x + 2, $y + 1, 3, 3);
+	    $this->Rect($x + 2, $y, 3, 3);
 	    $this->Cell(8,4,'',0,0,'C');
-	    $content = utf8_decode('Der/Die Schüler/in ist damit zum Eintritt in die Qualifikationsphase der Oberstufe des Gymnasiums berechtigt;')."\n".utf8_decode('dies schließt den Nachweis eines mittleren Schulabschlusses ein.');	    
-	    $this->MultiCell(156,3,$content,0,'L',0);
-	    
+	    $content = utf8_decode('Der/Die Schüler/in ist damit zum Eintritt in die Qualifikationsphase der Oberstufe des Gymnasiums berechtigt;');
+	    $this->Cell(156,4,$content,0,'L',0);
+
+        // 3b. checkbox
+        $this->Ln(3);
+        $x = $this->GetX();
+        $y = $this->GetY();
+        $this->Rect($x + 2, $y, 3, 3);
+        $this->Cell(8,4,'',0,0,'');
+        $content = utf8_decode('Das Zeugnis schließt den Nachweis eines mittleren Schulabschlusses ein.');
+        $this->Cell(156,4,$content,0,'L',0);
+
 	    // 4. checkbox
 	    $this->Ln(3);
 	    $x = $this->GetX();
@@ -486,14 +495,14 @@ class schulmanager_export_kv_pdf extends schulmanager_export_pdf //FPDF
 	    $this->Ln(6);
 	    $x = $this->GetX();
 	    $y = $this->GetY();
-	    $this->Rect($x + 2, $y + 1, 3, 3);
+	    $this->Rect($x + 2, $y, 3, 3);
 	    $this->Cell(8,4,'',0,0,'C');
 	    $content = utf8_decode('Die mit diesem Zeugnis nachgewiesene Schulbildung schließt die Berechtigung des erfolgreichen ')."\n".utf8_decode('Abschlusses der Mittelschule ein. (§ 39 (9) GSO).');
 	    $this->MultiCell(156,3,$content,0,'L',0);
 	    
 	    
 	    // Datum, Unterschrift, Schulleiter
-	    $this->Ln(5);
+	    $this->Ln(3);
 	    //$this->SetXY($this->GetX(), $this->GetY() + 5);
 	    $this->Cell(50,4,utf8_decode('Datum:'),0,0,'L');
 	    $this->Cell(50,4,utf8_decode('Klassenleiter/in:'),0,0,'L');
