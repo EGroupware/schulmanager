@@ -963,7 +963,7 @@ export class SchulmanagerApp extends EgwApp
 
 
 	/**
-	 * Serach accounts to map them to teachers
+	 * Search accounts to map them to teachers
 	 */
 	onTeacherAutoLinking(_action, _senders) {
 		let et2 = this.et2;
@@ -977,14 +977,13 @@ export class SchulmanagerApp extends EgwApp
 	}
 
 	/**
-	 * Before linking teacher tom egw account
+	 * Before linking teacher to egw account
 	 * @param _action
 	 * @param _senders
 	 */
 	onTeacherAccountLinkEdit(_action, _senders)
 	{
 		let row_id = _senders[0]._index;
-
 		let func = 'schulmanager.schulmanager_substitution_ui.ajax_onTeacherAccountLinkEdit';
 
 		this.egw.json(func, [row_id], function (result) {
@@ -994,7 +993,7 @@ export class SchulmanagerApp extends EgwApp
 			delete(result['link_account_id']);
 
 			for (let key in result){
-				let widget_id = 'schulmanager-accounts_' + key;
+				let widget_id = 'schulmanager-accounts_editcontentmodal_editcontent_' + key;
 				let widget = <HTMLInputElement>document.getElementById(widget_id);
 				if (widget) {
 					widget.innerText = result[key];
@@ -1014,7 +1013,7 @@ export class SchulmanagerApp extends EgwApp
 		modal.style.display = "none";
 
 		let et2 = this.et2;
-		let selAccount = <HTMLSelectElement>document.getElementById('schulmanager-accounts_account_id');
+		let selAccount = <HTMLSelectElement>document.getElementById('schulmanager-accounts_editcontentmodal_editcontent_account_id');
 		let account = selAccount.value;
 		let tokenDiv = <HTMLInputElement> document.getElementById('schulmanager-accounts_token');
 		let token = tokenDiv.value;
