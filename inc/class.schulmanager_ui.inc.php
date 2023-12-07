@@ -60,6 +60,8 @@ class schulmanager_ui
 
     var $calendar_ui;
 
+    var $sreport_so;
+
 
     /**
      * Constructor
@@ -72,6 +74,7 @@ class schulmanager_ui
         $this->wl_bo = new schulmanager_werteliste_bo();
         $this->schueler_bo = new schulmanager_schueler_bo();
         $this->calendar_ui = new schulmanager_cal_ui();
+        $this->sreport_so = new schulmanager_sreportcontent_so();
     }
 
     /**
@@ -1360,7 +1363,17 @@ class schulmanager_ui
 
         $sel_options = array();
 
+        $wl_gefaehrdung = schulmanager_werteliste_bo::getGefaehrdungList(true);
+        $select_gefaehrung = array();
+        $select_gefaehrung[] = "";
+        foreach($wl_gefaehrdung as $key => $value){
+            $select_gefaehrung[] = $value;
+        }
+        $sel_options['select_zz_gefaehrdung'] = $select_gefaehrung;
+
         $sel_options['select_klasse'] = $this->bo->getClassLeaderClasses();
+
+        $classLeaderClasses = $this->bo->getClassLeaderClasses(false);
 
         // select klasse
         $selected_klasse_index = Api\Cache::getSession('schulmanager', 'klassen_filter_id');
@@ -1392,63 +1405,11 @@ class schulmanager_ui
         $content['select_schueler'] = $selected_schueler_index;
 
         $content['header_klasse'] = $sel_options['select_klasse'][$selected_klasse_index];
+
+        $selClass = $classLeaderClasses[$selected_klasse_index];
+        $content['header_klassleitung_k'] = $selClass['1111_K_givenname'].' '.$selClass['1111_K_sn'];
+        $content['header_klassleitung_s'] = $selClass['1111_S_givenname'].' '.$selClass['1111_S_sn'];
         $content['header_schuelername'] = $sel_options['select_schueler'][$selected_schueler_index]; //$klassen_schueler_list[$schueler_id]['nm_st']['st_asv_familienname'].' '.$klassen_schueler_list[$schueler_id]['nm_st']['st_asv_rufname']
-
-        // nextmatch Schuelerlaufbahn
-        /*$content['sla_nm'] = array();
-        $content['sla_nm']['get_rows']		= 'schulmanager.schulmanager_ui.sla_get_rows';
-        $content['sla_nm']['no_filter'] 	= true;
-        $content['sla_nm']['no_filter2']	= true;
-        $content['sla_nm']['no_cat']	    = true;
-        $content['sla_nm']['no_search']	    = true;
-        $content['sla_nm']['header_left']	= false;
-        $content['sla_nm']['bottom_too']	= true;
-        $content['sla_nm']['order']		= 'sla_nm_id';
-        $content['sla_nm']['sort']		= 'ASC';
-        $content['sla_nm']['row_id']	= 'sla_nm_id';
-        $content['sla_nm']['no_columnselection'] = false;
-
-        // nextmatch Schuelerkommunikaton
-        $content['sko_nm'] = array();
-        $content['sko_nm']['get_rows']		= 'schulmanager.schulmanager_ui.sko_get_rows';
-        $content['sko_nm']['no_filter'] 	= true;
-        $content['sko_nm']['no_filter2']	= true;
-        $content['sko_nm']['no_cat']	    = true;
-        $content['sko_nm']['no_search']	    = true;
-        $content['sko_nm']['header_left']	= false;
-        $content['sko_nm']['bottom_too']	= true;
-        $content['sko_nm']['order']		= 'sko_nm_id';
-        $content['sko_nm']['sort']		= 'ASC';
-        $content['sko_nm']['row_id']	= 'sko_nm_id';
-        $content['sko_nm']['no_columnselection'] = false;
-
-        // nextmatch Schueleranschrift
-        $content['san_nm'] = array();
-        $content['san_nm']['get_rows']		= 'schulmanager.schulmanager_ui.san_get_rows';
-        $content['san_nm']['no_filter'] 	= true;
-        $content['san_nm']['no_filter2']	= true;
-        $content['san_nm']['no_cat']	    = true;
-        $content['san_nm']['no_search']	    = true;
-        $content['san_nm']['header_left']	= false;
-        $content['san_nm']['bottom_too']	= true;
-        $content['san_nm']['order']		= 'san_nm_id';
-        $content['san_nm']['sort']		= 'ASC';
-        $content['san_nm']['row_id']	= 'san_nm_id';
-        $content['san_nm']['no_columnselection'] = false;
-        */
-        // nextmatch Noten
-        $content['not_nm'] = array();
-        $content['not_nm']['get_rows']		= 'schulmanager.schulmanager_ui.not_get_rows';
-        $content['not_nm']['no_filter'] 	= true;
-        $content['not_nm']['no_filter2']	= true;
-        $content['not_nm']['no_cat']	    = true;
-        $content['not_nm']['no_search']	    = true;
-        $content['not_nm']['header_left']	= false;
-        $content['not_nm']['bottom_too']	= true;
-        $content['not_nm']['order']		= 'not_nm_id';
-        $content['not_nm']['sort']		= 'ASC';
-        $content['not_nm']['row_id']	= 'not_nm_id';
-        $content['not_nm']['no_columnselection'] = false;
 
         $xrsf_token = bin2hex(random_bytes(32));
         Api\Cache::setSession('schulmanager', 'token_schuelerview', $xrsf_token);
@@ -1536,7 +1497,7 @@ class schulmanager_ui
         $schueler_id = Api\Cache::getSession('schulmanager', 'schueler_filter_id');
         $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
         $schueler = $klassen_schueler_list[$schueler_id];
-        $this->schueler_bo->getNotenAbstract($schueler, $rows, $schueler_id);//$query_in['col_filter']['schueler_id']);
+        $this->schueler_bo->getNotenAbstract($schueler, $rows, $schueler_id, true);
 
         //return $query_in['total'];
         return count($rows);
@@ -1568,7 +1529,14 @@ class schulmanager_ui
         Api\Cache::setSession('schulmanager', 'klassen_filter_id', $klasse_id);
         Api\Cache::setSession('schulmanager', 'schueler_filter_id', $schueler_id);
 
-        $result['header_klasse'] = $this->bo->getClassLeaderClasses()[$klasse_id];
+        $selKlasse = $this->bo->getClassLeaderClasses(false)[$klasse_id];
+
+        $result['header_klasse'] = $selKlasse['name'];
+        $selClass = $result['header_klasse'][$klasse_id];
+        $result['header_klassleitung_k'] = $selKlasse['1111_K_givenname'].' '.$selKlasse['1111_K_sn'];
+        $result['header_klassleitung_s'] = $selKlasse['1111_S_givenname'].' '.$selKlasse['1111_S_sn'];
+
+
         $result['header_schuelername'] = $klassen_schueler_list[$schueler_id];
         $result['note_avg_schnitt_hj_1'] = $rows[0]['noten']['note_hj_1']['-1']['note'];
         $result['note_avg_note_hj_1'] = $rows[0]['noten']['note_hj_1']['-1']['note'];
@@ -1599,7 +1567,46 @@ class schulmanager_ui
         $result['header_schuelername'] = $klassen_schueler_list[$schueler_id]['nm_st']['st_asv_familienname'].' '.$klassen_schueler_list[$schueler_id]['nm_st']['st_asv_rufname'];
 
         $this->getSchuelerViewSchuelerData($result);
+        Api\Json\Response::get()->data($result);
+    }
 
+    function ajax_schuelerview_zz_commit($gefaehrd, $abweis, $token){
+        $config = Api\Config::read('schulmanager');
+        $result = array();
+        if(!$this->checkToken('token_schuelerview', $token)){
+            $result['error_msg'] = 'ERROR: could not submit date!';
+            Api\Json\Response::get()->data($result);
+            return;
+        }
+
+        $wl_gefaehrdung_list = schulmanager_werteliste_bo::getGefaehrdungList(false);
+
+        $schueler_id = Api\Cache::getSession('schulmanager', 'schueler_filter_id');
+        $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
+        $schueler = $klassen_schueler_list[$schueler_id];
+        $schueler_stamm_id = $schueler['nm_st']['st_asv_id'];
+
+        if($gefaehrd != 0){
+            // -1, 0 is empty list item
+            $wl_gefaehrd = $wl_gefaehrdung_list[((int)$gefaehrd) - 1];
+            $this->sreport_so->saveItem($schueler_stamm_id, 'key_zz_gefaehrdung', $wl_gefaehrd['asv_wert_langform'], $wl_gefaehrd['asv_wert_id'], $wl_gefaehrd['asv_wert_kurzform'], $wl_gefaehrd['asv_wert_anzeigeform']);
+        }
+        else{
+            $this->sreport_so->saveItem($schueler_stamm_id, 'key_zz_gefaehrdung', '');
+        }
+        if($abweis){
+            if($schueler['nm_st']['geschlecht'] == 'M'){
+                $zz_abweisung_value = str_replace("##der_die_schueler_in##", "Der Schüler", $config['notenbild_zz_abweisung']);
+            }
+            else{
+                $zz_abweisung_value = str_replace("##der_die_schueler_in##", "Die Schülerin", $config['notenbild_zz_abweisung']);
+            }
+            $this->sreport_so->saveItem($schueler_stamm_id, 'key_zz_abweisung', $zz_abweisung_value);
+        }
+        else{
+            $this->sreport_so->saveItem($schueler_stamm_id, 'key_zz_abweisung', '');
+        }
+        $this->getSchuelerViewSchuelerData($result);
         Api\Json\Response::get()->data($result);
     }
 
@@ -1655,7 +1662,8 @@ class schulmanager_ui
      * Loads student data to result array
      * @param $result
      */
-    function getSchuelerViewSchuelerData(&$result){
+    function getSchuelerViewSchuelerData(&$result)
+    {
         $query_in = array('start' => 0,);
         $readonlys = array();
 
@@ -1663,7 +1671,7 @@ class schulmanager_ui
         $rows = array();
         $this->sla_get_rows($query_in, $rows, $readonlys);
         $sla_nm_rows = array();
-        foreach($rows as $key => $values) {
+        foreach ($rows as $key => $values) {
             $sla_nm_rows[$key] = array(
                 0 => $values['sla_nr'],
                 1 => $values['sla_datum'],
@@ -1680,7 +1688,7 @@ class schulmanager_ui
         $rows = array();
         $this->sko_get_rows($query_in, $rows, $readonlys);
         $sko_nm_rows = array();
-        foreach($rows as $key => $values) {
+        foreach ($rows as $key => $values) {
             $sko_nm_rows[$key] = array(
                 0 => $values['sko_nr'],
                 1 => $values['sko_type'],
@@ -1695,7 +1703,7 @@ class schulmanager_ui
         $rows = array();
         $this->san_get_rows($query_in, $rows, $readonlys);
         $san_nm_rows = array();
-        foreach($rows as $key => $values) {
+        foreach ($rows as $key => $values) {
             $san_nm_rows[$key] = array(
                 0 => $values['san_nr'],
                 1 => $values['san_anrede_anzeige'],
@@ -1722,31 +1730,24 @@ class schulmanager_ui
         //$this->get_klassen_rows($query_in, $rows, $readonlys);
         $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
         $schueler = $klassen_schueler_list[$schueler_id];
-        $this->schueler_bo->getNotenAbstract($schueler, $rows, $query_in['col_filter']['schueler_id']);
+        $this->schueler_bo->getNotenAbstract($schueler, $rows, $query_in['col_filter']['schueler_id'], true);
         $noten_nm_rows = array();
-        foreach($rows as $key => $values) {
+        foreach ($rows as $key => $values) {
             $noten_nm_rows[] = array(
                 0 => $values['fachname'],
-                1 => $values['noten']['alt_b'][-1]['checked'],
-                2 => $values['noten']['glnw_hj_1']['concat'],
-                3 => $values['noten']['klnw_hj_1']['concat'],
-                4 => $values['noten']['glnw_hj_1']['-1']['note'],
-                5 => $values['noten']['klnw_hj_1']['-1']['note'],
-                6 => $values['noten']['schnitt_hj_1'][-1]['note'],
-                7 => $values['noten']['note_hj_1'][-1]['note'],
-                8 => $values['noten']['m_hj_1'][-1]['note'],
-                9 => $values['noten']['v_hj_1'][-1]['note'],
-                10 => $values['noten']['glnw_hj_2']['concat'],
-                11 => $values['noten']['klnw_hj_2']['concat'],
-                12 => $values['noten']['glnw_hj_2']['-1']['note'],
-                13 => $values['noten']['klnw_hj_2']['-1']['note'],
-                14 => $values['noten']['schnitt_hj_2'][-1]['note'],
-                15 => $values['noten']['note_hj_2'][-1]['note'],
-                16 => $values['noten']['m_hj_2'][-1]['note'],
-                17 => $values['noten']['v_hj_2'][-1]['note'],
+                1 => $values['noten']['alt_b'],
+                2 => $values['noten']['glnw'],
+                3 => $values['noten']['klnw'],
+                4 => $values['noten']['glnw_avg'],
+                5 => $values['noten']['klnw_avg'],
+                6 => $values['noten']['schnitt'],
+                7 => $values['noten']['note'],
             );
         }
         $result['noten_nm_rows'] = $noten_nm_rows;
+
+        // Informationen für Zeugnisse und Notenberichte
+        $this->schueler_bo->getEvaluationInfo($schueler, $result);
     }
 
     public static function getSchuljahrXXXX(){

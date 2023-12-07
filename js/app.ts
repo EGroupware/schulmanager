@@ -16,6 +16,7 @@ import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {SlMenuItem} from "@shoelace-style/shoelace";
+import {Et2Checkbox} from "../../api/js/etemplate/Et2Checkbox/Et2Checkbox";
 
 export class SchulmanagerApp extends EgwApp
 {
@@ -121,6 +122,43 @@ export class SchulmanagerApp extends EgwApp
 		$a.remove();
 
 		egw.loading_prompt('schulmanager',false);
+	}
+
+
+
+	schuelerview_zz_edit(_id, _widget){
+		let modal = document.getElementById("schulmanager-schuelerview_zzeditmodal");
+		modal.style.display = "block";
+
+	}
+
+	schuelerview_jz_edit(_id, _widget){
+		let modal = document.getElementById("schulmanager-schuelerview_jzeditmodal");
+		modal.style.display = "block";
+	}
+
+	/**
+	 * Vorbereitung Notenbericht / Zwischenzeugnis
+	 * @param _id
+	 * @param _widget
+	 */
+	schuelerview_zz_commit(_id, _widget){
+		let instance = this;
+		let model = document.getElementById('schulmanager-schuelerview_zzeditmodal');
+		model.style.display='none';
+
+		let tokenDiv = <HTMLInputElement> document.getElementById('schulmanager-schuelerview_token');
+		let token = tokenDiv.value;
+		let gefaehrdWidget = <HTMLSelectElement> document.getElementById('schulmanager-schuelerview_zzeditmodal_zzeditcontent_select_zz_gefaehrdung');
+		let gefaehrd = gefaehrdWidget.value;
+
+		let zzabweis = document.getElementById('schulmanager-schuelerview_zzeditmodal_zzeditcontent_zzabweis').checked;
+
+		let func = 'schulmanager.schulmanager_ui.ajax_schuelerview_zz_commit';
+		this.egw.json(func, [gefaehrd, zzabweis, token], function (result) {
+			instance.schuelerViewUpdate(instance, result);
+
+		}).sendRequest(true);
 	}
 
 	/**
@@ -922,7 +960,7 @@ export class SchulmanagerApp extends EgwApp
 		instance.tableUpdate("schulmanager-schuelerview_grid-sla", result['sla_nm_rows']);
 		instance.tableUpdate("schulmanager-schuelerview_grid-sko", result['sko_nm_rows']);
 		instance.tableUpdate("schulmanager-schuelerview_grid-san", result['san_nm_rows']);
-		//instance.tableUpdate("schulmanager-schuelerview_not_nm[rows]", result['noten_nm_rows']);
+		instance.tableUpdate("schulmanager-schuelerview_not_nm", result['noten_nm_rows']);
 		// ################
 
 		for (let key in result){
@@ -933,6 +971,13 @@ export class SchulmanagerApp extends EgwApp
 				}
 			}
 		}
+
+		// select in modal div
+		let selGefaehrdung = <Et2Select>document.getElementById('schulmanager-schuelerview_zzeditmodal_zzeditcontent_select_zz_gefaehrdung');
+		selGefaehrdung.set_value(result['zz_gefaehrdung_id']);
+
+		let zzAbweis = <Et2Checkbox> document.getElementById('schulmanager-schuelerview_zzeditmodal_zzeditcontent_zzabweis');
+		zzAbweis.checked = result['zz_abweisung'];
 	}
 
 	/**

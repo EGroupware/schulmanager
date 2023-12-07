@@ -161,6 +161,7 @@ class schulmanager_download_ui
         {
             // load subjects, grades and eights
             $schueler_bo->loadSubjectsAndGrades($schueler);
+            $schueler_bo->getEvaluationInfo($schueler, $schueler);
         }
 
         $schulleitung = $sm_bo->getSchulleitung();

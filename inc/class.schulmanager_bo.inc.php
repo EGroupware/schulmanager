@@ -62,11 +62,12 @@ class schulmanager_bo
 
     /**
      * This method returns all classes in which this teacher is the class teacher or has special rights.
+     * @param bool $plain if plain = true, the result only contains the names of classes, if plain is false, the complete data is returned
      * @return array
      */
-	function getClassLeaderClasses()
+	function getClassLeaderClasses($plain = true)
 	{
-		return $this->myLehrer->getClassLeaderClasses();
+		return $this->myLehrer->getClassLeaderClasses($plain);
 	}
 
     /**
@@ -293,13 +294,13 @@ class schulmanager_bo
     function getSchulleitung(){
         $config = Api\Config::read('schulmanager');
         $sl = $config['schulleiter'];
-        return $this->myLehrer->getTeacherByEGWUserID($sl);
+        return $this->myLehrer->getTeacherByEGWUserID($sl[0]);
     }
 
     function getSchulleitung_Stlvtr(){
         $config = Api\Config::read('schulmanager');
         $stlvtr = $config['schulleiter_stlvtr'];
-        return $this->myLehrer->getTeacherByEGWUserID($stlvtr);
+        return $this->myLehrer->getTeacherByEGWUserID($stlvtr[0]);
     }
 
     function getSchulleitung_Mitarb(){

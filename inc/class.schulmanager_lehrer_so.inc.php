@@ -180,38 +180,25 @@ class schulmanager_lehrer_so extends Api\Storage{
 	 * 0 =array( name => '5A', asvid => 'ihgz233Hj')
 	 */
 	function &loadClassleaderClasses(array $lehrerStammIDs, &$rows, $showAllKlassen = true, $search = ''){
-		//$selection = '';
-
-        foreach($lehrerStammIDs as &$lsid){
-            $lsid = "'".$lsid."'";
-        }
-        $csvIDs = implode(',', $lehrerStammIDs);
-        if(empty($csvIDs)){ // called by non-teacher, return empty result from db
-            $csvIDs = "FALSE";  // SQL FALSE
-        }
 
 		$searchSQL = $this->db->quote('%'.$search.'%');
 
-		if(!$showAllKlassen){
-			// only groups, where user is one of two leaders
-            $sql = "SELECT DISTINCT egw_schulmanager_asv_klassenleitung.kl_klasse_id AS klasse_asv_id,
-				egw_schulmanager_asv_klassenleitung.kl_lehrer_schuljahr_schule_id AS schuljahr_id,
-				egw_schulmanager_asv_klassenleitung.kl_art AS art,
-				egw_schulmanager_asv_klasse.kl_asv_klassenname AS klassenname
-
-				FROM egw_schulmanager_asv_klassenleitung
-				INNER JOIN egw_schulmanager_asv_klasse ON egw_schulmanager_asv_klasse.kl_asv_id = egw_schulmanager_asv_klassenleitung.kl_klasse_id
-				INNER JOIN egw_schulmanager_asv_lehrer_schuljahr_schule ON egw_schulmanager_asv_lehrer_schuljahr_schule.lss_asv_id = egw_schulmanager_asv_klassenleitung.kl_lehrer_schuljahr_schule_id
-				INNER JOIN egw_schulmanager_asv_lehrer_schuljahr ON egw_schulmanager_asv_lehrer_schuljahr.lsj_asv_id = egw_schulmanager_asv_lehrer_schuljahr_schule.lss_asv_lehrer_schuljahr_id
-				WHERE egw_schulmanager_asv_lehrer_schuljahr.lsj_asv_lehrer_stamm_id IN (".$csvIDs.") ORDER BY egw_schulmanager_asv_klasse.kl_asv_klassenname";
-		}
-		else{
-			$sql = "SELECT DISTINCT egw_schulmanager_asv_klasse.kl_asv_id AS klasse_asv_id,
-				egw_schulmanager_asv_klasse.kl_asv_klassenname AS klassenname
-				FROM egw_schulmanager_asv_klasse
-				WHERE egw_schulmanager_asv_klasse.kl_asv_klassenname LIKE ".$searchSQL."
-				ORDER BY egw_schulmanager_asv_klasse.kl_asv_klassenname";
-		}
+		$sql = "SELECT DISTINCT 
+                        egw_schulmanager_asv_klasse.kl_asv_klassenname AS klassenname,
+                        egw_schulmanager_asv_klasse.kl_asv_id AS klasse_asv_id,
+                        egw_schulmanager_asv_lehrer_stamm.ls_asv_familienname AS lehrer_sn,
+	                    egw_schulmanager_asv_lehrer_stamm.ls_asv_rufname AS lehrer_givenname,
+	                    egw_schulmanager_asv_lehrer_stamm.ls_asv_zeugnisname1 AS lehrer_zeugnisname1,
+	                    egw_schulmanager_asv_lehrer_stamm.ls_asv_zeugnisname2 AS lehrer_zeugnisname2,
+	                    egw_schulmanager_asv_lehrer_stamm.ls_asv_id AS lehrer_asv_id,
+                        egw_schulmanager_asv_klassenleitung.kl_art AS art                    
+                    FROM egw_schulmanager_asv_klasse
+                    INNER JOIN egw_schulmanager_asv_klassenleitung ON egw_schulmanager_asv_klassenleitung.kl_klasse_id = egw_schulmanager_asv_klasse.kl_asv_id
+                    INNER JOIN egw_schulmanager_asv_lehrer_schuljahr_schule ON egw_schulmanager_asv_lehrer_schuljahr_schule.lss_asv_id = egw_schulmanager_asv_klassenleitung.kl_lehrer_schuljahr_schule_id
+                    INNER JOIN egw_schulmanager_asv_lehrer_schuljahr ON egw_schulmanager_asv_lehrer_schuljahr.lsj_asv_id = egw_schulmanager_asv_lehrer_schuljahr_schule.lss_asv_lehrer_schuljahr_id
+                    INNER JOIN egw_schulmanager_asv_lehrer_stamm ON egw_schulmanager_asv_lehrer_schuljahr.lsj_asv_lehrer_stamm_id = egw_schulmanager_asv_lehrer_stamm.ls_asv_id
+                    WHERE egw_schulmanager_asv_klasse.kl_asv_klassenname LIKE ".$searchSQL."
+                    ORDER BY egw_schulmanager_asv_klasse.kl_asv_klassenname";
 
 		$rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
 		$id = 0;
@@ -219,15 +206,31 @@ class schulmanager_lehrer_so extends Api\Storage{
 
 		Api\Cache::unsetSession('schulmanager', 'klassen_asv_ids');
 
-		foreach($rs as $row){
-			//$rows[$id] = $row['klassenname'];
-			$rows[$id] = array(
-				'name' => $row['klassenname'],
-				'asvid' => $row['klasse_asv_id']
-			);
-			$klassenasvids[$id] = $row['klasse_asv_id'];
-			$id++;
-		}
+        $tmpRows = array();
+        foreach($rs as $row){
+            if(!array_key_exists($row['klasse_asv_id'], $tmpRows)){
+                $tmpRows[$row['klasse_asv_id']] = array(
+                    'name' => $row['klassenname'],
+                    'asvid' => $row['klasse_asv_id']
+                );
+            }
+            $tmpRows[$row['klasse_asv_id']][$row['art'].'_givenname'] = $row['lehrer_givenname'];
+            $tmpRows[$row['klasse_asv_id']][$row['art'].'_sn'] = $row['lehrer_sn'];
+            $tmpRows[$row['klasse_asv_id']][$row['art'].'_zeugnisname'] = $row['lehrer_zeugnisname'];
+            $tmpRows[$row['klasse_asv_id']][$row['art'].'_asv_id'] = $row['lehrer_asv_id'];
+        }
+
+        foreach($tmpRows as $tmpRow){
+            // exclude classes, where user is not class leader
+            if(!$showAllKlassen && !in_array($tmpRow['1111_K_asv_id'], $lehrerStammIDs) && !in_array($tmpRow['1111_S_asv_id'], $lehrerStammIDs)){
+                continue;
+            }
+
+            $rows[$id] = $tmpRow;
+            $klassenasvids[$id] = $tmpRow['asvid'];
+            $id++;
+        }
+
 		Api\Cache::setSession('schulmanager', 'klassen_asv_ids', $klassenasvids);
 
 	}

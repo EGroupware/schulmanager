@@ -307,6 +307,105 @@ class schulmanager_schueler_so {
 		return $rows;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Creates a short abstract of grades
+     * @param $schueler_schuljahr_id
+     * @param $rows
+     * @param $rowid
+     * @return mixed
+     * @throws Api\Db\Exception\InvalidSql
+     */
+    function &getNotenAbstractShort($schueler_schuljahr_id, &$rows, $rowid){
+        $sql = "select
+			egw_schulmanager_asv_schuelerfach.sf_asv_id AS asv_id,
+			egw_schulmanager_asv_schuelerfach.sf_asv_kurzform AS asv_kurzform,
+			egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform AS asv_anzeigeform,
+			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'alt_b' THEN egw_schulmanager_note.note_note END) AS alt_b,
+			GROUP_CONCAT(CASE WHEN (egw_schulmanager_note.note_blockbezeichner = 'klnw_hj_1' OR egw_schulmanager_note.note_blockbezeichner = 'klnw_hj_2') AND egw_schulmanager_note.note_index_im_block >= 0 THEN egw_schulmanager_note.note_note END ORDER BY egw_schulmanager_note.note_index_im_block SEPARATOR ' | ') AS klnw,
+			GROUP_CONCAT(CASE WHEN (egw_schulmanager_note.note_blockbezeichner = 'glnw_hj_1' OR egw_schulmanager_note.note_blockbezeichner = 'glnw_hj_2') AND egw_schulmanager_note.note_index_im_block >= 0 THEN egw_schulmanager_note.note_note END ORDER BY egw_schulmanager_note.note_index_im_block SEPARATOR ' | ') AS glnw,
+			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'klnw_hj_2' AND egw_schulmanager_note.note_index_im_block = -1 THEN egw_schulmanager_note.note_note END) AS klnw_avg,
+			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'glnw_hj_2' AND egw_schulmanager_note.note_index_im_block = -1 THEN egw_schulmanager_note.note_note END) AS glnw_avg,
+			-- MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'glnw_hj_2' AND egw_schulmanager_note.note_index_im_block = -1 AND egw_schulmanager_note.note_asv_note_manuell = '1' THEN '1' END) AS glnw_hj_2_avg_manuell,
+			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'schnitt_hj_2' THEN egw_schulmanager_note.note_note END) AS schnitt,
+			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'note_hj_2' THEN egw_schulmanager_note.note_note END) AS note
+			FROM egw_schulmanager_asv_schueler_schuljahr
+			INNER JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_asv_klassengruppe.kg_asv_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_klassengruppe_id
+			INNER JOIN egw_schulmanager_asv_besuchtes_fach ON egw_schulmanager_asv_besuchtes_fach.bf_asv_schueler_schuljahr_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_id
+			INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_asv_besuchtes_fach.bf_asv_schuelerfach_id
+            LEFT JOIN egw_schulmanager_config ON egw_schulmanager_asv_schuelerfach.sf_asv_kurzform = egw_schulmanager_config.cnf_val
+			LEFT JOIN egw_schulmanager_note ON egw_schulmanager_note.note_asv_schueler_schuljahr_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_id AND egw_schulmanager_note.note_asv_schueler_schuelerfach_id = egw_schulmanager_asv_schuelerfach.sf_asv_id
+			WHERE egw_schulmanager_asv_schueler_schuljahr.ss_asv_id= '".$schueler_schuljahr_id."'
+				AND egw_schulmanager_asv_besuchtes_fach.bf_asv_unterrichtsart = 'P'
+			GROUP BY egw_schulmanager_asv_schuelerfach.sf_asv_id, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform, egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform, egw_schulmanager_config.cnf_extra
+			ORDER BY egw_schulmanager_config.cnf_extra, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform";
+
+        $rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
+
+        $id = ($rowid +1) * 100;
+        foreach($rs as $row){
+            //$rows[] = array(
+            $schueler = array(
+                'rownr'	    => '',
+                'nm_id'		=> $rowid * 100 + $id,
+                'nm_st'		=> array(
+                    'st_asv_id'			  => '',
+                    'sch_schuljahr_asv_id' => '',
+                    'st_asv_familienname' => '',
+                    'st_asv_rufname'	  => $row['asv_anzeigeform']
+                ),
+                'fachname' => $row['asv_anzeigeform'],
+                'noten'		=> array(
+                    'alt_b'	=> $row['alt_b'] ? '1:1' : '2:1',
+                    'glnw'	=> $row['glnw'],
+                    'klnw'	=> $row['klnw'],
+                    'glnw_avg'	=> str_replace('.', ',', $row['glnw_avg']),
+                    'klnw_avg'	=> str_replace('.', ',', $row['klnw_avg']),
+                    'schnitt'	=> str_replace('.', ',', $row['schnitt']),
+                    'note'	=> $row['note'],
+                ),
+                'is_par' => 0
+            );
+
+            $rows[$id] = $schueler;
+            $id++;
+        }
+        return $rows;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/**
 	 * return average values from schnit_hj1, note_hj_1, m_hj1, v_hj1 and all rom  hj2
 	 * @param type $schueler_schuljahr_id

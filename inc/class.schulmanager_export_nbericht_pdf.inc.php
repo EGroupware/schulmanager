@@ -215,7 +215,9 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
         // Line break
         $this->Ln();
 
-        $this->createReportTable($row['faecher']);
+        $this->createReportTable($row['faecher'], $row['zz_gefaehrdung_value'], $row['zz_abweisung_value']);
+        $this->Ln();
+
     }
 
     /**
@@ -224,7 +226,7 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
      * @param $faecher
      * @return void
      */
-    function createReportTable($faecher = null)
+    function createReportTable($faecher = null, $zz_gefaehrdung_value, $zz_abweisung_value)
     {
         $lehrer_so = new schulmanager_lehrer_so();
         $w = $this->w - $this->lMargin - $this->rMargin;
@@ -233,7 +235,7 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
 
         $x = $this->GetX();
         $y = $this->GetY();
-        // greoup border
+        // group border
         $this->SetLineWidth(0.3);
         $this->Cell($tw, 8, '', 1);
 
@@ -293,8 +295,22 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
             //$this->Ln();
         }
 
+        // Bemerkungen
+        $y += 16;
+        //$this->Ln();
+        //$x = 0;
+        //$this->Text($x, $y, utf8_decode($zz_gefaehrdung_value));
+        //$this->Write(4, utf8_decode($zz_gefaehrdung_value));
+        $this->MultiCell($tw, 4, utf8_decode($zz_gefaehrdung_value), 0, 'L', 0);
+        //$this->Ln();
+        //$this->Text($x, $y, utf8_decode($zz_abweisung_value));
+        //$this->Write(4, utf8_decode($zz_abweisung_value));
+        $this->MultiCell($tw, 4, utf8_decode($zz_abweisung_value), 0, 'L', 0);
+        $this->Ln();
+
         // signing
         $y += 16;
+        //$x = 0;
         $this->Text($x, $y, $this->schule_ort.', den '.$this->notenbild_zeichnungstag);
 
         if ($this->signed) {
