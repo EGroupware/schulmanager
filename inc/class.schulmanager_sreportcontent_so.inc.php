@@ -14,8 +14,8 @@
 use EGroupware\Api;
 use EGroupware\Api\Storage;
 
-define('KEY_GEFAEHRD', 'key_gefaehrd');
-define('KEY_ABWEISUNG', 'key_abweisung');
+define('KEY_GEFAEHRD', 'key_zz_gefaehrdung');
+define('KEY_ABWEISUNG', 'key_zz_abweisung');
 
 /**
  * substitutions in EGroupware
@@ -49,7 +49,7 @@ class schulmanager_sreportcontent_so extends Api\Storage {
         $this->value_col['asv_wert_anzeigeform'] = 'sr_asv_wert_anzeigeform';
         $this->value_col['value'] = 'sr_value';
         $this->value_col['update_date'] = 'sr_update_date';
-        $this->value_col['update_user'] = 'sr_update_date';
+        $this->value_col['update_user'] = 'sr_update_user';
 
 
         $this->customfields = Storage\Customfields::get($app, false, null, $db);
@@ -57,8 +57,9 @@ class schulmanager_sreportcontent_so extends Api\Storage {
 
     /**
      * loads all contents of stud
-     * @param array $unterricht
-     * @return unknown
+     * @param $asv_schueler_stamm
+     * @param $key
+     * @return array
      */
     function load($asv_schueler_stamm, $key = null){
         $filter = array();
@@ -67,7 +68,8 @@ class schulmanager_sreportcontent_so extends Api\Storage {
         if(isset($key) && !empty($key)){
             $filter[] = "sr_key = '$key'";
         }
-        $result = $this->query_list($this->value_col, '', $filter);
+        //$result = $this->query_list($this->value_col, '', $filter);
+        $result = $this->search($filter, false, '', $this->value_col, '');
 
 
 
@@ -81,7 +83,7 @@ class schulmanager_sreportcontent_so extends Api\Storage {
      * @return false|mixed
      */
     function saveItem($asv_schueler_stamm, $key, $value, $asv_wert_id = null, $asv_wert_kurzform = null, $asv_wert_anzeigeform = null){
-        $time = date("Y-m-d H:i:s").'.000';//time();
+        $time = date("Y-m-d H:i:s");//time();
         $kennung = $GLOBALS['egw_info']['user']['account_lid'];
 
         $srcExists = $this->load($asv_schueler_stamm, $key);
@@ -99,7 +101,7 @@ class schulmanager_sreportcontent_so extends Api\Storage {
 
         if(!empty($srcExists)) {
             $keys = array_keys($srcExists);
-            $src['sr_id'] = $srcExists[$keys[0]]['id'];
+            $src['sr_id'] = $srcExists[$keys[0]]['sr_id'];
             $this->data = $src;
             if(parent::update($src, true) != 0) return false;
         }

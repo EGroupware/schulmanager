@@ -262,8 +262,8 @@
 	<template id="schulmanager.config.zeugnis" template="" lang="" group="0" version="16.1">
 		<grid width="100%" class="admin-config egwGridView_grid">
 			<columns>
-				<column width="60%"/>
-				<column/>
+				<column width="30%"/>
+				<column width="70%"/>
 			</columns>
 			<rows>
 				<row>
@@ -273,6 +273,10 @@
 				<row>
 					<description value="Zeichnungsdatum"/>
 					<date id="newsettings[notenbild_zeichnungstag]" readonly="false"  class="et2_fullWidth" span="4"/>
+				</row>
+				<row>
+					<description value="Bemerkung bei drohender Abweisung"/>
+					<textbox id="newsettings[notenbild_zz_abweisung]" multiline="true" readonly="false" class="et2_fullWidth" span="4" height="80" no_lang="true"/>
 				</row>
 			</rows>
 		</grid>

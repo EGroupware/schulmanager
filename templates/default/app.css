@@ -561,6 +561,26 @@ div.gridCont_2_div_col_1.innerContainer{
 	z-index: 99;
 }
 
+#schulmanager-schuelerview_zzeditmodal_zzeditcontent{
+	position: absolute;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 99;
+}
+
+#schulmanager-schuelerview_jzeditmodal_jzeditcontent{
+	position: absolute;
+	border: 2px solid black;
+	background-color: #ffffff;
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 99;
+}
+
 
 /*
 .sm_col_klnw
@@ -622,7 +642,7 @@ div.gridCont_2_div_col_1.innerContainer{
 }
 
 .fl-table tr:nth-child(even) {
-	background: #F8F8F8;
+	background: #E8E8E8;
 }
 
 /* md table , modal*/

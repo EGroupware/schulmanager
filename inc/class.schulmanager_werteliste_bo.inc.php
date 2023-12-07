@@ -76,6 +76,36 @@ class schulmanager_werteliste_bo {
         return $result;
     }
 
+
+    /**
+     * Gefaehrdung
+     * @param bool $onlyKeyVal
+     * @return false|string[]
+     */
+    public static function getGefaehrdungList(bool $onlyKeyVal = false){
+        $result = array();
+        $wl = Api\Cache::getSession('schulmanager', 'wl_GEFAEHRD');
+        if(!isset($wl)) {
+            self::loadWerteliste('GEFAEHRD', $wl, false);
+            Api\Cache::setSession('schulmanager', 'wl_GEFAEHRD', $wl);
+        }
+
+        foreach($wl as $w) {
+            if($onlyKeyVal){
+                // for select control
+                $result[$w['asv_wert_id']] = $w['asv_wert_anzeigeform'];
+            }
+            else{
+                $result[] = $w;
+            }
+        }
+        return $result;
+    }
+
+
+
+
+
     /**
      * determines grades type
      * @param bool $glnw

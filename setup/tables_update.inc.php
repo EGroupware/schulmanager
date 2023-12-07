@@ -446,3 +446,42 @@ function schulmanager_upgrade0_0_024()
 
     return $GLOBALS['setup_info']['schulmanager']['currentver'] = '21.1';
 }
+
+function schulmanager_upgrade21_1()
+{
+    $GLOBALS['egw_setup']->oProc->query("DELETE FROM egw_schulmanager_config WHERE cnf_key = '#FACH_ORDER#'");
+
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'K',   '010')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Ev',  '011')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Eth', '012')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'D',   '020')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'L',   '030')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Gr',  '031')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'E',   '032')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'F',   '033')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Sp',  '034')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'M',   '040')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Inf', '041')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Ph',  '042')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Ch',  '043')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'B',   '044')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'NuT', '045')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'G',   '050')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Geo', '051')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'WR',  '052')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'PuG', '060')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Sk',  '070')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Ku',  '080')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Mu',  '090')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Sm',  '100')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Sw',  '101')");
+
+    return $GLOBALS['setup_info']['schulmanager']['currentver'] = '23.1.20231207';
+}
+
+
+
+
+
+
+
