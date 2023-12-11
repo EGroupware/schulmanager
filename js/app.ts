@@ -4,7 +4,7 @@
  * @link http://www.egroupware.org
  * @package schulmanager
  * @author Axel Wild <info-AT-wild-solutions.de>
- * @copyright (c) 2022 by info-AT-wild-solutions.de
+ * @copyright (c) 2023 by info-AT-wild-solutions.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
@@ -15,7 +15,6 @@ import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
-import {SlMenuItem} from "@shoelace-style/shoelace";
 import {Et2Checkbox} from "../../api/js/etemplate/Et2Checkbox/Et2Checkbox";
 
 export class SchulmanagerApp extends EgwApp
@@ -25,6 +24,7 @@ export class SchulmanagerApp extends EgwApp
 	constructor()
 	{
 		super('schulmanager');
+
 	}
 
 	/**
@@ -169,22 +169,16 @@ export class SchulmanagerApp extends EgwApp
 	exportpdf_nbericht_prepare(_id, _widget){
 		let modal = document.getElementById("schulmanager-notenmanager-klassenview_showexportmodal");
 		modal.style.display = "block";
-
 		let func = 'schulmanager.schulmanager_ui.ajax_nbericht_prepare';
-
 		this.egw.json(func, [], function (result) {
-			let widget = <HTMLSelectElement> document.getElementById('schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent_klassleiter');
-
-			if(widget){
-				while (widget.firstChild) {
-					widget.removeChild(widget.firstChild);
-				}
+			if(_widget !== null) {
+				let select_klassleiter = _widget.getRoot().getWidgetById('klassleiter');
+				let options = [];
 				for (let key in result['klassleiter']){
-					let item = new SlMenuItem();
-					item.value = key;
-					item.innerText = result['klassleiter'][key];
-					widget.appendChild(item);
+					options.push({value:key, label: result['klassleiter'][key]});
 				}
+				select_klassleiter.set_select_options(options);
+				select_klassleiter.set_value(0);
 			}
 		}).sendRequest(true);
 	}
@@ -487,15 +481,22 @@ export class SchulmanagerApp extends EgwApp
 	/**
 	 * selectes teacher for a new substitution changed, reload list
 	 */
-	subs_TeacherChanged(_action, _senders)
+	subs_TeacherChanged(_action, _widget)
 	{
 		let et2 = this.et2;
 		let func = 'schulmanager.schulmanager_substitution_ui.ajax_getTeacherLessonList';
-		let teacher_id = _senders.value;
+		let teacher_id = _widget.value;
 		
 		this.egw.json(func, [teacher_id], function (result) {
-			let widget = <Et2Select> document.getElementById('schulmanager-substitution_add_lesson_list');
-					
+			let select_lesson = _widget.getRoot().getWidgetById('add_lesson_list');
+			let options = [];
+			for (let key in result){
+				options.push({value:key, label: result[key]});
+			}
+			select_lesson.set_select_options(options);
+			select_lesson.set_value(0);
+
+			/*let widget = <Et2Select> document.getElementById('schulmanager-substitution_add_lesson_list');
 			if(widget){
 				while (widget.firstChild) {
 					widget.removeChild(widget.firstChild);
@@ -506,7 +507,7 @@ export class SchulmanagerApp extends EgwApp
 					item.innerText = result[key];
 					widget.appendChild(item);
 				}
-			}
+			}*/
 		}).sendRequest(true);
 	}
 
@@ -586,19 +587,26 @@ export class SchulmanagerApp extends EgwApp
 	/**
 	 * select students for a new class changed, reload list
 	 */
-	onDetailsKlasseChanged(_action, _senders)
+	onDetailsKlasseChanged(_action, _widget)
 	{
 		let instance = this;
 		let egw = this.egw;
 		this.egw.loading_prompt('schulmanager',true,egw.lang('please wait...'));
 		let et2 = this.et2;
 		let func = 'schulmanager.schulmanager_ui.ajax_DetailsKlasseChanged';
-		let klasse_id = _senders.value;
+		let klasse_id = _widget.value;
 
 		this.egw.json(func, [klasse_id], function (result) {
 			// update schueler select
-			let widget = <Et2Select> document.getElementById('schulmanager-notenmanager-notendetails_select_schueler');
+			let select_schueler = _widget.getRoot().getWidgetById('select_schueler');
+			let options = [];
+			for (let key in result['select_schueler']){
+				options.push({value:key, label: result['select_schueler'][key]});
+			}
+			select_schueler.set_select_options(options);
+			select_schueler.set_value(0);
 
+			/*let widget = <Et2Select> document.getElementById('schulmanager-notenmanager-notendetails_select_schueler');
 			if(widget){
 				while (widget.firstChild) {
 					widget.removeChild(widget.firstChild);
@@ -609,7 +617,8 @@ export class SchulmanagerApp extends EgwApp
 					item.innerText =result['select_schueler'][key];
 					widget.appendChild(item);
 				}
-			}
+			}*/
+
 			delete(result['select_schueler']);
 
 			for (let key in result){
@@ -685,10 +694,10 @@ export class SchulmanagerApp extends EgwApp
 	/**
 	 * selectes teacher for a new substitution changed, reload list
 	 */
-	onDetailsNotenEdit(_action, _senders)
+	onDetailsNotenEdit(_action, _widget)
 	{
-		let idPostfix = _senders.id.substring(4)
-		let isGlnw = _senders.id.substring(5, 9) == 'glnw';
+		let idPostfix = _widget.id.substring(4)
+		let isGlnw = _widget.id.substring(5, 9) == 'glnw';
 		let modal = document.getElementById("schulmanager-notenmanager-notendetails_editcontentmodal");
 		modal.style.display = "block";
 
@@ -701,16 +710,17 @@ export class SchulmanagerApp extends EgwApp
 		// select GLNW and KLNW
 		let widgetTypeGKlnw = <HTMLLabelElement>document.getElementById('schulmanager-notenmanager-notendetails_details_noten' + idPostfix + '[art]');
 		if(widgetTypeGKlnw){
-			let selTypeGlnw = <Et2Select>document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_notgebart_glnw');
-			let selTypeKlnw = <Et2Select>document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_notgebart_klnw');
+			let selTypeGlnw = _widget.getRoot().getWidgetById('notgebart_glnw');
+			let selTypeKlnw = _widget.getRoot().getWidgetById('notgebart_klnw');
 
 			if(isGlnw) {
-				for (let i = 0; i < selTypeGlnw.menuItems.length; i++) {
-					if (selTypeGlnw.menuItems[i].innerText.trim() == widgetTypeGKlnw.value) {
+	/*			for (let i = 0; i < selTypeGlnw.sel_options.length; i++) {
+					if (selTypeGlnw.sel_options[i].innerText.trim() == widgetTypeGKlnw.value) {
 						selTypeGlnw.set_value(i);
 						break;
 					}
 				}
+	*/
 				selTypeGlnw.style.display = "block";
 				selTypeKlnw.set_value(0);
 				selTypeKlnw.style.display = "none";
@@ -722,13 +732,13 @@ export class SchulmanagerApp extends EgwApp
 				// end update style
 			}
 			else {
-				for (let i = 0; i < selTypeKlnw.menuItems.length; i++) {
+	/*			for (let i = 0; i < selTypeKlnw.menuItems.length; i++) {
 					if(selTypeKlnw.menuItems[i].innerText.trim() == widgetTypeGKlnw.value){
 						selTypeKlnw.set_value(i);
 						break;
 					}
 				}
-
+	*/
 				selTypeGlnw.set_value(0);
 				selTypeGlnw.style.display = "none";
 				selTypeKlnw.style.display = "block";
@@ -764,7 +774,7 @@ export class SchulmanagerApp extends EgwApp
 	 * @param _action
 	 * @param _senders
 	 */
-	onDetailsNotenCommit(_action, _senders)
+	onDetailsNotenCommit(_action, _widget)
 	{
 		let egw = this.egw;
 		let instance = this;
@@ -779,16 +789,19 @@ export class SchulmanagerApp extends EgwApp
 		let note_type = "0";
 
 		if(typeFlag == "glnw"){
-			let selTypeGlnw = <Et2Select>document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_notgebart_glnw');
+			let selTypeGlnw = _widget.getRoot().getWidgetById('notgebart_glnw');
+			//let selTypeGlnw = <Et2Select>document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_notgebart_glnw');
 			note_type = selTypeGlnw.value;
 
 		}
 		else if(typeFlag == "klnw"){
-			let selTypeKlnw = <Et2Select>document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_notgebart_klnw');
+			let selTypeKlnw = _widget.getRoot().getWidgetById('notgebart_klnw');
+			//let selTypeKlnw = <Et2Select>document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_notgebart_klnw');
 			note_type = selTypeKlnw.value;
 		}
 
-		let dateElement = <Et2Date> document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_edit_date');
+		let dateElement = _widget.getRoot().getWidgetById('edit_date');
+		//let dateElement = <Et2Date> document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_edit_date');
 		let note_date = dateElement.value;
 
 		let descElement = <HTMLInputElement> document.getElementById('schulmanager-notenmanager-notendetails_editcontentmodal_editcontent_edit_desc');
@@ -887,38 +900,30 @@ export class SchulmanagerApp extends EgwApp
 	 * @param _action
 	 * @param _senders
 	 */
-	onSchuelerViewKlasseChanged(_action, _senders)
+	onSchuelerViewKlasseChanged(_action, _widget)
 	{
 		let instance = this;
 		let et2 = this.et2;
 		let func = 'schulmanager.schulmanager_ui.ajax_schuelerViewKlasseChanged';
 		let klasse_id = 0;
+		let egw = this.egw;
 
-		if(_senders !== null){
-			klasse_id = _senders.value;
+		if(_widget !== null){
+			klasse_id = _widget.value;
 		}
 
 		this.egw.json(func, [klasse_id], function (result) {
-	//		let not_nm = <et2_nextmatch>et2.getWidgetById('not_nm');
-	//		not_nm.applyFilters();
-
-			// update schueler select
-			let widget = <HTMLSelectElement> document.getElementById('schulmanager-schuelerview_select_schueler');
-			if(widget){
-				while (widget.firstChild) {
-					widget.removeChild(widget.firstChild);
-				}
+			if(_widget !== null) {
+				let select_schueler = _widget.getRoot().getWidgetById('select_schueler');
+				let options = [];
 				for (let key in result['select_schueler']){
-					let item = new SlMenuItem();
-					item.value = key;
-					item.innerText = result['select_schueler'][key];
-					widget.appendChild(item);
+					options.push({value:key, label: result['select_schueler'][key]});
 				}
+				select_schueler.set_select_options(options);
+				select_schueler.set_value(0);
 			}
 			delete(result['select_schueler']);
-
 			instance.schuelerViewUpdate(instance, result);
-
 		}).sendRequest(true);
 	}
 
@@ -927,26 +932,11 @@ export class SchulmanagerApp extends EgwApp
 	 */
 	onSchuelerViewSchuelerChanged(_action, _senders) {
 		let instance = this;
-		//var egw = this.egw;
-		//this.egw.loading_prompt('schulmanager',true,egw.lang('please wait...'));
-
-
 		let et2 = this.et2;
 		let func = 'schulmanager.schulmanager_ui.ajax_schuelerViewSchuelerChanged';
 		let schueler_id = _senders.value;
-
 		this.egw.json(func, [schueler_id], function (result) {
-			/*
-			var sla_nm = <et2_nextmatch>et2.getWidgetById('sla_nm');
-			var sko_nm = <et2_nextmatch>et2.getWidgetById('sko_nm');
-			sla_nm.applyFilters('');
-			sko_nm.applyFilters('');
-			*/
-	//		let not_nm = <et2_nextmatch>et2.getWidgetById('not_nm');
-	//		not_nm.applyFilters();
-
 			instance.schuelerViewUpdate(instance, result);
-			//egw.loading_prompt('schulmanager',false);
 		}).sendRequest(true);
 	}
 

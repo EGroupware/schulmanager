@@ -1523,6 +1523,7 @@ class schulmanager_ui
         Api\Cache::setSession('schulmanager', 'klassen_schueler_list', $rows);
 
         $klassen_schueler_list = $this->extractSchuelerListFromRows($rows);
+
         $result['select_schueler'] = $klassen_schueler_list;
 
         $schueler_id = 0;
