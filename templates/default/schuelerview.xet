@@ -230,6 +230,10 @@
                 </row>
             </rows>
         </grid>
+        <et2-hbox disabled="!@isadmin">
+            <button statustext="LNW delete" label="Lnw 1. Hj löschen" id="button[dellnwpera]" image="delete" background_image="1" onclick="app.schulmanager.delLnwPerA"/>
+            <button statustext="LNW delete" label="Lnw 2. Hj löschen" id="button[dellnwperb]" image="delete" background_image="1" onclick="app.schulmanager.delLnwPerB"/>
+        </et2-hbox>
     </template>
 
     <template id="schulmanager.schuelerview" template="" lang="" group="0" version="0.0.001">
