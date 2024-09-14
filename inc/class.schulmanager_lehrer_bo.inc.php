@@ -37,6 +37,8 @@ class schulmanager_lehrer_bo
 	 */
 	var $so;
 
+    var $unterricht_so;
+
 	/**
 	 * @var int $user nummerical id of the current user-id
 	 */
@@ -48,14 +50,9 @@ class schulmanager_lehrer_bo
 	var $username=0;
 
 	/**
-	 * @var schulmanager_klassengr_schuelerfa $klassengr_schuelerfa array mit klassengruppen schuelerfach Kombinationen
+	 * @var schulmanager_klassengr_schuelerfa $lessons array mit klassengruppen schuelerfach Kombinationen
 	 */
-	var $klassengr_schuelerfa = null;
-
-    /**
-     * @var null array with classes where this teacher is class leader or has special access rights
-     */
-    //var $classLeaderClasses = null;
+	var $lessons = null;
 
     /**
      * instance of the bo-class
@@ -73,30 +70,22 @@ class schulmanager_lehrer_bo
 	{
 		if ($this->debug > 0) $this->debug_message('schulmanager_lehrer_bo::bocal() started',True);
 		$this->so = new schulmanager_lehrer_so();
+        $this->unterricht_so = new schulmanager_unterricht_so();
 		$this->username = $GLOBALS['egw_info']['user']['account_lid'];
         $lehrer_account_so = new schulmanager_lehrer_account_so();
         $this->lehrerStammIDs = $lehrer_account_so->loadLehrerStammIDs($GLOBALS['egw_info']['user']['account_id']);
-		$this->klassengr_schuelerfa = $this->so->loadUnterricht($this->lehrerStammIDs);
+        $this->lessons = $this->unterricht_so->loadLehrerUnterricht($this->lehrerStammIDs);
         $this->wl_bo = new schulmanager_werteliste_bo();
 	}
 
     /**
-     * his method returns all classes of this teacher. This teacher is the class leader, teaches the class or
-     * has special access rights
-     * @param $rows
-     */
-    function getSchuelerViewClassList(&$rows){
-        // TODO - coming soon
-    }
-
-    /**
-     * Creates an array with combinations of subjects and class group
+     * Creates an array of lessons, without combined lessen elements
      * @return array
      */
-	function getKlasseUnterrichtList(){
+	function getLessonList(){
 		$result = array();
-		foreach($this->klassengr_schuelerfa as $item){
-			$result[] = $item->getFormatKgSf();
+		foreach($this->lessons as $item){
+			$result[] = $item['bezeichnung'];
 		}
 		return $result;
 	}
@@ -141,27 +130,27 @@ class schulmanager_lehrer_bo
 			return;
 		}
 		else{
-			if(is_null($this->klassengr_schuelerfa)){
-				$this->getKlasseUnterrichtList();
+			if(is_null($this->lessons)){
+				$this->getLessonList();
 			}
-			elseif(empty($this->klassengr_schuelerfa)){
+			elseif(empty($this->lessons)){
                 $query_in['total'] = 0;
 				return;
 			}
-			$kg_asv_id = $this->klassengr_schuelerfa[$filter]->getKlassengruppe_asv_id();
-			$sf_asv_id = $this->klassengr_schuelerfa[$filter]->getSchuelerfach_asv_id();
+            $koppel_id = $this->lessons[$filter]['koppel_id'];
 
 			// Save in Session
-            Api\Cache::setSession('schulmanager', 'actual_klassengr_schuelerfa', $this->klassengr_schuelerfa[$filter]);
-			Api\Cache::setSession('schulmanager', 'filter_klassengruppe_asv_id', $kg_asv_id);
-			Api\Cache::setSession('schulmanager', 'filter_schuelerfach_asv_id', $sf_asv_id);
+            Api\Cache::setSession('schulmanager', 'actual_lesson', $this->lessons[$filter]);
+            Api\Cache::setSession('schulmanager', 'filter_koppel_id', $koppel_id);
 
 			// Gewichtungen
 			$gewichtungen = array();
 			$gew_bo = new schulmanager_note_gew_bo();
-			$gew_bo->loadGewichtungen($kg_asv_id, $sf_asv_id, $gewichtungen);
+			//$gew_bo->loadGewichtungen($kg_asv_id, $sf_asv_id, $gewichtungen);
+            $gew_bo->loadGewichtungen($koppel_id, $gewichtungen);
 			Api\Cache::setSession('schulmanager', 'notenmanager_gewichtungen', $gewichtungen);
-			$total = $this->so->loadSchuelerNotenList($query_in, $kg_asv_id, $sf_asv_id, $rows, $gewichtungen);
+
+            $total = $this->unterricht_so->loadSchuelerNotenList($query_in, $koppel_id, $rows, $gewichtungen);
 
 			// Gewichtungen in rows schreiben
 			foreach($gewichtungen as $gewKey => $gewVal){

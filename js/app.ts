@@ -44,7 +44,7 @@ export class SchulmanagerApp extends EgwApp
             this.header_change();
 		}
 		if (name == 'schulmanager.notenmanager.edit') {
-            //this.header_change();
+            this.toggleEditGradesInput(true);
         }
 		if (name == 'schulmanager.calendar.index') {
 			this.cal_header_change();
@@ -261,7 +261,6 @@ export class SchulmanagerApp extends EgwApp
 
 	cal_focus_item(_action, widget)
 	{
-		//alert(widget.getDOMNode());
 		let _send = function() {
 			egw().json(
 				'schulmanager.schulmanager_cal_ui.ajax_editCalEvent',
@@ -271,7 +270,6 @@ export class SchulmanagerApp extends EgwApp
 				// Remove loading spinner
 				function(result) {					
 					jQuery(_action).blur();
-					//alert(result['test']);
 				}
 			).sendRequest(true);
 		};
@@ -397,22 +395,22 @@ export class SchulmanagerApp extends EgwApp
 			}
 		}
 		this.egw.json(func, [noteKey, noteVal, token, note_date, note_type, note_desc], function (result) {
-			jQuery(action).addClass('schulmanager_note_changed');
-			for (let key in result){
-				if(key == 'error_msg'){
-					alert("Error:\n\t"+result[key]);
-					break;
-				}
-
-				let cssAvgKey = 'schulmanager-notenmanager-edit_'+key+'[-1][note]';
-				let widget = <HTMLInputElement> document.getElementById(cssAvgKey);
-				if(widget){
-					widget.value = result[key]['[-1][note]'];
-					if(action.id == cssAvgKey){
-						// reset css class if this input value has been modified
-						jQuery(action).removeClass('nm_avg_manuell');
-						jQuery(action).removeClass('nm_avg_auto');
-						jQuery(action).addClass(result[key]['avgclass']);
+			if(result.error_msg){
+				egw(window).message(result.error_msg, 'error');
+			}
+			else{
+				jQuery(action).addClass('schulmanager_note_changed');
+				for (let key in result){
+					let cssAvgKey = 'schulmanager-notenmanager-edit_'+key+'[-1][note]';
+					let widget = <HTMLInputElement> document.getElementById(cssAvgKey);
+					if(widget){
+						widget.value = result[key]['[-1][note]'];
+						if(action.id == cssAvgKey){
+							// reset css class if this input value has been modified
+							jQuery(action).removeClass('nm_avg_manuell');
+							jQuery(action).removeClass('nm_avg_auto');
+							jQuery(action).addClass(result[key]['avgclass']);
+						}
 					}
 				}
 			}
@@ -1147,9 +1145,49 @@ export class SchulmanagerApp extends EgwApp
 			}
 		}, egw.lang('Confirmation required'), egw.lang('Absolut sicher, dass alle Noten gelöscht werden sollen?'), {}, et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.QUESTION_MESSAGE);
 	}
+
+	/**
+	 *
+	 * @param action
+	 * @param widget
+	 */
+	onNotGebArtChanged(action, widget){
+		let index = widget.getValue();
+		let readonlyKLNW = index == 0;
+		this.toggleEditGradesInput(readonlyKLNW);
+	}
+
+	toggleEditGradesInput(readonlyKLNW){
+		for(let row = 1; row <= 40; row++){
+			for(let i = 0; i < 12; i++){
+				let inputItem1 = <HTMLInputElement>document.getElementById('schulmanager-notenmanager-edit_' + row + '[noten][klnw_hj_1][' + i + '][note]');
+				if(!inputItem1){
+					return;	// no more lines
+				}
+				let inputItem2 = <HTMLInputElement>document.getElementById('schulmanager-notenmanager-edit_' + row + '[noten][klnw_hj_2][' + i + '][note]');
+				if(readonlyKLNW){
+					inputItem1.readOnly = true;
+					inputItem2.readOnly = true;
+				}
+				else{
+					inputItem1.removeAttribute("readonly");
+					inputItem2.removeAttribute("readonly");
+				}
+			}
+			for(let i = 0; i < 3; i++){
+				let inputItem1 = <HTMLInputElement>document.getElementById('schulmanager-notenmanager-edit_' + row + '[noten][glnw_hj_1][' + i + '][note]');
+				let inputItem2 = <HTMLInputElement>document.getElementById('schulmanager-notenmanager-edit_' + row + '[noten][glnw_hj_2][' + i + '][note]');
+				if(readonlyKLNW){
+					inputItem1.removeAttribute("readonly");
+					inputItem2.removeAttribute("readonly");
+				}
+				else{
+					inputItem1.readOnly = true;
+					inputItem2.readOnly = true;
+				}
+			}
+		}
+	}
 }
 
 app.classes.schulmanager = SchulmanagerApp;
-
-
-

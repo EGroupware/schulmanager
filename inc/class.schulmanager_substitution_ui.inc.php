@@ -35,9 +35,14 @@ class schulmanager_substitution_ui
 	var $bo;
 
 	/**
-	 * @var chulmanager_lehrer_so
+	 * @var schulmanager_lehrer_so
 	 */
 	var $schulmanager_lehrer_so;
+
+    /**
+     * @var unterricht_so
+     */
+    var $unterricht_so;
 
 	/**
 	 * Constructor
@@ -47,6 +52,7 @@ class schulmanager_substitution_ui
 	{		
 		$this->bo = new schulmanager_substitution_bo();
 		$this->schulmanager_lehrer_so = new schulmanager_lehrer_so();
+        $this->unterricht_so = new schulmanager_unterricht_so();
 	}
 
 	/**
@@ -280,13 +286,12 @@ class schulmanager_substitution_ui
         $lehrer_account_so = new schulmanager_lehrer_account_so();
         $lehrerStammIDs = $lehrer_account_so->loadLehrerStammIDs($teacher_id);
 
-        // TODO
-	    $lessonList = $this->schulmanager_lehrer_so->loadUnterricht($lehrerStammIDs);
+        $lessonList = $this->unterricht_so->loadLehrerUnterricht($lehrerStammIDs);
 	   	   
 	    Api\Cache::setSession('schulmanager', 'substitution_lesson_list', $lessonList);
 	    $result = array();
 	    foreach($lessonList AS $key => $lesson){
-	        $result[$key] = $lesson->getFormatKgSf();
+	        $result[$key] = $lesson['bezeichnung'];
 	    }
 	    Api\Json\Response::get()->data($result);
 	}
@@ -310,7 +315,6 @@ class schulmanager_substitution_ui
             Api\Cache::unsetSession('schulmanager', 'substitution_rows');
             Api\Cache::unsetSession('schulmanager', 'substitution_lesson_list');
 
-            //$content = array();
             $content['nm'] = array();
             $content['msg'] = $msg;
 

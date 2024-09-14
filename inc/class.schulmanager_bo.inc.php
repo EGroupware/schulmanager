@@ -30,12 +30,6 @@ class schulmanager_bo
 	 */
 	var $myLehrer;
 
-	/**
-	 * lehrer bo object
-	 * @var schulmanager_lehrer_bo
-	 */
-	var $klassenFachList = array();
-
     /**
      * lehrer stamm ids
      * @var array|NULL
@@ -76,7 +70,7 @@ class schulmanager_bo
      */
 	function getKlassenFachList()
 	{
-		return $this->myLehrer->getKlasseUnterrichtList();
+		return $this->myLehrer->getLessonList();
 	}
 
 	/**
@@ -89,15 +83,6 @@ class schulmanager_bo
 	{
         $this->myLehrer->getSchuelerNotenList($query_in, $rows);
 	}
-
-    /**
-     * This method loads all classes of this teacher. This teacher is the class leader, teaches the class or
-     * has special access rights
-     * @param $rows
-     */
-    function getSchuelerViewClassList(&$rows){
-        $this->myLehrer->getSchuelerViewClassList($rows);
-    }
 
 	/**
      * THis method loads all relevant class lists
@@ -118,26 +103,18 @@ class schulmanager_bo
      * @return void
      */
     function revalidateGrades($st_asv_id){
-        $schueler_so = new schulmanager_schueler_so();
-
-        $kg_asv_ids = array();
-        $sf_asv_ids = array();
-
-        $schueler_so->getKlassenGruppen($st_asv_id, $kg_asv_ids);
-        $schueler_so->getSchuelerFaecher($st_asv_id, $sf_asv_ids);
+        $unterricht_so = new schulmanager_unterricht_so();
+        $unts = $unterricht_so->loadSchuelerUnterricht($st_asv_id);
 
         $gew_bo = new schulmanager_note_gew_bo();
-        $lehrer_so = new schulmanager_lehrer_so();
         $query_in = array(
             'total' => 1000,
         );
-        foreach($kg_asv_ids as $kg_asv_id){
-            foreach($sf_asv_ids as $sf_asv_id){
-                $gewichtungen = array();
-                $rows = array();
-                $gew_bo->loadGewichtungen($kg_asv_id, $sf_asv_id, $gewichtungen);
-                $lehrer_so->loadSchuelerNotenList($query_in, $kg_asv_id, $sf_asv_id, $rows, $gewichtungen);
-            }
+        foreach($unts as $unt){
+            $gewichtungen = array();
+            $rows = array();
+            $gew_bo->loadGewichtungen($unt['koppel_id'], $gewichtungen);
+            $unterricht_so->loadSchuelerNotenList($query_in, $unt['koppel_id'], $rows, $gewichtungen);
         }
     }
 
@@ -151,8 +128,7 @@ class schulmanager_bo
 		$modified_records = Api\Cache::getSession('schulmanager', 'notenmanager_modified_records');
 		$modified_gewichtung = Api\Cache::getSession('schulmanager', 'notenmanager_modified_gewichtung');
 		$session_rows = Api\Cache::getSession('schulmanager', 'notenmanager_rows');
-		$klassengruppe_asv_id = Api\Cache::getSession('schulmanager', 'filter_klassengruppe_asv_id');
-		$schuelerfach_asv_id = Api\Cache::getSession('schulmanager', 'filter_schuelerfach_asv_id');
+        $koppel_id = Api\Cache::getSession('schulmanager', 'filter_koppel_id');
 
 		// grades eight has been modified
 		if(isset($modified_gewichtung)){
@@ -162,8 +138,8 @@ class schulmanager_bo
 				$index = -1;
 
 				$this->splitGewichtungKey($key, $block, $index);
-				if(isset($schuelerfach_asv_id)){
-					$note_gew_bo->save($gew, $klassengruppe_asv_id, $schuelerfach_asv_id, $block, $index);
+				if(isset($koppel_id)){
+					$note_gew_bo->save($gew, $koppel_id, $block, $index);
 				}
 			}
 		}
@@ -179,18 +155,20 @@ class schulmanager_bo
 
 				$this->splitRecordRowKey($key, $row_id, $block, $block_index);
 
-				$schueler_schuljahr_asv_id = $session_rows[$row_id]['nm_st']['sch_schuljahr_asv_id'];
+                $schueler_id = $session_rows[$row_id]['nm_st']['st_asv_id'];
 				$note_id = $session_rows[$row_id]['noten'][$block][$block_index]['note_id'];
 				$asv_id = $session_rows[$row_id]['noten'][$block][$block_index]['asv_id'];
-				if(isset($schueler_schuljahr_asv_id)){
+				if(isset($schueler_id) && isset($koppel_id)){
 					$note = array(
-						'note_asv_schueler_schuljahr_id' => $schueler_schuljahr_asv_id,
-						'note_asv_schueler_schuelerfach_id' => $schuelerfach_asv_id,
+						'note_asv_schueler_schuljahr_id' => 'x',
+						'note_asv_schueler_schuelerfach_id' => 'x',
 						'note_blockbezeichner' => $block,
 						'note_index_im_block' => $block_index,
 						'note_note' => $value['val'],
 						'note_asv_id' => $asv_id,
 						'note_asv_note_manuell' => $block_index == -1,
+                        'koppel_id' => $koppel_id,
+                        'schueler_id' => $schueler_id,
 					);
 
 					// apply input info
@@ -209,7 +187,7 @@ class schulmanager_bo
 	}
 
 	/**
-	 * This methos creates import file for ASV-Import-Interface
+	 * This method creates import file for ASV-Import-Interface
      * https://www.asv.bayern.de/doku/_export/pdf/alle/schnittstellen/xml_sst/zeugnisnotenimport/anleitung_fuer_schulen/start?rev=0
 	 * @param int $period 1 = zwischenzeugnis, 2 jahreszeugnis
 	 * @return string
@@ -294,13 +272,13 @@ class schulmanager_bo
     function getSchulleitung(){
         $config = Api\Config::read('schulmanager');
         $sl = $config['schulleiter'];
-        return $this->myLehrer->getTeacherByEGWUserID($sl[0]);
+        return $this->myLehrer->getTeacherByEGWUserID($sl);
     }
 
     function getSchulleitung_Stlvtr(){
         $config = Api\Config::read('schulmanager');
         $stlvtr = $config['schulleiter_stlvtr'];
-        return $this->myLehrer->getTeacherByEGWUserID($stlvtr[0]);
+        return $this->myLehrer->getTeacherByEGWUserID($stlvtr);
     }
 
     function getSchulleitung_Mitarb(){

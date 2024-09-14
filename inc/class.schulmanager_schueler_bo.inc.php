@@ -43,12 +43,13 @@ class schulmanager_schueler_bo{
 	 * @param type $rows
 	 */
 	function getNotenAbstract($schueler, &$rows, $rowid, $short = false){
-		$schueler_schuljahr_id = $schueler['nm_st']['sch_schuljahr_asv_id'];
+        $note_so = new schulmanager_note_so();
+		$schueler_id = $schueler['nm_st']['st_asv_id'];
         if($short){
-            $this->so->getNotenAbstractShort($schueler_schuljahr_id, $rows, $rowid);
+            $note_so->getNotenAbstractShort($schueler_id, $rows, $rowid);
         }
         else{
-            $this->so->getNotenAbstract($schueler_schuljahr_id, $rows, $rowid);
+            $note_so->getNotenAbstract($schueler_id, $rows, $rowid);
         }
 	}
 
@@ -58,30 +59,31 @@ class schulmanager_schueler_bo{
      * @return void
      */
     function loadSubjectsAndGrades(&$schueler){
-        $lehrer_so = new schulmanager_lehrer_so();
         $gew_bo = new schulmanager_note_gew_bo();
+        $unterricht_so = new schulmanager_unterricht_so();
+        $note_bo = new schulmanager_note_bo();
+        $note_so = new schulmanager_note_so();
         // load subjects
-        $faecher = array();
-        $this->so->getSchuelerFaecherData($schueler['nm_st']['st_asv_id'], $faecher);
 
         $kgs = array();
         $this->so->getKlassenGruppen($schueler['nm_st']['st_asv_id'], $kgs);
+
+        $faecher = $unterricht_so->loadSchuelerUnterricht($schueler['nm_st']['st_asv_id']);
 
         // load grades
         $schueler['faecher'] = array();
         $fachIndex = 0;
         foreach($faecher as $key => $fach){
-            $fach['noten'] = $lehrer_so->getNotenTemplate();
-            $lehrer_so->loadNotenBySchuljahrFach($schueler['nm_st']['sch_schuljahr_asv_id'], $fach['sf_asv_id'], $fach);
+            $fach['noten'] = $note_bo->getNotenTemplate();
+
+            $note_so->loadNotenBySchueler($schueler['nm_st']['st_asv_id'], $fach['koppel_id'], $fach);
 
             // load weights
             $gewichtungen = array();
-
-            $gew_bo->loadGewichtungen($kgs[0], $fach['sf_asv_id'], $gewichtungen);
+            $gew_bo->loadGewichtungen($fach['koppel_id'], $gewichtungen);
             $fach['gew'] = $gewichtungen;
             // get teacher
-            $teacher = array();
-            $lehrer_so->getLehrerByUnterricht($kgs[0], $fach['sf_asv_id'], $teacher);
+            $teacher = $unterricht_so->loadUnterrichtLehrer($schueler['nm_st']['st_asv_id'], $fach['untart'], $fach['belegart_id'], $fach['sf_asv_id']);
             $fach['teacher'] = $teacher;
 
             $schueler['faecher'][$fachIndex] = $fach;

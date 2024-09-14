@@ -43,13 +43,13 @@ class schulmanager_note_gew_bo
 	}
 
     /**
-     * Load all weights by subject and class group
-	 * @param type $asv_schueler_schuljahr_id
-	 * @param type $asv_schuelerfach_id
-	 * @param type $rows
-	 */
-	function &loadGewichtungen($kg_asv_id, $sf_asv_id, &$gewichtungen){
-		$this->so->load($kg_asv_id, $sf_asv_id, $gewichtungen);
+     * Load all weights
+     * @param $koppel_id
+     * @param $gewichtungen
+     * @return void
+     */
+	function &loadGewichtungen($koppel_id, &$gewichtungen){
+		$this->so->load($koppel_id, $gewichtungen);
 	}
 
 	/**
@@ -58,8 +58,8 @@ class schulmanager_note_gew_bo
 	 * @param array note
 	 * @return string msg if somthing went wrong; nothing if all right
 	 */
-	function save($gew, $kg_id, $sf_id, $blockbezeichner, $index_im_block)
+	function save($gew, $koppel_id, $blockbezeichner, $index_im_block)
 	{
-		$this->so->saveItem($gew, $kg_id, $sf_id, $blockbezeichner, $index_im_block);
+		$this->so->saveItem($gew, $koppel_id, $blockbezeichner, $index_im_block);
 	}
 }

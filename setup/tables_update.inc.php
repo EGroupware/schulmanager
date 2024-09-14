@@ -479,6 +479,112 @@ function schulmanager_upgrade21_1()
     return $GLOBALS['setup_info']['schulmanager']['currentver'] = '23.1.20231207';
 }
 
+function schulmanager_upgrade23_1_20231207()
+{
+    $GLOBALS['egw_setup']->oProc->query("DELETE FROM egw_schulmanager_config WHERE cnf_key = '#FACH_ORDER#' AND cnf_val = 'Ch' AND cnf_extra = '043'");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'C',  '043')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'SpInf',  '041')");
+    $GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_schulmanager_config (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'Smw',  '102')");
+
+    $GLOBALS['egw_setup']->oProc->DropColumn('egw_schulmanager_note_gew',array(
+        'fd' => array(
+            'ngew_id' => array('type' => 'auto','nullable' => False,'comment' => 'Note id'),
+            'ngew_asv_klassengruppe_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schuelerfach_id'),
+            'ngew_blockbezeichner' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.blockbezeichner'),
+            'ngew_index_im_block' => array('type' => 'int','precision' => '11','default' => '1', 'comment' => 'index im block'),
+            'ngew_gew' => array('type' => 'varchar','precision' => '10','nullable' => False,'comment' => 'notenwert'),
+            'ngew_create_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'create date'),
+            'ngew_create_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'create user'),
+            'ngew_update_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'update date'),
+            'ngew_update_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'update user'),
+        ),
+        'pk' => array('ngew_id'),
+        'fk' => array(),
+        'ix' => array(),
+        'uc' => array()
+    ), 'ngew_asv_schueler_schuelerfach_id');
+
+    $GLOBALS['egw_setup']->oProc->DropColumn('egw_schulmanager_note_gew',array(
+        'fd' => array(
+            'ngew_id' => array('type' => 'auto','nullable' => False,'comment' => 'Note id'),
+            'ngew_blockbezeichner' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.blockbezeichner'),
+            'ngew_index_im_block' => array('type' => 'int','precision' => '11','default' => '1', 'comment' => 'index im block'),
+            'ngew_gew' => array('type' => 'varchar','precision' => '10','nullable' => False,'comment' => 'notenwert'),
+            'ngew_create_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'create date'),
+            'ngew_create_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'create user'),
+            'ngew_update_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'update date'),
+            'ngew_update_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'update user'),
+        ),
+        'pk' => array('ngew_id'),
+        'fk' => array(),
+        'ix' => array(),
+        'uc' => array()
+    ), 'ngew_asv_klassengruppe_id');
+
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_note_gew','koppel_id',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'));
+
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_note','koppel_id',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'));
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_note','schueler_id',array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id schueler'));
+
+    $GLOBALS['egw_setup']->oProc->DropTable('egw_schulmanager_substitution');
+    $GLOBALS['egw_setup']->oProc->CreateTable('egw_schulmanager_substitution', array(
+        'fd' => array(
+            'subs_id' => array('type' => 'auto','nullable' => False,'comment' => ''),
+            'subs_asv_kennung' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => ''),
+            'subs_asv_kennung_orig' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => ''),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'),
+            'bezeichnung' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'description'),
+        ),
+        'pk' => array('subs_id'),
+        'fk' => array(),
+        'ix' => array(),
+        'uc' => array()
+    ));
+
+    $GLOBALS['egw_setup']->oProc->CreateTable('egw_schulmanager_unterrichtselement2', array(
+        'fd' => array(
+            'unt_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID aus ASV'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Koppel oder Unterrichtselement'),
+            'bezeichnung' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'Bezeichnung'),
+            'kg_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Klassengruppe'),
+            'untart_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Unterrichtsart'),
+            'fach_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Schuelerfach'),
+        ),
+        'pk' => array('unt_id'),
+        'fk' => array(),
+        'ix' => array('koppel_id'),
+        'uc' => array()
+    ));
+
+    $GLOBALS['egw_setup']->oProc->CreateTable('egw_schulmanager_unterrichtselement2_lehrer', array(
+        'fd' => array(
+            'unt_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID aus ASV'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Koppel oder Unterrichtselement'),
+            'lehrer_stamm_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Lehrer'),
+        ),
+        'pk' => array('unt_id','lehrer_stamm_id'),
+        'fk' => array(),
+        'ix' => array('koppel_id','lehrer_stamm_id'),
+        'uc' => array()
+    ));
+
+    $GLOBALS['egw_setup']->oProc->CreateTable('egw_schulmanager_unterrichtselement2_schueler', array(
+        'fd' => array(
+            'unt_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID aus ASV'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Koppel oder Unterrichtselement'),
+            'schueler_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Schueler'),
+            'belegart_id' => array('type' => 'varchar','precision' => '40','nullable' => True,'comment' => 'ID Belegungsart'),
+            'untart' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'Unterrichtsart'),
+        ),
+        'pk' => array('unt_id','schueler_id'),
+        'fk' => array(),
+        'ix' => array('koppel_id','schueler_id'),
+        'uc' => array()
+    ));
+
+    return $GLOBALS['setup_info']['schulmanager']['currentver'] = '23.1.20240909';
+}
+
 
 
 
