@@ -213,8 +213,8 @@
 					</et2-vbox>
 					<et2-vbox class="sm_col_avg">
 						<et2-hbox>
-							<et2-description id="${row}[noten][glnw_hj_1][-1][label]" class="$row_cont[noten][glnw_hj_1][avgclass] schulmanager_note_input sm_nm_glnw" align="center"></et2-description>
-							<et2-description id="${row}[noten][klnw_hj_1][-1][label]" class="$row_cont[noten][klnw_hj_1][avgclass] schulmanager_note_input sm_nm_klnw" align="center"></et2-description>
+							<et2-description id="${row}[noten][glnw_hj_1][-1][label]" class="$row_cont[noten][glnw_hj_1][avgclass] schulmanager_note_input sm_nm_glnw_avg" align="center"></et2-description>
+							<et2-description id="${row}[noten][klnw_hj_1][-1][label]" class="$row_cont[noten][klnw_hj_1][avgclass] schulmanager_note_input sm_nm_klnw_avg" align="center"></et2-description>
 						</et2-hbox>
 					</et2-vbox>
 					<et2-hbox class="sm_col_note">
@@ -258,8 +258,8 @@
 						</et2-hbox>
 					</et2-vbox>
 					<et2-hbox class="sm_col_avg">
-						<et2-description id="${row}[noten][glnw_hj_2][-1][label]" class="$row_cont[noten][glnw_hj_2][avgclass] schulmanager_note_input sm_nm_glnw" align="center"></et2-description>
-						<et2-description id="${row}[noten][klnw_hj_2][-1][label]" class="$row_cont[noten][klnw_hj_2][avgclass] schulmanager_note_input sm_nm_klnw" align="center"></et2-description>
+						<et2-description id="${row}[noten][glnw_hj_2][-1][label]" class="$row_cont[noten][glnw_hj_2][avgclass] schulmanager_note_input sm_nm_glnw_avg" align="center"></et2-description>
+						<et2-description id="${row}[noten][klnw_hj_2][-1][label]" class="$row_cont[noten][klnw_hj_2][avgclass] schulmanager_note_input sm_nm_klnw_avg" align="center"></et2-description>
 					</et2-hbox>
 					<et2-hbox class="sm_col_note">
 						<et2-description id="${row}[noten][schnitt_hj_2][-1][label]" class="$row_cont[noten][schnitt_hj_2][avgclass] schulmanager_note_input sm_nm_znote_schnitt"  align="center"></et2-description>

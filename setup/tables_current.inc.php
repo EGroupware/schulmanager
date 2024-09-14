@@ -215,6 +215,8 @@ $phpgw_baseline = array(
             'note_art' => array('type' => 'varchar','precision' => '25','comment' => 'type of grade'),
             'note_definition_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'date of grade'),
             'note_description' => array('type' => 'varchar','precision' => '150','comment' => 'description'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'),
+            'schueler_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id schueler'),
         ),
         'pk' => array('note_id'),
         'fk' => array(),
@@ -264,8 +266,6 @@ $phpgw_baseline = array(
     'egw_schulmanager_note_gew' => array(
         'fd' => array(
             'ngew_id' => array('type' => 'auto','nullable' => False,'comment' => 'Note id'),
-            'ngew_asv_schueler_schuelerfach_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schuelerfach_id'),
-            'ngew_asv_klassengruppe_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schuelerfach_id'),
             'ngew_blockbezeichner' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.blockbezeichner'),
             'ngew_index_im_block' => array('type' => 'int','precision' => '11','nullable' => False, 'comment' => 'index im block'),
             'ngew_gew' => array('type' => 'varchar','precision' => '10','nullable' => False,'comment' => 'notenwert'),
@@ -273,6 +273,7 @@ $phpgw_baseline = array(
             'ngew_create_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'create user'),
             'ngew_update_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'update date'),
             'ngew_update_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'update user'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schuelerfach_id'),
         ),
         'pk' => array('ngew_id'),
         'fk' => array(),
@@ -336,13 +337,8 @@ $phpgw_baseline = array(
             'subs_id' => array('type' => 'auto','nullable' => False,'comment' => ''),
             'subs_asv_kennung' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => ''),
             'subs_asv_kennung_orig' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => ''),
-            'subs_kg_asv_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => ''),
-            'subs_kg_asv_kennung' => array('type' => 'varchar','precision' => '32','nullable' => False,'comment' => ''),
-            'subs_kl_asv_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => ''),
-            'subs_kl_asv_klassenname' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => ''),
-            'subs_sf_asv_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => ''),
-            'subs_sf_asv_kurzform' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => ''),
-            'subs_sf_asv_anzeigeform' => array('type' => 'varchar','precision' => '50','nullable' => False,'comment' => ''),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'),
+            'bezeichnung' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'description'),
         ),
         'pk' => array('subs_id'),
         'fk' => array(),
@@ -445,6 +441,50 @@ $phpgw_baseline = array(
         'fk' => array(),
         'ix' => array(),
         'uc' => array(array('sr_asv_schueler_stamm_id','sr_key'))
+    ),
+
+    // Unterrichtselemente 2
+    'egw_schulmanager_unterrichtselement2' => array(
+        'fd' => array(
+            'unt_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID aus ASV'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Koppel oder Unterrichtselement'),
+            'bezeichnung' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'Bezeichnung'),
+            'kg_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Klassengruppe'),
+            'untart_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Unterrichtsart'),
+            'fach_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Schuelerfach'),
+        ),
+        'pk' => array('unt_id'),
+        'fk' => array(),
+        'ix' => array('koppel_id'),
+        'uc' => array()
+    ),
+
+    // Unterrichtselemente 2 - Lehrer
+    'egw_schulmanager_unterrichtselement2_lehrer' => array(
+        'fd' => array(
+            'unt_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID aus ASV'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Koppel oder Unterrichtselement'),
+            'lehrer_stamm_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Lehrer'),
+        ),
+        'pk' => array('unt_id'),
+        'fk' => array(),
+        'ix' => array('koppel_id','lehrer_stamm_id'),
+        'uc' => array()
+    ),
+
+    // Unterrichtselemente 2 - Schueler
+    'egw_schulmanager_unterrichtselement2_schueler' => array(
+        'fd' => array(
+            'unt_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID aus ASV'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Koppel oder Unterrichtselement'),
+            'schueler_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Schueler'),
+            'belegart_id' => array('type' => 'varchar','precision' => '40','nullable' => True,'comment' => 'ID Belegungsart'),
+            'untart' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'Unterrichtsart'),
+        ),
+        'pk' => array('unt_id','schueler_id'),
+        'fk' => array(),
+        'ix' => array('koppel_id','schueler_id'),
+        'uc' => array()
     ),
 );
 

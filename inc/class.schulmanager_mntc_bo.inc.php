@@ -20,13 +20,11 @@ use EGroupware\Api;
 class schulmanager_mntc_bo
 {
 
-
     /**
      * Constructor Schulmanager BO
      */
     function __construct()
     {
-
     }
 
     /**
@@ -39,7 +37,11 @@ class schulmanager_mntc_bo
 
         $note_gew_so = new schulmanager_note_gew_so();
         $note_gew_so->truncate();
+
+        $sreportcontent_so = new schulmanager_sreportcontent_so();
+        $sreportcontent_so->truncate();
+
+        $substitution_so = new schulmanager_substitution_so();
+        $substitution_so->truncate();
     }
-
-
 }

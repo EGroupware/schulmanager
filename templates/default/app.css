@@ -87,6 +87,11 @@ table, td, th {
 	-moz-appearance: textfield;
 }
 
+.schulmanager_note_input[readonly]
+{
+	background-color: #ddd;
+}
+
 /** Chrome, Edge, Safari, Opera*/
 .sm_nm_gew_th_input::-webkit-outer-spin-button,
 .sm_nm_gew_th_input::-webkit-inner-spin-button,
@@ -151,7 +156,6 @@ table, td, th {
 .sm_col_glnw
 {
 	background-color: #fff47c;
-	/*min-height: 40px;*/
 }
 
 .sm_nm_glnw
@@ -160,7 +164,19 @@ table, td, th {
 	background-color: #fff9ba;
 	border-color: #ffdd00;
 	min-height: 19px;
+	/*width: 30px !important;*/
 }
+
+.sm_nm_glnw_avg
+{
+	font-weight: bold;
+	background-color: #fff9ba;
+	border-color: #ffdd00;
+	min-height: 19px;
+	width: 40px !important;
+}
+
+
 
 /* klnw */
 /*#schulmanager-notenmanager-index_nm table tr td:nth-child(5),
@@ -179,6 +195,14 @@ table, td, th {
 	background-color: #beeaac;
 	border-color: #7ecc67;
 	min-height: 19px;
+}
+
+.sm_nm_klnw_avg
+{
+	background-color: #beeaac;
+	border-color: #7ecc67;
+	min-height: 19px;
+	width: 40px !important;
 }
 
 /* Schnitte */
@@ -222,12 +246,15 @@ table, td, th {
 {
 	background-color: #b0bec5;
 	border-color: #0077c2;
+	width:40px !important;
+	min-height: 19px;
 }
 .sm_nm_znote
 {
 	/*background-color: #ff9761;*/
 	background-color: #80d6ff;
 	border-color: #0077c2;
+	width:40px !important;
 }
 .sm_nm_znote_note
 {
@@ -252,6 +279,7 @@ table, td, th {
 	/*background-color: #efefef;*/
 	background-color: #bdbdbd;
 	border-color: #8d8d8d;
+	min-height: 19px;
 }
 
 /* ausgetretene Schüler */

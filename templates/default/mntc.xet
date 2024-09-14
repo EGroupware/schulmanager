@@ -20,10 +20,10 @@
                 </row>
                 <row class="$row_cont[class]">
                     <vbox>
-                        <button statustext="Alle Noten entfernen" label="Alle Noten entfernen" id="button[resetAllGrades]" onclick="app.schulmanager.resetAllGrades" background_image="true"/>
+                        <button statustext="schuljahrspezifische Eingaben entfernen" label="schuljahrspezifische Eingaben entfernen" id="button[resetAllGrades]" onclick="app.schulmanager.resetAllGrades" background_image="true"/>
                     </vbox>
                     <vbox>
-                        <description value="Alle Noten und Gewichtungen werden gelöscht!"  no_lang="1"/>
+                        <description value="Alle Noten, Gewichtungen, Gefährdungen und Vertretungen werden gelöscht!"  no_lang="1"/>
                     </vbox>
                 </row>
             </rows>

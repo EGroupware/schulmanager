@@ -54,30 +54,6 @@ class schulmanager_werteliste_bo {
     }
 
     /**
-     * @return array|mixed|null
-     * @deprecated
-     */
-    public static function loadWLNotGebArt(bool $onlyKeyVal = false){
-        $result = array();
-        $wl = Api\Cache::getSession('schulmanager', 'wl_NOTGEBART');
-        if(!isset($wl)) {
-            self::loadWerteliste('NOTGEBART', $wl, true);
-        }
-
-        foreach($wl as $w) {
-            if($onlyKeyVal){
-                // for select control
-                $result[$w['asv_wert_id']] = $w['asv_wert_anzeigeform'];
-            }
-            else{
-                $result[] = $w;
-            }
-        }
-        return $result;
-    }
-
-
-    /**
      * Gefaehrdung
      * @param bool $onlyKeyVal
      * @return false|string[]
@@ -101,10 +77,6 @@ class schulmanager_werteliste_bo {
         }
         return $result;
     }
-
-
-
-
 
     /**
      * determines grades type

@@ -307,9 +307,9 @@ class schulmanager_ui
         $sel_options['select_klasse'] = $this->bo->getKlassenFachList();
         $sel_options['select_schueler'] = array();
 
-        // todo testen, ob filter isset
+
         $content['select_klasse'] = Api\Cache::getSession('schulmanager', 'filter');
-        // TODO
+
         $selected_schueler_index = Api\Cache::getSession('schulmanager', 'details_filter_schueler');
         if(!isset($selected_schueler_index)){
             $selected_schueler_index = 0;
@@ -323,7 +323,7 @@ class schulmanager_ui
         $content['select_schueler'] = $selected_schueler_index;
         $rows = Api\Cache::getSession('schulmanager', 'notenmanager_rows');
 
-        $sel_options['select_schueler'] = $this->extractSchuelerListFromRows($rows);
+        $sel_options['select_schueler'] = $this->extractSchuelerListFromRows($rows, true);
 
         $this->extractSchuelerDataFromRows($content, $rows, $selected_schueler_index);
 
@@ -455,6 +455,8 @@ class schulmanager_ui
         //$content['nm']['token'] = $xrsf_token;
         $content['token'] = $xrsf_token;
 
+        $content['klnwReadOnly'] = "false";
+
         $content['inputinfo']['date'] = new DateTime();
         $content['inputinfo']['desc'] = '';
 
@@ -573,7 +575,6 @@ class schulmanager_ui
             $mime = '';
 
             $length = 0;
-            // public static function safe(&$content, $path, &$mime='', &$length=0, $nocache=true, $force_download=true, $no_content_type=false)
             Api\Header\Content::safe($xmlData, $path, $mime, $length, True, True);
             echo $this->bo->asvNotenExport(2);
         }
@@ -697,19 +698,10 @@ class schulmanager_ui
             Api\Cache::setSession('schulmanager', 'klassen_schueler_list', $rows);
         }
         elseif(array_key_exists('col_filter', $query_in) && isset( $query_in['col_filter']['schueler_id'])){ //array_key_exists('schueler_id', $query_in['col_filter'])){
-            //$query_in['test'] = $query_in['col_filter'];
             $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
-            //$schueler_index = $query_in['col_filter']['schueler_id'] -1;
             $schueler = $klassen_schueler_list[$query_in['col_filter']['schueler_id']];
             $this->schueler_bo->getNotenAbstract($schueler, $rows, $query_in['col_filter']['schueler_id']);
         }
-        /*else{
-             //= $query_in['filter'];
-            Api\Cache::setSession('schulmanager', 'klassen_filter_id', $query_in['filter']);
-            $this->bo->getKlassenSchuelerList($query_in,$rows,$readonlys,$id_only);
-            Api\Cache::setSession('schulmanager', 'klassen_schueler_list', $rows);
-        }*/
-
         return count($rows);
     }
 
@@ -719,13 +711,12 @@ class schulmanager_ui
      * @throws Api\Json\Exception
      */
     function ajax_getGewichtungen($query) {
-        $kg_asv_id = Api\Cache::getSession('schulmanager', 'filter_klassengruppe_asv_id');
-        $sf_asv_id = Api\Cache::getSession('schulmanager', 'filter_schuelerfach_asv_id');
+        $koppel_id = Api\Cache::getSession('schulmanager', 'filter_koppel_id');
 
         // Gewichtungen
         $gewichtungen = array();
         $gew_bo = new schulmanager_note_gew_bo();
-        $gew_bo->loadGewichtungen($kg_asv_id, $sf_asv_id, $gewichtungen);
+        $gew_bo->loadGewichtungen($koppel_id, $gewichtungen);
 
         $result = array();
         foreach($gewichtungen AS $key => $gew){
@@ -741,11 +732,13 @@ class schulmanager_ui
      * @param type $noteKey
      * @param type $noteVal
      */
-    function ajax_noteModified($noteKey, $noteVal, $token, $definition_date, $art, $description) {
+    function ajax_noteModified($noteKey, $noteVal, $token, $definition_date, $art, $description)
+    {
         $result = array();
+        $note_bo = new schulmanager_note_bo();
 
         // xsrf check
-        if(!$this->checkToken('token_note_modified', $token)){
+        if (!$this->checkToken('token_note_modified', $token)) {
             $result['error_msg'] = 'ERROR: could not submit date!';
             Api\Json\Response::get()->data($result);
             return;
@@ -753,27 +746,40 @@ class schulmanager_ui
 
         // Key/val in session speichern
         $modified_records = Api\Cache::getSession('schulmanager', 'notenmanager_modified_records');
-        if(!is_array($modified_records)){
+        if (!is_array($modified_records)) {
             // maybe first modified record
             $modified_records = array();
         }
         // inc key because of array shift
         $keys = preg_split('/\\]\\[|\\[|\\]/', $noteKey, -1, PREG_SPLIT_NO_EMPTY);
-        $modNoteKey = ($keys[0] - 1).'['.$keys[1].']['.$keys[2].']['.$keys[3].']['.$keys[4].']';
-        //$modified_records[$noteKey] = $noteVal;
-        $modified_records[$modNoteKey] = array(
-            'val' => $noteVal,
-            'date' => strtotime($definition_date),
-            'art' => $art,
-            'desc' => $description,
-        );
-        Api\Cache::setSession('schulmanager', 'notenmanager_modified_records', $modified_records);
+
+        // validation for major and minor marks input
+        if ($keys[3] >= 0 && (($art == 0 && str_starts_with($keys[2], 'klnw_hj_')) || ($art > 0 && str_starts_with($keys[2], 'glnw_hj_')))){
+            $result['error_msg'] = "Art der Note nicht für die Eingabe gültig";
+        }
+        else{
+            // remove unnecessary art and descriptions, not marks input processed
+            if ($keys[3] == -1){
+                $art = '';
+                $description = '';
+            }
+
+            $modNoteKey = ($keys[0] - 1).'['.$keys[1].']['.$keys[2].']['.$keys[3].']['.$keys[4].']';
+            //$modified_records[$noteKey] = $noteVal;
+            $modified_records[$modNoteKey] = array(
+                'val' => $noteVal,
+                'date' => strtotime($definition_date),
+                'art' => $art,
+                'desc' => $description,
+            );
+            Api\Cache::setSession('schulmanager', 'notenmanager_modified_records', $modified_records);
+        }
+
+
 
         // neue Schnitte berechnen
         $rows = Api\Cache::getSession('schulmanager', 'notenmanager_temp_rows');
         $gewichtungen = Api\Cache::getSession('schulmanager', 'notenmanager_gewichtungen');
-
-
 
         $keys[0] = $keys[0] - 1; // shifted in grid!!!!
         $schueler = $rows[$keys[0]];
@@ -788,12 +794,10 @@ class schulmanager_ui
         if($keys[3] == -1 && !empty($noteVal)){
             // schnitt oder note wurde geändert und ist nicht nur gelöscht
             $schueler[$keys[1]][$keys[2]][$keys[3]]['manuell'] = true;
-//			$schueler[$keys[1]][$keys[2]]['avgclass'] = 'nm_avg_manuell';
         }
         elseif($keys[3] == -1 && empty($noteVal)){
             // schnitt oder note wurde geändert und ist nicht nur gelöscht
             $schueler[$keys[1]][$keys[2]][$keys[3]]['manuell'] = false;
-//			$schueler[$keys[1]][$keys[2]]['avgclass'] = 'nm_avg_auto';
         }
 
         // alternative Berechnung
@@ -801,17 +805,12 @@ class schulmanager_ui
             $schueler[$keys[1]][$keys[2]][$keys[3]]['note'] = $noteVal;
         }
 
-
-        //foreach($rows AS $key => $schueler){
-        schulmanager_lehrer_so::beforeSendToClient($schueler, $gewichtungen);		// Schnitte und noten neu berechnen
+        $note_bo->beforeSendToClient($schueler, $gewichtungen);		// Schnitte und noten neu berechnen
         $rows[$keys[0]] = $schueler;
         Api\Cache::setSession('schulmanager', 'notenmanager_temp_rows', $rows);
 
         // $keys[0] + 1 backshift to view in grid
         $this->setAVGNoten($result, $keys[0] + 1, $schueler);
-
-
-
         Api\Json\Response::get()->data($result);
     }
 
@@ -989,7 +988,7 @@ class schulmanager_ui
 
         $result['details_noten'] = $stud['noten'];
 
-        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_klassengr_schuelerfa');
+        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_lesson');
         $result['details_klasse'] = $klassengr_schuelerfa->getKlasse_asv_klassenname();
         $result['details_fach'] = $klassengr_schuelerfa->getSchuelerfach_asv_anzeigeform();
 
@@ -1008,7 +1007,7 @@ class schulmanager_ui
         $stud = $cachedRows[$stud_id];
         $result['contact_name'] = $stud['nm_st']['st_asv_familienname'];
         $result['contact_rufname'] = $stud['nm_st']['st_asv_rufname'];
-        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_klassengr_schuelerfa');
+        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_lesson');
         $result['contact_klasse'] = $klassengr_schuelerfa->getKlasse_asv_klassenname();
         $result['contact_fach'] = $klassengr_schuelerfa->getSchuelerfach_asv_anzeigeform();
 
@@ -1086,10 +1085,9 @@ class schulmanager_ui
 
         //$schuelerList = $this->extractSchuelerFromRows($rows);
         $content = array();
-        $content['select_schueler'] = $this->extractSchuelerListFromRows($rows);
+        $content['select_schueler'] = $this->extractSchuelerListFromRows($rows, true);
 
         $this->extractSchuelerDataFromRows($content, $rows, 0);
-        //Api\Json\Response::get()->data($schuelerList);
         Api\Json\Response::get()->data($content);
     }
 
@@ -1112,11 +1110,14 @@ class schulmanager_ui
      * @param array $rows
      * @return array
      */
-    function extractSchuelerListFromRows(array $rows){
+    function extractSchuelerListFromRows(array $rows, $addClassInfo = false){
         $result = array();
         foreach ($rows as $key => $value) {
             if (is_numeric($key)) {
                 $result[$key] = $value['nm_st']['st_asv_familienname'].' '.$value['nm_st']['st_asv_rufname'];
+                if($addClassInfo) {
+                    $result[$key] = $result[$key].' ('.$value['klasse']['name'].')';
+                }
             }
         }
         return $result;
@@ -1128,11 +1129,11 @@ class schulmanager_ui
      * @return array
      */
     function extractSchuelerDataFromRows(array &$content, array $rows, $selected_schueler_index){
-        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_klassengr_schuelerfa');
+        $actual_lesson = Api\Cache::getSession('schulmanager', 'actual_lesson');
 
-        if(!empty($klassengr_schuelerfa)){
-            $content['klasse'] =  $klassengr_schuelerfa->getKlasse_asv_klassenname();
-            $content['fach'] = $klassengr_schuelerfa->getSchuelerfach_asv_anzeigeform();
+        if(!empty($actual_lesson)){
+            $content['klasse'] =  $rows[$selected_schueler_index]['klasse']['name'];
+            $content['fach'] =  $actual_lesson['fach_name'];
 
             $content['nm_st_familienname'] = $rows[$selected_schueler_index]['nm_st']['st_asv_familienname'];
             $content['nm_st_rufname'] = $rows[$selected_schueler_index]['nm_st']['st_asv_rufname'];
@@ -1154,13 +1155,14 @@ class schulmanager_ui
     }
 
     /**
-     * Ajax call, wenn gew was modified, before beeing saved
+     * Ajax call, wenn gew was modified, before being saved
      * Revalidate avg-values with new grades.
      * @param type $noteKey
      * @param type $noteVal
      */
     function ajax_gewModified($gewKey, $gewVal) {
         $result = array();
+        $note_bo = new schulmanager_note_bo();
         // Key/val in session speichern
         $modified_gewichtung = Api\Cache::getSession('schulmanager', 'notenmanager_modified_gewichtung');
         if(!is_array($modified_gewichtung)){
@@ -1173,14 +1175,9 @@ class schulmanager_ui
         }
 
         $modified_gewichtung[$gewKey] = $gewVal;
-
-
         Api\Cache::setSession('schulmanager', 'notenmanager_modified_gewichtung', $modified_gewichtung);
-
         $rows = Api\Cache::getSession('schulmanager', 'notenmanager_temp_rows');
-
         $gewichtungen = Api\Cache::getSession('schulmanager', 'notenmanager_gewichtungen');
-
         // commit gewichtung
         foreach($modified_gewichtung as $key => $val) {
             $gewichtungen[$key] = $val;
@@ -1190,25 +1187,25 @@ class schulmanager_ui
             if(is_array($schueler) && array_key_exists('noten', $schueler)){
                 $grid_row = $key + 1;
                 $this->resetAVGNoten($schueler);
-                schulmanager_lehrer_so::beforeSendToClient($schueler, $gewichtungen);
+                $note_bo->beforeSendToClient($schueler, $gewichtungen);
                 // to result, $key + 1 shift in grid, first row is the header
                 $this->setAVGNoten($result, $grid_row, $schueler);
             }
         }
-
         Api\Cache::setSession('schulmanager', 'notenmanager_gewichtungen', $gewichtungen);
         Api\Cache::setSession('schulmanager', 'notenmanager_temp_rows', $rows);
         Api\Json\Response::get()->data($result);
     }
 
     /**
-     * Ajax call, wenn gew was modified in header checkbox, before beeing saved
+     * Ajax call, when gew was modified in header checkbox, before being saved
      * Revalidate avg-values with new grades.
      * @param type $noteKey
      * @param type $noteVal
      */
     function ajax_gewAllModified(string $gewKey, int $altb_Val) {
         $result = array();
+        $note_bo = new schulmanager_note_bo();
 
         // Key/val in session speichern
         $modified_gewichtung = Api\Cache::getSession('schulmanager', 'notenmanager_modified_gewichtung');
@@ -1255,7 +1252,7 @@ class schulmanager_ui
             if(is_array($schueler) && array_key_exists('noten', $schueler)){
                 $grid_row = $key + 1; // first row is the header in grid, not nm
                 $this->resetAVGNoten($schueler);
-                schulmanager_lehrer_so::beforeSendToClient($schueler, $gewichtungen);
+                $note_bo->beforeSendToClient($schueler, $gewichtungen);
                 // to result
                 $this->setAVGNoten($result, $grid_row, $schueler);
                 //TODO: test ob geändert wurde
@@ -1629,8 +1626,8 @@ class schulmanager_ui
         $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
         $schueler = $klassen_schueler_list[$schueler_id];
 
-        $schueler_so = new schulmanager_schueler_so();
-        $schueler_so->delLnwPer($schueler, true, false);
+        $note_so = new schulmanager_note_so();
+        $note_so->delLnwPer($schueler, true, false);
         $this->bo->revalidateGrades($schueler['nm_st']['st_asv_id']);
         Api\Json\Response::get()->data($result);
     }
@@ -1653,8 +1650,8 @@ class schulmanager_ui
         $klassen_schueler_list = Api\Cache::getSession('schulmanager', 'klassen_schueler_list');
         $schueler = $klassen_schueler_list[$schueler_id];
 
-        $schueler_so = new schulmanager_schueler_so();
-        $schueler_so->delLnwPer($schueler, false, true);
+        $note_so = new schulmanager_note_so();
+        $note_so->delLnwPer($schueler, false, true);
         $this->bo->revalidateGrades($schueler['nm_st']['st_asv_id']);
         Api\Json\Response::get()->data($result);
     }

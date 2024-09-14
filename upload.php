@@ -39,11 +39,6 @@ require(dirname(__DIR__).'/header.inc.php');
 $debug = true;
 
 /**
- * csv field seperator
- */
-// TODO $CSV_SEP = ",";
-
-/**
  * array contains names valid csv-filenames and corresponding table name
  * array
  */
@@ -67,10 +62,13 @@ $file2table = array(
     'svp_unterrichtselement.csv' => 'egw_schulmanager_asv_unterrichtselement',
     'svp_werteliste.csv' => 'egw_schulmanager_asv_werteliste',
     'svp_wl_jahrgangsstufe.csv' => 'egw_schulmanager_asv_jahrgangsstufe',
+    'svp_unterrichtselement2.csv' => 'egw_schulmanager_unterrichtselement2',
+    'svp_unterrichtselement2_lehrer.csv' => 'egw_schulmanager_unterrichtselement2_lehrer',
+    'svp_unterrichtselement2_schueler.csv' => 'egw_schulmanager_unterrichtselement2_schueler',
 );
 
 $output = array();
-$response_code = 200;
+$response_code = 204;
 
 try {
     $db = clone($GLOBALS['egw']->db);
