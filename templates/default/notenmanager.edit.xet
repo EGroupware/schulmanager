@@ -17,7 +17,7 @@
 				<row>
 					<description label="Art der Leistungserhebung: " class="sm_label"/>
 					<menulist>
-						<menupopup type="select" id="notgebart" needed="true"/>
+						<menupopup type="select" id="notgebart" needed="true" onchange="app.schulmanager.onNotGebArtChanged"/>
 					</menulist>
 				</row>
 				<row>
@@ -43,7 +43,7 @@
 			</columns>
 			<rows>
 				<row>
-					<description id="sm_nm_edit_hint" class="sm_hint_red" align="center" label="Änderungen müssen aktiv über Speichern oder Übernehmen bestätigt werden! Datum, Art und Beschreibung werden nur für neue Eintragungen übernommen!" no_lang="1"></description>
+					<description id="sm_nm_edit_hint" class="sm_hint_red" align="center" label="Änderungen müssen aktiv über Speichern oder Übernehmen bestätigt werden! Datum, Art und Beschreibung werden nur für nachfolgende Eintragungen übernommen!" no_lang="1"></description>
 				</row>
 				<row>
 					<template id="schulmanager.notenmanager.edit.inputinfo"></template>

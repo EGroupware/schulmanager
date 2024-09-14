@@ -75,7 +75,7 @@ class schulmanager_download_ui
         $session_rows = Api\Cache::getSession('schulmanager', 'notenmanager_rows');
         $filter = Api\Cache::getSession('schulmanager', 'filter');
         $myLehrer = new schulmanager_lehrer_bo();
-        $klasse_fach = $myLehrer->getKlasseUnterrichtList()[$filter];
+        $klasse_fach = $myLehrer->getLessonList()[$filter];
         $exportpdf = new schulmanager_export_pdf($session_rows, $klasse_fach, $meta);
 
         $pdfOutput =  $exportpdf->createPDFFachNotenListe();

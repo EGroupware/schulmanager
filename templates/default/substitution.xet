@@ -40,8 +40,6 @@
 				<column width="15%"/>
 				<column width="15%"/>
 				<column width="15%"/>
-				<column width="15%"/>
-				<column width="15%"/>
 			</columns>
 			<rows>
 				<row class="th">
@@ -55,13 +53,7 @@
 						<description value="Lehrer"/>
 					</vbox>
 					<vbox>
-						<description value="Klasse"/>
-					</vbox>
-					<vbox>
-						<description value="Kg"/>
-					</vbox>
-					<vbox>
-						<description value="Fach"/>
+						<description value="Unterricht"/>
 					</vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]">
@@ -75,13 +67,7 @@
 						<description id="${row}[asv_kennung_orig]"/>
 					</vbox>
 					<vbox>
-						<description id="${row}[kl_asv_klassenname]"/>
-					</vbox>
-					<vbox>
-						<description id="${row}[kg_asv_kennung]"/>
-					</vbox>
-					<vbox>
-						<description id="${row}[sf_asv_kurzform]"/>
+						<description id="${row}[bezeichnung]"/>
 					</vbox>
 				</row>
 			</rows>

@@ -101,10 +101,11 @@ class schulmanager_merge extends Api\Storage\Merge
         $replacements['$$schueler/anschrift_ortsteil$$'] = $hap['san_asv_ortsteil'];
         $replacements['$$schueler/anschrift_staat$$'] = $hap['san_staat_anzeige'];
 
-        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_klassengr_schuelerfa');
+        /** @var TODO
+        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_lesson');
         $replacements['$$klasse/name$$'] = $klassengr_schuelerfa->getKlasse_asv_klassenname();
         $replacements['$$klasse/fach$$'] = $klassengr_schuelerfa->getSchuelerfach_asv_anzeigeform();
-
+        */
         return $replacements;
     }
 
@@ -163,6 +164,7 @@ class schulmanager_merge extends Api\Storage\Merge
                     'label' => lang('Staat der Hauptansprechpartner')
                 ],
             ],
+            /** TODO
             'klasse' => [
                 [
                     'value' => $this->prefix($prefix, 'klasse/name', '{'),
@@ -173,6 +175,7 @@ class schulmanager_merge extends Api\Storage\Merge
                     'label' => lang('fach')
                 ],
             ],
+             */
         ];
 
         $this->add_customfield_placeholders($placeholders, $prefix);

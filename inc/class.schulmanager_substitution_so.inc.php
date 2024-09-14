@@ -40,15 +40,8 @@ class schulmanager_substitution_so extends Api\Storage {
         $this->value_col['id'] = 'subs_id';
         $this->value_col['asv_kennung'] = 'subs_asv_kennung';
         $this->value_col['asv_kennung_orig'] = 'subs_asv_kennung_orig';
-        $this->value_col['kg_asv_id'] = 'subs_kg_asv_id';
-        $this->value_col['kg_asv_kennung'] = 'subs_kg_asv_kennung';
-        $this->value_col['kl_asv_id'] = 'subs_kl_asv_id';
-        $this->value_col['kl_asv_klassenname'] = 'subs_kl_asv_klassenname';
-        $this->value_col['sf_asv_id'] = 'subs_sf_asv_id';
-        $this->value_col['sf_asv_kurzform'] = 'subs_sf_asv_kurzform';
-        $this->value_col['sf_asv_anzeigeform'] = 'subs_sf_asv_anzeigeform';
-        
-        $this->customfields = Storage\Customfields::get($app, false, null, $db);
+        $this->value_col['koppel_id'] = 'koppel_id';
+        $this->value_col['bezeichnung'] = 'bezeichnung';
     }
     
     /**
@@ -86,20 +79,12 @@ class schulmanager_substitution_so extends Api\Storage {
     }
     
     
-    function saveItem($asv_kennung, $asv_kennung_orig, $kg_asv_id, $kg_asv_kennung, $kl_asv_id, $kl_asv_klassenname, $sf_asv_id, $sf_asv_kurzform, $sf_asv_anzeigeform){
-        $time = time();
-        $key_col = "";
-        
+    function saveItem($asv_kennung, $asv_kennung_orig, $koppel_id, $bezeichnung){
         $subs = array(
             'subs_asv_kennung' => $asv_kennung,
             'subs_asv_kennung_orig' => $asv_kennung_orig,
-            'subs_kg_asv_id' => $kg_asv_id,
-            'subs_kg_asv_kennung' => $kg_asv_kennung,
-            'subs_kl_asv_id' => $kl_asv_id,
-            'subs_kl_asv_klassenname' => $kl_asv_klassenname,
-            'subs_sf_asv_id' => $sf_asv_id,
-            'subs_sf_asv_kurzform' => $sf_asv_kurzform,
-            'subs_sf_asv_anzeigeform' => $sf_asv_anzeigeform,
+            'koppel_id' => $koppel_id,
+            'bezeichnung' => $bezeichnung,
         );
         
         $this->data = $subs;
@@ -108,7 +93,7 @@ class schulmanager_substitution_so extends Api\Storage {
     }
 
     function truncate(){
-        $sql = "TRUNCATE $this->untissync_substitution_table";
+        $sql = "TRUNCATE $this->schulmanager_substitution_table";
         return $this->db->query($sql, __LINE__, __FILE__);
     }
 }

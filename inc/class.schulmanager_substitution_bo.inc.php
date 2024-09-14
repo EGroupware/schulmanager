@@ -73,18 +73,11 @@ class schulmanager_substitution_bo
 	        
 	        $teacher = $GLOBALS['egw']->accounts->read($asv_kennung_id);
 	        $teacher_orig = $GLOBALS['egw']->accounts->read($asv_kennung_orig_id);
-	        
-	        $kg_asv_id = $lesson->getKlassengruppe_asv_id();
-	        $kg_asv_kennung = $lesson->getKlassengruppe_asv_kennung();
-	        
-	        $kl_asv_id = $lesson->getKlasse_asv_id();
-	        $kl_asv_klassenname = $lesson->getKlasse_asv_klassenname();
-	        
-	        $sf_asv_id = $lesson->getSchuelerfach_asv_id();
-	        $sf_asv_kurzform = $lesson->getSchuelerfach_asv_kurzform();
-	        $sf_asv_anzeigeform = $lesson->getSchuelerfach_asv_anzeigeform();
 
-	        return $this->so->saveItem($teacher['account_lid'], $teacher_orig['account_lid'], $kg_asv_id, $kg_asv_kennung, $kl_asv_id, $kl_asv_klassenname, $sf_asv_id, $sf_asv_kurzform, $sf_asv_anzeigeform);
+            $koppel_id = $lesson['koppel_id'];
+            $bezeichnung = $lesson['bezeichnung'];
+
+	        return $this->so->saveItem($teacher['account_lid'], $teacher_orig['account_lid'], $koppel_id, $bezeichnung);
 	    }
 	    return false;
 	}

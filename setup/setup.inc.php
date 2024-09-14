@@ -10,7 +10,7 @@
 
 $setup_info['schulmanager']['name']      = 'schulmanager';
 $setup_info['schulmanager']['title']     = 'SchulManager';
-$setup_info['schulmanager']['version']   = '23.1.20231207';  //anything you like, as long as it is fitting the schema of a version number
+$setup_info['schulmanager']['version']   = '23.1.20240909';
 $setup_info['schulmanager']['app_order'] = 5;        // at the end
 $setup_info['schulmanager']['tables']    = array('egw_schulmanager_asv_schueler_stamm','egw_schulmanager_asv_klassengruppe','egw_schulmanager_asv_klasse',
     'egw_schulmanager_asv_unterrichtselement','egw_schulmanager_asv_fachgruppe','egw_schulmanager_asv_schueler_schuljahr','egw_schulmanager_asv_lehrer_unterr_faecher',
@@ -18,7 +18,8 @@ $setup_info['schulmanager']['tables']    = array('egw_schulmanager_asv_schueler_
     'egw_schulmanager_asv_lehrer_schuljahr_schule',
     'egw_schulmanager_note','egw_schulmanager_note_extra','egw_schulmanager_asv_klassenleitung',
     'egw_schulmanager_config','egw_schulmanager_note_gew','egw_schulmanager_asv_werteliste','egw_schulmanager_asv_schule_fach','egw_schulmanager_asv_jahrgangsstufe','egw_schulmanager_substitution',
-    'egw_schulmanager_asv_schullaufbahn','egw_schulmanager_lehrer_account','egw_schulmanager_asv_schuelerkommunikation','egw_schulmanager_asv_schueleranschrift','egw_schulmanager_sreportcontent');
+    'egw_schulmanager_asv_schullaufbahn','egw_schulmanager_lehrer_account','egw_schulmanager_asv_schuelerkommunikation','egw_schulmanager_asv_schueleranschrift','egw_schulmanager_sreportcontent',
+    'egw_schulmanager_unterrichtselement2', 'egw_schulmanager_unterrichtselement2_lehrer', 'egw_schulmanager_unterrichtselement2_schueler');
 
 $setup_info['schulmanager']['enable']    = 1;
 

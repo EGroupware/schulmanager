@@ -35,8 +35,6 @@ class schulmanager_note_gew_so extends Api\Storage {
 		$this->debug = 0;
 
 		$this->value_col[] = 'ngew_id';
-		$this->value_col[] = 'ngew_asv_schueler_schuelerfach_id';
-		$this->value_col[] = 'ngew_asv_klassengruppe_id';
 		$this->value_col[] = 'ngew_blockbezeichner';
 		$this->value_col[] = 'ngew_index_im_block';
 		$this->value_col[] = 'ngew_gew';
@@ -44,6 +42,7 @@ class schulmanager_note_gew_so extends Api\Storage {
 		$this->value_col[] = 'ngew_create_user';
 		$this->value_col[] = 'ngew_update_date';
 		$this->value_col[] = 'ngew_update_user';
+        $this->value_col[] = 'koppel_id';
 	}
 
 
@@ -53,26 +52,25 @@ class schulmanager_note_gew_so extends Api\Storage {
 	 * @param array $note key => value
 	 * @return mixed id of resource if all right, false if fale
 	 */
-	function &load($kg_asv_id, $sf_asv_id, &$gewichtungen)
+	function &load($koppel_id, &$gewichtungen)
 	{
 		$key_col = '';
 
 		$filter = array();
-		$filter[] = "ngew_asv_klassengruppe_id='".$kg_asv_id."'";
-		$filter[] = "ngew_asv_schueler_schuelerfach_id='".$sf_asv_id."'";
+		$filter[] = "koppel_id='".$koppel_id."'";
 
 		$result = $this->query_list($this->value_col, $key_col, $filter);
 		$this->setDefaultGew($gewichtungen);
 
 		foreach($result as $row){
-			$gewKey = $row[3];
+			$gewKey = $row[1];
 			// schnitt_g und schnitt_k ohne index_im_block, bzw index_im_block = -1
-			if($row[4] >= 0){
+			if($row[2] >= 0){
 				// normale noten im block
-				$gewKey .= '_'.$row[4];
+				$gewKey .= '_'.$row[2];
 			}
 
-			$gewVal = $row[5];
+			$gewVal = $row[3];
 
 			$gewichtungen[$gewKey] = $gewVal;
 		}
@@ -107,12 +105,11 @@ class schulmanager_note_gew_so extends Api\Storage {
 	/**
 	 *
 	 * @param type $gew Gewichtung
-	 * @param type $kg_id Klassengruppe_id
-	 * @param type $sf_id schuelerfach_id
+	 * @param type $koppel_id koppel_id
 	 * @param type $blockbezeichner Blockbezeichner
 	 * @param type $index_im_block Index im Block
 	 */
-	function saveItem($gew, $kg_asv_id, $sf_asv_id, $blockbezeichner, $index_im_block)
+	function saveItem($gew, $koppel_id, $blockbezeichner, $index_im_block)
 	{
 		$time = date("Y-m-d H:i:s").'.000';//time();
 		$kennung = $GLOBALS['egw_info']['user']['account_lid'];
@@ -121,16 +118,14 @@ class schulmanager_note_gew_so extends Api\Storage {
 		$key_col = "";
 
 		$filter = array();
-		$filter[] = "ngew_asv_klassengruppe_id='".$kg_asv_id."'";
-		$filter[] = "ngew_asv_schueler_schuelerfach_id='".$sf_asv_id."'";
+		$filter[] = "koppel_id='".$koppel_id."'";
 		$filter[] = "ngew_blockbezeichner='".$blockbezeichner."'";
 		$filter[] = "ngew_index_im_block='".$index_im_block."'";
 
 		$result = $this->query_list($this->value_col, $key_col, $filter);
 
 		$gewichtung = array(
-				'ngew_asv_klassengruppe_id' => $kg_asv_id,
-				'ngew_asv_schueler_schuelerfach_id' => $sf_asv_id,
+				'koppel_id' => $koppel_id,
 				'ngew_blockbezeichner' => $blockbezeichner,
 				'ngew_index_im_block' => $index_im_block,
 				'ngew_gew' => $gew,

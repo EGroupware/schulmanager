@@ -50,7 +50,7 @@
 
 	<template id="schulmanager.notenmanager.notendetails.navi">
 		<hbox class="sm_label">
-			<description value="Klasse:" class="et2_label sm_label"/>
+			<description value="Unterricht:" class="et2_label sm_label"/>
 			<menulist>
 				<menupopup type="select" id="select_klasse" onchange="app.schulmanager.onDetailsKlasseChanged"/>
 			</menulist>
@@ -79,10 +79,10 @@
 			<description id="details_noten[schnitt_hj_2][-1][note]" class="schulmanager_note_input sm_nm_znote_schnitt"/>
 			<description value="; "/>
 			<description value="Ø GLNW: "/>
-			<description id="details_noten[glnw_hj_2][-1][note]" class="schulmanager_note_input sm_nm_glnw"/>
+			<description id="details_noten[glnw_hj_2][-1][note]" class="schulmanager_note_input sm_nm_glnw_avg"/>
 			<description value="; "/>
 			<description value="Ø kLNW: "/>
-			<description id="details_noten[klnw_hj_2][-1][note]" class="schulmanager_note_input sm_nm_klnw"/>
+			<description id="details_noten[klnw_hj_2][-1][note]" class="schulmanager_note_input sm_nm_klnw_avg"/>
 			<description value="; "/>
 			<description value="alt. Berechnung:"/>
 			<description id="altb"/>
