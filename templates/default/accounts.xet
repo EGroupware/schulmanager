@@ -79,6 +79,7 @@
 	
 	<template id="schulmanager.accounts.header" template="" lang="" group="0" version="0.0.001">
 		<button label="Auto-Mapping" id="button[automapping]" class="button_add" onclick="app.schulmanager.onTeacherAutoLinking"/>
+		<button label="Clear" id="button[resetmapping]" class="button_reset" onclick="app.schulmanager.onTeacherResetLinking"/>
 	</template>
 	<template id="schulmanager.accounts" template="" lang="" group="0" version="0.0.001">
 		<hidden id="token"/>

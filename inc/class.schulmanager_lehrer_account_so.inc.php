@@ -73,4 +73,9 @@ class schulmanager_lehrer_account_so extends Api\Storage
         }
         return $ids;
     }
+
+    function truncateEGWLinking(){
+        $sql = "TRUNCATE egw_schulmanager_lehrer_account";
+        return $this->db->query($sql, __LINE__, __FILE__);
+    }
 }

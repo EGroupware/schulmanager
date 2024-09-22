@@ -1010,6 +1010,21 @@ export class SchulmanagerApp extends EgwApp
 	}
 
 	/**
+	 * reset all linked accounts
+	 * @param _action
+	 * @param _senders
+	 */
+	onTeacherResetLinking(_action, _senders) {
+		let et2 = this.et2;
+		let func = 'schulmanager.schulmanager_substitution_ui.ajax_onTeacherResetLinking';
+
+		this.egw.json(func, [], function (result) {
+			let nm = <et2_nextmatch>et2.getWidgetById('nm');
+			nm.applyFilters();
+		}).sendRequest(true);
+	}
+
+	/**
 	 * Before linking teacher to egw account
 	 * @param _action
 	 * @param _senders

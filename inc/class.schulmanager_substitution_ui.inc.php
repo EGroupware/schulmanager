@@ -346,7 +346,7 @@ class schulmanager_substitution_ui
     }
 
     /**
-     * query projects for nextmatch in the substitution-list
+     * query projects for nextmatch in the teacher-mapping-list
      * reimplemented from Api\Storage\Base to disable action-buttons based on the Acl and make some modification on the data
      * @param array &$query
      * @param array &$rows returned rows/cups
@@ -356,16 +356,30 @@ class schulmanager_substitution_ui
      */
     function get_rows_lehrer(&$query_in,&$rows,&$readonlys,$id_only=false)
     {
-        $rowsOld = Api\Cache::getSession('schulmanager', 'teacher_account_list');
         $lehrer_so = new schulmanager_lehrer_so();
         $lehrer_so->getLehrerAccountList($query_in, $rows);
 
-        if(!is_array($rowsOld)){
-            $rowsOld = array();
+        $querySearchCached = Api\Cache::getSession('schulmanager', 'teacher_account_list_search');
+        if($query_in['search'] != $querySearchCached){
+            Api\Cache::setSession('schulmanager', 'teacher_account_list_search', $query_in['search']);
+            Api\Cache::unsetSession('schulmanager', 'teacher_account_list');
         }
-        $rowsOld = array_merge($rowsOld, $rows);
-        // TODO better array merge
-        Api\Cache::setSession('schulmanager', 'teacher_account_list', $rowsOld);
+        else{
+            $rowsCache = Api\Cache::getSession('schulmanager', 'teacher_account_list');
+        }
+
+        if(!is_array($rowsCache)){
+            $rowsCache = array();
+        }
+        //$rowsOld = array_merge($rowsOld, $rows);
+        foreach($rows AS $key => $val){
+            //$sKey = strval($key);
+            if(!array_key_exists($key, $rowsCache)){
+                $rowsCache[$key] = $val;
+            }
+        }
+
+        Api\Cache::setSession('schulmanager', 'teacher_account_list', $rowsCache);
         return $query_in['total'];
     }
 
@@ -386,6 +400,13 @@ class schulmanager_substitution_ui
         Api\Json\Response::get()->data($result);
     }
 
+    function ajax_onTeacherResetLinking(){
+        $result = array();
+        $lehrer_account_so =  new schulmanager_lehrer_account_so();
+        $lehrer_account_so->truncateEGWLinking();
+        Api\Json\Response::get()->data($result);
+    }
+
     /**
      * Edit teacher - EGWUser link
      * @param $row_index
@@ -393,17 +414,7 @@ class schulmanager_substitution_ui
      */
     function ajax_onTeacherAccountLinkEdit($row_index){
         $result = array();
-        $readonlys = array();
-
-        $rows = array();
-        $query_in = array(
-            'start' => $row_index,
-            'num_rows' => 1,
-            'order' => 'ls_asv_familienname, ls_asv_rufname',
-            'sort' => 'ASC',
-        );
-
-        $this->get_rows_lehrer($query_in, $rows, $readonlys);
+        $rows = Api\Cache::getSession('schulmanager', 'teacher_account_list');
 
         if($rows[$row_index]){
             Api\Cache::setSession('schulmanager', 'substitution_linkedit_lehrer', $rows[$row_index]);
@@ -435,16 +446,20 @@ class schulmanager_substitution_ui
         $selRowLehrer = Api\Cache::getSession('schulmanager', 'substitution_linkedit_lehrer');
 
         if($selRowLehrer) {
-            $lehrer_account = array(
-                'leac_lehrer' => $selRowLehrer['ls_asv_id'],
-                'leac_account' => $account_id,
+            $lehrer_mapping_old = array(
+                'leac_lehrer' => $selRowLehrer['ls_asv_id']
             );
             $lehrer_account_so = new schulmanager_lehrer_account_so();
             if($selRowLehrer['ls_asv_id']){
-                $lehrer_account_so->delete($lehrer_account);
+                $lehrer_account_so->delete($lehrer_mapping_old);
             }
-            $lehrer_account_so->saveItem($lehrer_account);
-            $result['row_index'] = $selRowLehrer['row_index'];
+            $lehrer_mapping_new = array(
+                'leac_lehrer' => $selRowLehrer['ls_asv_id'],
+                'leac_account' => $account_id,
+            );
+            $lehrer_account_so->saveItem($lehrer_mapping_new);
+            $result['row_index'] = $selRowLehrer['nm_id'];
+            Api\Cache::unsetSession('schulmanager', 'teacher_account_list');
         }
         Api\Json\Response::get()->data($result);
     }
