@@ -586,6 +586,86 @@ function schulmanager_upgrade23_1_20231207()
 }
 
 
+function schulmanager_upgrade23_1_20240909()
+{
+    $GLOBALS['egw_setup']->oProc->DropColumn('egw_schulmanager_note', array(
+        'fd' => array(
+            'note_id' => array('type' => 'auto','nullable' => False,'comment' => 'Note id'),
+            'note_asv_schueler_schuljahr_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schueler_schuljahr_id'),
+            'note_asv_schueler_schuelerfach_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schuelerfach_id'),
+            'note_blockbezeichner' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.blockbezeichner'),
+            'note_index_im_block' => array('type' => 'int','precision' => '11','nullable' => False, 'comment' => 'index im block'),
+            'note_note' => array('type' => 'varchar','precision' => '10','nullable' => False,'comment' => 'notenwert'),
+            'note_create_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'create date'),
+            'note_create_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'create user'),
+            'note_update_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'update date'),
+            'note_update_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'update user'),
+            'note_asv_note_manuell' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'manuel update avg'),
+            'note_art' => array('type' => 'varchar','precision' => '25','comment' => 'type of grade'),
+            'note_definition_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'date of grade'),
+            'note_description' => array('type' => 'varchar','precision' => '150','comment' => 'description'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'),
+            'schueler_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id schueler'),
+        ),
+        'pk' => array('note_id'),
+        'fk' => array(),
+        'ix' => array(),
+        'uc' => array()
+    ), 'note_asv_id');
+
+    $GLOBALS['egw_setup']->oProc->DropColumn('egw_schulmanager_note', array(
+        'fd' => array(
+            'note_id' => array('type' => 'auto','nullable' => False,'comment' => 'Note id'),
+            'note_asv_schueler_schuelerfach_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schuelerfach_id'),
+            'note_blockbezeichner' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.blockbezeichner'),
+            'note_index_im_block' => array('type' => 'int','precision' => '11','nullable' => False, 'comment' => 'index im block'),
+            'note_note' => array('type' => 'varchar','precision' => '10','nullable' => False,'comment' => 'notenwert'),
+            'note_create_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'create date'),
+            'note_create_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'create user'),
+            'note_update_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'update date'),
+            'note_update_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'update user'),
+            'note_asv_note_manuell' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'manuel update avg'),
+            'note_art' => array('type' => 'varchar','precision' => '25','comment' => 'type of grade'),
+            'note_definition_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'date of grade'),
+            'note_description' => array('type' => 'varchar','precision' => '150','comment' => 'description'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'),
+            'schueler_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id schueler'),
+        ),
+        'pk' => array('note_id'),
+        'fk' => array(),
+        'ix' => array(),
+        'uc' => array()
+    ), 'note_asv_schueler_schuljahr_id');
+
+    $GLOBALS['egw_setup']->oProc->DropColumn('egw_schulmanager_note', array(
+        'fd' => array(
+            'note_id' => array('type' => 'auto','nullable' => False,'comment' => 'Note id'),
+            'note_blockbezeichner' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.blockbezeichner'),
+            'note_index_im_block' => array('type' => 'int','precision' => '11','nullable' => False, 'comment' => 'index im block'),
+            'note_note' => array('type' => 'varchar','precision' => '10','nullable' => False,'comment' => 'notenwert'),
+            'note_create_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'create date'),
+            'note_create_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'create user'),
+            'note_update_date' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'update date'),
+            'note_update_user' => array('type' => 'varchar','precision' => '20','nullable' => False,'comment' => 'update user'),
+            'note_asv_note_manuell' => array('type' => 'int','precision' => '4','nullable' => False,'comment' => 'manuel update avg'),
+            'note_art' => array('type' => 'varchar','precision' => '25','comment' => 'type of grade'),
+            'note_definition_date' => array('type' => 'int','meta' => 'timestamp','precision' => '8','comment' => 'date of grade'),
+            'note_description' => array('type' => 'varchar','precision' => '150','comment' => 'description'),
+            'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'),
+            'schueler_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id schueler'),
+        ),
+        'pk' => array('note_id'),
+        'fk' => array(),
+        'ix' => array(),
+        'uc' => array()
+    ), 'note_asv_schueler_schuelerfach_id');
+
+    $GLOBALS['egw_setup']->oProc->CreateIndex('egw_schulmanager_note',array('koppel_id','schueler_id'));
+
+    return $GLOBALS['setup_info']['schulmanager']['currentver'] = '23.1.20241011';
+}
+
+
 
 
 

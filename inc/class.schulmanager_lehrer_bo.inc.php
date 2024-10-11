@@ -118,7 +118,7 @@ class schulmanager_lehrer_bo
 	 * Liefert alle Note der Schüler zu einem Fach
 	 * @param type $filter
 	 * @param type $rows
-	 * @return type
+	 * @return type|void
 	 */
 	function getSchuelerNotenList(&$query_in, &$rows){
 	    $filter = $query_in['filter'];
@@ -133,7 +133,7 @@ class schulmanager_lehrer_bo
 			if(is_null($this->lessons)){
 				$this->getLessonList();
 			}
-			elseif(empty($this->lessons)){
+			if(empty($this->lessons)){
                 $query_in['total'] = 0;
 				return;
 			}
@@ -146,17 +146,17 @@ class schulmanager_lehrer_bo
 			// Gewichtungen
 			$gewichtungen = array();
 			$gew_bo = new schulmanager_note_gew_bo();
-			//$gew_bo->loadGewichtungen($kg_asv_id, $sf_asv_id, $gewichtungen);
-            $gew_bo->loadGewichtungen($koppel_id, $gewichtungen);
+			$gew_bo->loadGewichtungen($koppel_id, $gewichtungen);
 			Api\Cache::setSession('schulmanager', 'notenmanager_gewichtungen', $gewichtungen);
 
-            $total = $this->unterricht_so->loadSchuelerNotenList($query_in, $koppel_id, $rows, $gewichtungen);
+            //$total = $this->unterricht_so->loadSchuelerNotenList($query_in, $koppel_id, $rows, $gewichtungen);
+            $this->unterricht_so->loadSchuelerNotenList($query_in, $koppel_id, $rows, $gewichtungen);
 
 			// Gewichtungen in rows schreiben
 			foreach($gewichtungen as $gewKey => $gewVal){
 				$rows[$gewKey] = $gewVal;
 			}
-            $query_in['total'] = $total;
+            //$query_in['total'] = $total;
 		}
 	}
 

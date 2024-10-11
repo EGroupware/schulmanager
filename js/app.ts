@@ -534,7 +534,7 @@ export class SchulmanagerApp extends EgwApp
 					instance.updateDetailsNoten(key, result, 'schulmanager-notenmanager-index_showdetailsmodal_showdetailscontent_details_noten');
 				}
 				else {
-					let widget_id = 'schulmanager-notenmanager-index_showdetailsmodal_showdetailscontent' + key;
+					let widget_id = 'schulmanager-notenmanager-index_showdetailsmodal_showdetailscontent_' + key;
 					let widget = <HTMLInputElement>document.getElementById(widget_id);
 					if (widget) {
 						widget.innerText = result[key];
@@ -569,7 +569,7 @@ export class SchulmanagerApp extends EgwApp
 			delete result['san_nm_rows'];
 
 			for (let key in result){
-				let widget_id = 'schulmanager-notenmanager-index_' + key;
+				let widget_id = 'schulmanager-notenmanager-index_showcontactmodal_showcontactcontent_' + key;
 				let widget = <HTMLInputElement>document.getElementById(widget_id);
 				if (widget) {
 					widget.innerText = result[key];

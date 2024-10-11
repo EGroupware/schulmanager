@@ -10,7 +10,7 @@
 
 $setup_info['schulmanager']['name']      = 'schulmanager';
 $setup_info['schulmanager']['title']     = 'SchulManager';
-$setup_info['schulmanager']['version']   = '23.1.20240909';
+$setup_info['schulmanager']['version']   = '23.1.20241011';
 $setup_info['schulmanager']['app_order'] = 5;        // at the end
 $setup_info['schulmanager']['tables']    = array('egw_schulmanager_asv_schueler_stamm','egw_schulmanager_asv_klassengruppe','egw_schulmanager_asv_klasse',
     'egw_schulmanager_asv_unterrichtselement','egw_schulmanager_asv_fachgruppe','egw_schulmanager_asv_schueler_schuljahr','egw_schulmanager_asv_lehrer_unterr_faecher',

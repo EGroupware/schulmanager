@@ -160,12 +160,9 @@ class schulmanager_bo
 				$asv_id = $session_rows[$row_id]['noten'][$block][$block_index]['asv_id'];
 				if(isset($schueler_id) && isset($koppel_id)){
 					$note = array(
-						'note_asv_schueler_schuljahr_id' => 'x',
-						'note_asv_schueler_schuelerfach_id' => 'x',
 						'note_blockbezeichner' => $block,
 						'note_index_im_block' => $block_index,
 						'note_note' => $value['val'],
-						'note_asv_id' => $asv_id,
 						'note_asv_note_manuell' => $block_index == -1,
                         'koppel_id' => $koppel_id,
                         'schueler_id' => $schueler_id,

@@ -201,9 +201,6 @@ $phpgw_baseline = array(
     'egw_schulmanager_note' => array(
         'fd' => array(
             'note_id' => array('type' => 'auto','nullable' => False,'comment' => 'Note id'),
-            'note_asv_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.id'),
-            'note_asv_schueler_schuljahr_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schueler_schuljahr_id'),
-            'note_asv_schueler_schuelerfach_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.schuelerfach_id'),
             'note_blockbezeichner' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'asv.svp_note.blockbezeichner'),
             'note_index_im_block' => array('type' => 'int','precision' => '11','nullable' => False, 'comment' => 'index im block'),
             'note_note' => array('type' => 'varchar','precision' => '10','nullable' => False,'comment' => 'notenwert'),
@@ -220,7 +217,7 @@ $phpgw_baseline = array(
         ),
         'pk' => array('note_id'),
         'fk' => array(),
-        'ix' => array(),
+        'ix' => array(array('koppel_id','schueler_id')),
         'uc' => array()
     ),
     // Schulamanger Note Extras
