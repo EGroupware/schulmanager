@@ -55,7 +55,6 @@ class schulmanager_note_so extends Api\Storage {
 			$this->data = $note;
 			if(parent::save() != 0) return false;
 			$note['note_id'] = $this->data['note_id'];
-			$note['note_asv_id'] = 'x'; //$this->createASVID($this->data['note_id']);
 			$this->data = $note;
 			if(parent::update($note) != 0) return false;
 		}
@@ -224,9 +223,6 @@ class schulmanager_note_so extends Api\Storage {
     function loadNotenBySchueler($schueler_id, $koppel_id, &$schueler){
         $sql = "SELECT
 			egw_schulmanager_note.note_id AS note_id,
-			egw_schulmanager_note.note_asv_id AS asv_id,
-			egw_schulmanager_note.note_asv_schueler_schuljahr_id AS asv_schueler_schuljahr_id,
-			egw_schulmanager_note.note_asv_schueler_schuelerfach_id AS asv_schueler_schuelerfach_id,
 			egw_schulmanager_note.note_blockbezeichner AS blockbezeichner,
 			egw_schulmanager_note.note_index_im_block AS index_im_block,
 			egw_schulmanager_note.note_note AS note,
@@ -248,14 +244,12 @@ class schulmanager_note_so extends Api\Storage {
 
         foreach($rs as $row) {
             $note_id = $row['note_id'];
-            $asv_id = $row['asv_id'];
             $blockbezeichner = $row['blockbezeichner'];
             $index_im_block = $row['index_im_block'];
             $note = $row['note'];
             $manuell = $row['asv_note_manuell'];
             $schueler['noten'][$blockbezeichner][$index_im_block]['note'] = str_replace(",", ".", $note);
             $schueler['noten'][$blockbezeichner][$index_im_block]['note_id'] = $note_id;
-            $schueler['noten'][$blockbezeichner][$index_im_block]['asv_id'] = $asv_id;
             $schueler['noten'][$blockbezeichner][$index_im_block]['update_date'] = substr($row['update_date'],  0,10);
             $schueler['noten'][$blockbezeichner][$index_im_block]['update_user'] = $row['update_user'];
             $schueler['noten'][$blockbezeichner][$index_im_block]['art'] = $row['art'];

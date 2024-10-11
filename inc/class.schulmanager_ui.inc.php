@@ -621,9 +621,11 @@ class schulmanager_ui
      */
     function get_rows(&$query_in,&$rows,&$readonlys=false,$id_only=false)
     {
-        // todo if edit, dann rows aus session holen!
-        $total = 0;
         if(isset($query_in['filter'])){
+            // load records
+            if($query_in['filter'] != Api\Cache::getSession('schulmanager', 'filter')){
+                unset($query_in['total']);  // load new group
+            }
             Api\Cache::setSession('schulmanager', 'filter', $query_in['filter']);
         }
         else{
@@ -988,9 +990,9 @@ class schulmanager_ui
 
         $result['details_noten'] = $stud['noten'];
 
-        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_lesson');
-        $result['details_klasse'] = $klassengr_schuelerfa->getKlasse_asv_klassenname();
-        $result['details_fach'] = $klassengr_schuelerfa->getSchuelerfach_asv_anzeigeform();
+        $actual_lesson = Api\Cache::getSession('schulmanager', 'actual_lesson');
+        $result['details_klasse'] = $stud['klasse']['name'];
+        $result['details_fach'] = $actual_lesson['bezeichnung'];
 
         Api\Json\Response::get()->data($result);
     }
@@ -1007,9 +1009,9 @@ class schulmanager_ui
         $stud = $cachedRows[$stud_id];
         $result['contact_name'] = $stud['nm_st']['st_asv_familienname'];
         $result['contact_rufname'] = $stud['nm_st']['st_asv_rufname'];
-        $klassengr_schuelerfa = Api\Cache::getSession('schulmanager', 'actual_lesson');
-        $result['contact_klasse'] = $klassengr_schuelerfa->getKlasse_asv_klassenname();
-        $result['contact_fach'] = $klassengr_schuelerfa->getSchuelerfach_asv_anzeigeform();
+        $actual_lesson = Api\Cache::getSession('schulmanager', 'actual_lesson');
+        $result['details_klasse'] = $stud['klasse']['name'];
+        $result['details_fach'] = $actual_lesson['bezeichnung'];
 
         $rows = array();
         $schuelerkommunikation_so = new schulmanager_schuelerkommunikation_so();
