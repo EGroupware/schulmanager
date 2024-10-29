@@ -44,9 +44,9 @@ class schulmanager_note_bo {
 		$this->so->saveItem($note);
 	}
 
-    function loadNotenBySchueler($schueler_id, $koppel_id, &$schueler)
+    function loadNotenBySchueler($schueler_id, &$schueler, array $fach)
     {
-        $this->so->loadNotenBySchueler($schueler_id, $koppel_id, $schueler);
+        $this->so->loadNotenBySchueler($schueler_id, $schueler, $fach);
     }
 
     function beforeSendToClient(&$schueler, $gewichtungen){
@@ -403,6 +403,9 @@ class schulmanager_note_bo {
                     $note = array(
                         'schueler_id' => $schueler['nm_st']['st_asv_id'],
                         'koppel_id' => $koppel_id,
+                        'fach_id' => $schueler['fach']['fach_id'],
+                        'belegart_id' => $schueler['fach']['belegart_id'],
+                        'jahrgangsstufe_id' => $schueler['klasse']['jahrgangsstufe_id'],
                         'note_blockbezeichner' => $blockname,
                         'note_index_im_block' => -1,
                         'note_note' => $notenblock[-1]['note'],

@@ -665,6 +665,37 @@ function schulmanager_upgrade23_1_20240909()
     return $GLOBALS['setup_info']['schulmanager']['currentver'] = '23.1.20241011';
 }
 
+function schulmanager_upgrade23_1_20241011()
+{
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_note','fach_id', array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'ID Schuelerfach'));
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_note','belegart_id',array('type' => 'varchar','precision' => '40','nullable' => True,'comment' => 'ID Belegungsart'));
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_note','jahrgangsstufe_id',array('type' => 'varchar','precision' => '40','nullable' => True,'comment' => 'ID Jahrgangsstufe'));
+
+    $GLOBALS['egw_setup']->oProc->DropIndex('egw_schulmanager_note',array('koppel_id','schueler_id'));
+    $GLOBALS['egw_setup']->oProc->CreateIndex('egw_schulmanager_note',array('schueler_id', 'fach_id', 'belegart_id', 'jahrgangsstufe_id'));
+
+    $GLOBALS['egw_setup']->oProc->query(
+        'UPDATE egw_schulmanager_note AS N '.
+            'INNER JOIN '.
+            '( SELECT DISTINCT egw_schulmanager_note.note_id,'.
+                        'egw_schulmanager_unterrichtselement2.fach_id, '.
+                        'egw_schulmanager_unterrichtselement2_schueler.belegart_id, '.
+                        'egw_schulmanager_asv_klassengruppe.kg_asv_jahrgangsstufe_id '.
+                    'FROM egw_schulmanager_note '.
+                    'INNER JOIN egw_schulmanager_unterrichtselement2 ON egw_schulmanager_unterrichtselement2.koppel_id = egw_schulmanager_note.koppel_id '.
+                    'INNER JOIN egw_schulmanager_unterrichtselement2_schueler ON egw_schulmanager_unterrichtselement2_schueler.koppel_id = egw_schulmanager_note.koppel_id '.
+                    'INNER JOIN egw_schulmanager_asv_schueler_stamm ON egw_schulmanager_asv_schueler_stamm.sch_asv_id = egw_schulmanager_note.schueler_id '.
+                    'INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_schueler_stamm_id= egw_schulmanager_asv_schueler_stamm.sch_asv_id '.
+                    'INNER JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_asv_klassengruppe.kg_asv_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_klassengruppe_id '.
+                    'ORDER BY egw_schulmanager_note.note_id '.
+                ') AS S ON S.note_id = N.note_id '.
+            'SET N.fach_id = S.fach_id, '.
+                'N.belegart_id = S.belegart_id, '.
+                'N.jahrgangsstufe_id = S.kg_asv_jahrgangsstufe_id');
+
+    return $GLOBALS['setup_info']['schulmanager']['currentver'] = '23.1.20241029';
+}
+
 
 
 

@@ -216,11 +216,14 @@ class schulmanager_note_so extends Api\Storage {
 
     /**
      * @param $schueler_id
-     * @param $koppel_id
      * @param $schueler
+     * @param $fach
      * @return void
      */
-    function loadNotenBySchueler($schueler_id, $koppel_id, &$schueler){
+    function loadNotenBySchueler($schueler_id, &$schueler, $fach){
+        $fach_id = $fach['fach_id'];
+        $belegart_id = $fach['belegart_id'];
+        $jahrgangsstufe_id = $schueler['klasse']['jahrgangsstufe_id'];
         $sql = "SELECT
 			egw_schulmanager_note.note_id AS note_id,
 			egw_schulmanager_note.note_blockbezeichner AS blockbezeichner,
@@ -237,8 +240,10 @@ class schulmanager_note_so extends Api\Storage {
             egw_schulmanager_note.koppel_id AS koppel_id,
             egw_schulmanager_note.schueler_id AS schueler_id
 		FROM egw_schulmanager_note
-			WHERE egw_schulmanager_note.koppel_id='".$koppel_id."'
-			AND egw_schulmanager_note.schueler_id='".$schueler_id."'";
+			WHERE egw_schulmanager_note.schueler_id='".$schueler_id."'
+			AND egw_schulmanager_note.fach_id='".$fach_id."'
+			AND egw_schulmanager_note.belegart_id='".$belegart_id."'
+			AND egw_schulmanager_note.jahrgangsstufe_id='".$jahrgangsstufe_id."'";
 
         $rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
 

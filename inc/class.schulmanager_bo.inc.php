@@ -157,7 +157,9 @@ class schulmanager_bo
 
                 $schueler_id = $session_rows[$row_id]['nm_st']['st_asv_id'];
 				$note_id = $session_rows[$row_id]['noten'][$block][$block_index]['note_id'];
-				$asv_id = $session_rows[$row_id]['noten'][$block][$block_index]['asv_id'];
+				$fach_id = $session_rows[$row_id]['fach']['fach_id'];
+                $belegart_id = $session_rows[$row_id]['fach']['belegart_id'];
+                $jahrgangsstufe_id = $session_rows[$row_id]['klasse']['jahrgangsstufe_id'];
 				if(isset($schueler_id) && isset($koppel_id)){
 					$note = array(
 						'note_blockbezeichner' => $block,
@@ -166,6 +168,9 @@ class schulmanager_bo
 						'note_asv_note_manuell' => $block_index == -1,
                         'koppel_id' => $koppel_id,
                         'schueler_id' => $schueler_id,
+                        'fach_id' => $fach_id,
+                        'belegart_id' => $belegart_id,
+                        'jahrgangsstufe_id' => $jahrgangsstufe_id,
 					);
 
 					// apply input info

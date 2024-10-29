@@ -77,6 +77,8 @@ class schulmanager_substitution_bo
             $koppel_id = $lesson['koppel_id'];
             $bezeichnung = $lesson['bezeichnung'];
 
+            $classes = $lesson['klassen'];
+            $bezeichnung = $lesson['fach_name'].' ('.implode(',', $classes).') ['.$teacher_orig['account_lastname'].']';
 	        return $this->so->saveItem($teacher['account_lid'], $teacher_orig['account_lid'], $koppel_id, $bezeichnung);
 	    }
 	    return false;

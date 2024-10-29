@@ -74,7 +74,7 @@ class schulmanager_lehrer_bo
 		$this->username = $GLOBALS['egw_info']['user']['account_lid'];
         $lehrer_account_so = new schulmanager_lehrer_account_so();
         $this->lehrerStammIDs = $lehrer_account_so->loadLehrerStammIDs($GLOBALS['egw_info']['user']['account_id']);
-        $this->lessons = $this->unterricht_so->loadLehrerUnterricht($this->lehrerStammIDs);
+        $this->lessons = $this->unterricht_so->loadLehrerUnterricht($this->lehrerStammIDs, true);
         $this->wl_bo = new schulmanager_werteliste_bo();
 	}
 

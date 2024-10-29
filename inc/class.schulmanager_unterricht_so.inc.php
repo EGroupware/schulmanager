@@ -44,7 +44,7 @@ class schulmanager_unterricht_so extends Api\Storage {
      * @param type $kennung lehrer kennung
      * @return array of schulmanager_klassengr_schuelerfach
      */
-    function &loadLehrerUnterricht(array $lehrerStammIDs){
+    function &loadLehrerUnterricht(array $lehrerStammIDs, bool $addSubs = false){
         $unterricht = array();
         if(empty($lehrerStammIDs)){
             return $unterricht;
@@ -59,66 +59,113 @@ class schulmanager_unterricht_so extends Api\Storage {
         }
 
         $tables = $this->schulmanager_unterricht_table;
-        $cols =   implode(', ', $this->value_col).', egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform';
+        $cols =   'DISTINCT '.implode(', ', $this->value_col).', egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform, egw_schulmanager_asv_klasse.kl_asv_klassenname';
         $where = array(
             "lehrer_stamm_id IN (".$csvIDs.")"
         );
 
         $join = " INNER JOIN egw_schulmanager_unterrichtselement2_lehrer ON egw_schulmanager_unterrichtselement2_lehrer.koppel_id = egw_schulmanager_unterrichtselement2.koppel_id"
-                ." INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_unterrichtselement2.fach_id";
+                ." INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_unterrichtselement2.fach_id"
+                ." LEFT JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_unterrichtselement2.kg_id = egw_schulmanager_asv_klassengruppe.kg_asv_id"
+                ." LEFT JOIN egw_schulmanager_asv_klasse ON egw_schulmanager_asv_klassengruppe.kg_asv_klasse_id = egw_schulmanager_asv_klasse.kl_asv_id";
         $append = 'ORDER BY '.$this->schulmanager_unterricht_table.'.bezeichnung, '.$this->schulmanager_unterricht_table.".koppel_id";
         $rs = $this->db->select($tables, $cols, $where, '', '', False, $append, False, 0, $join);
 
-        $uhset = array();
-
+        $untLoaded = array();
         foreach($rs as $row){
-            $duplicateKey = $row['kg_id'].'#'.$row['fach_id'];
-            // ignore lessons with identical class group and subject
-            if(!array_key_exists($duplicateKey, $uhset) && !array_key_exists($row['koppel_id'], $uhset)){
-                $unterricht[] = array(
+            $unt = array(
+                'unt_id' => $row['unt_id'],
+                'koppel_id' => $row['koppel_id'],
+                'bezeichnung' => $row['bezeichnung'],
+                'kg_id' => $row['kg_id'],
+                'untart_id' => $row['untart_id'],
+                'fach_id' => $row['fach_id'],
+                'fach_name' => $row['sf_asv_anzeigeform'],
+                'fach_kurzform' => $row['sf_asv_kurzform'],
+                'klassenname' => $row['kl_asv_klassenname'],
+                'klasse' => $row['kl_asv_klassenname'],
+                'klassen' => array($row['kl_asv_klassenname'])
+            );
+            $untLoaded[] = $unt;
+        }
+
+        $this->createUnterrichtList($unterricht, $untLoaded);
+
+        if($addSubs) {
+            // load substitutions
+            $substitution_so = new schulmanager_substitution_so();
+            $subs = $substitution_so->load($unterricht, $GLOBALS['egw_info']['user']['account_lid']);
+
+            foreach ($subs as $row) {
+                $unt = array(
                     'unt_id' => $row['unt_id'],
                     'koppel_id' => $row['koppel_id'],
                     'bezeichnung' => $row['bezeichnung'],
                     'kg_id' => $row['kg_id'],
                     'untart_id' => $row['untart_id'],
                     'fach_id' => $row['fach_id'],
-                    'fach_name' => $row['sf_asv_anzeigeform']
+                    'klassen' => array()
                 );
+                $unterricht[] = $unt;
             }
-            if(!empty($row['kg_id'])){
-                $uhset[$duplicateKey] = $unterricht;
-            }
-            $uhset[$row['koppel_id']] = $unterricht;
         }
 
-        // load substitutions
-        $substitution_so = new schulmanager_substitution_so();
-        $subs = $substitution_so->load($unterricht, $GLOBALS['egw_info']['user']['account_lid']);
-
-        foreach($subs as $row){
-            $duplicateKey = $row['kg_id'].'#'.$row['fach_id'];
-            // ignore lessons with identical class group ans subject
-            if(!array_key_exists($duplicateKey, $uhset) && !array_key_exists($row['koppel_id'], $uhset)){
-                $unterricht[] = array(
-                    'unt_id' => $row['unt_id'],
-                    'koppel_id' => $row['koppel_id'],
-                    'bezeichnung' => $row['bezeichnung'],
-                    'kg_id' => $row['kg_id'],
-                    'untart_id' => $row['untart_id'],
-                    'fach_id' => $row['fach_id']
-                );
-                if(!empty($row['kg_asv_id'])){
-                    $uhset[$duplicateKey] = $row['koppel_id'];
-                }
-                $uhset[$row['koppel_id']] = $row['koppel_id'];
-            }
-        }
         return $unterricht;
     }
 
+    /**
+     * Creates list without redundant lessens or single units of lesson
+     * @param array $unterricht
+     * @param array $untLoaded
+     * @return void
+     */
+    function createUnterrichtList(array &$unterricht, array $untLoaded){
+        $untKeys = array();
+        //$untIndex = 0;
 
+        foreach($untLoaded as $unt){
+            // create keys, either via kg, fach combination or via koppel_id
+            $kgFachKey = null;
+            if(!empty($unt['kg_id'])) {
+                $kgFachKey = $unt['kg_id'] . '#' . $unt['fach_id'];
+            }
+            $koppelKey = $unt['koppel_id'];
 
+            // new combination, add to list
+            if((!array_key_exists($kgFachKey, $untKeys)) && !array_key_exists($koppelKey, $untKeys)){
+                $unterricht[] = $unt;
+                $untIndex = array_key_last($unterricht);
+            }
+            else{
+                // saved before, get index
+                if($kgFachKey && array_key_exists($kgFachKey, $untKeys)){
+                    // get index from previously saved entry
+                    $untIndex = $untKeys[$kgFachKey];
+                }
+                else{
+                    $untIndex = $untKeys[$koppelKey];
+                }
+                // add new class to unt
+                if(!in_array($unt['klasse'], $unterricht[$untIndex]['klassen'])){
+                    $unterricht[$untIndex]['klassen'][] = $unt['klasse'];
+                }
+            }
 
+            // remember keys, and index of saved unt
+            if($kgFachKey && !array_key_exists($kgFachKey, $untKeys)){
+                    $untKeys[$kgFachKey] = $untIndex;
+            }
+            if(!array_key_exists($koppelKey, $untKeys)){
+                $untKeys[$koppelKey] = $untIndex;
+            }
+        }
+
+        // create display name
+        foreach($unterricht as &$unt){
+            $classes = $unt['klassen'];
+            $unt['bezeichnung'] = $unt['fach_name'].' ('.implode(',', $classes).')';
+        }
+    }
 
     /**
      * Loads lessons with subject by student
@@ -245,14 +292,17 @@ class schulmanager_unterricht_so extends Api\Storage {
         }
 
         $tables = $this->schulmanager_unterricht_schueler_table;
-        $cols =   'egw_schulmanager_asv_schueler_stamm.sch_asv_id AS st_asv_id,
+        $cols =   'DISTINCT egw_schulmanager_asv_schueler_stamm.sch_asv_id AS st_asv_id,
 					egw_schulmanager_asv_schueler_stamm.sch_asv_familienname AS st_asv_familienname,
 					egw_schulmanager_asv_schueler_stamm.sch_asv_rufname AS st_asv_rufname,
 					egw_schulmanager_asv_schueler_stamm.sch_asv_austrittsdatum AS st_asv_austrittsdatum,
                     egw_schulmanager_asv_klassengruppe.kg_asv_id AS kg_id,
                     egw_schulmanager_asv_klassengruppe.kg_asv_kennung AS kg_kennung,
+                    egw_schulmanager_asv_klassengruppe.kg_asv_jahrgangsstufe_id AS jahrgangsstufe_id,
                     egw_schulmanager_asv_klasse.kl_asv_id AS kl_id,
-                    egw_schulmanager_asv_klasse.kl_asv_klassenname AS kl_name';
+                    egw_schulmanager_asv_klasse.kl_asv_klassenname AS kl_name,'
+                    .$this->schulmanager_unterricht_schueler_table.'.belegart_id,'
+                    .$this->schulmanager_unterricht_table.'.fach_id';
         $where = array(
             $this->schulmanager_unterricht_schueler_table.".koppel_id='".$koppel_id."'",
         );
@@ -260,20 +310,19 @@ class schulmanager_unterricht_so extends Api\Storage {
         $join = ' INNER JOIN egw_schulmanager_asv_schueler_stamm ON egw_schulmanager_asv_schueler_stamm.sch_asv_id = '.$this->schulmanager_unterricht_schueler_table.'.schueler_id'
                 .' INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_schueler_stamm_id = egw_schulmanager_asv_schueler_stamm.sch_asv_id'
                 .' INNER JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_asv_klassengruppe.kg_asv_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_klassengruppe_id'
-                .' INNER JOIN egw_schulmanager_asv_klasse ON egw_schulmanager_asv_klasse.kl_asv_id = egw_schulmanager_asv_klassengruppe.kg_asv_klasse_id';
+                .' INNER JOIN egw_schulmanager_asv_klasse ON egw_schulmanager_asv_klasse.kl_asv_id = egw_schulmanager_asv_klassengruppe.kg_asv_klasse_id'
+                .' INNER JOIN '.$this->schulmanager_unterricht_table.' ON '.$this->schulmanager_unterricht_table.'.koppel_id = '.$this->schulmanager_unterricht_schueler_table.'.koppel_id';
 
         $append = "ORDER BY st_asv_familienname, st_asv_rufname COLLATE 'utf8_general_ci'";
 
-
-
-        if(!isset($query_in['total'])){
+        if(!isset($query_in['total']) && !$query_in['adhocload']){
             // only get number of rows
             $total = $this->db->select($tables, $cols, $where, '', '', False, $append, False, 0, $join)->NumRows();;
         }
         else{
             $rs = $this->db->select($tables, $cols, $where, '', '', $query_in['start'], $append, False, $query_in['num_rows'], $join);
-            $rowid = $query_in['start'];
-            $id = $query_in['start'] + 1;
+            $rowid = $query_in['start'] ?? 0;
+            $id = $rowid + 1;
 
             foreach($rs as $row){
                 $schueler_id = $row['st_asv_id'];
@@ -292,11 +341,20 @@ class schulmanager_unterricht_so extends Api\Storage {
                         'name' => $row['kl_name'],
                         'kg_id' => $row['kg_id'],
                         'kg_kennung' => $row['kg_kennung'],
+                        'jahrgangsstufe_id' => $row['jahrgangsstufe_id'],
                     ),
+                    'fach'      => array(
+                        'fach_id' => $row['fach_id'],
+                        'belegart_id' => $row['belegart_id'],
+                    ),
+                );
+                $fach = array(
+                    'fach_id' => $row['fach_id'],
+                    'belegart_id' => $row['belegart_id'],
                 );
 
                 $schueler['noten'] = $note_bo->getNotenTemplate();
-                $note_bo->loadNotenBySchueler($schueler_id, $koppel_id, $schueler);
+                $note_bo->loadNotenBySchueler($schueler_id, $schueler, $fach);
 
                 $note_bo->beforeSendToClient($schueler, $gewichtungen);
                 $rows[$rowid] = $schueler;

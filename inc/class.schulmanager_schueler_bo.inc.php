@@ -76,7 +76,7 @@ class schulmanager_schueler_bo{
         foreach($faecher as $key => $fach){
             $fach['noten'] = $note_bo->getNotenTemplate();
 
-            $note_so->loadNotenBySchueler($schueler['nm_st']['st_asv_id'], $fach['koppel_id'], $fach);
+            $note_so->loadNotenBySchueler($schueler['nm_st']['st_asv_id'], $fach);
 
             // load weights
             $gewichtungen = array();

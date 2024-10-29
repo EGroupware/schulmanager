@@ -604,19 +604,6 @@ export class SchulmanagerApp extends EgwApp
 			select_schueler.set_select_options(options);
 			select_schueler.set_value(0);
 
-			/*let widget = <Et2Select> document.getElementById('schulmanager-notenmanager-notendetails_select_schueler');
-			if(widget){
-				while (widget.firstChild) {
-					widget.removeChild(widget.firstChild);
-				}
-				for (let key in result['select_schueler']){
-					let item = new SlMenuItem();
-					item.value = key;
-					item.innerText =result['select_schueler'][key];
-					widget.appendChild(item);
-				}
-			}*/
-
 			delete(result['select_schueler']);
 
 			for (let key in result){

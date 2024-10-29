@@ -900,6 +900,7 @@ class schulmanager_ui
         $query_in = array(
             'filter' => $klasse_id,
             'total' => -1,
+            'start' => 0,
         );
         $readonlys = array();
         $this->get_rows($query_in, $rows, $readonlys);
@@ -1078,6 +1079,7 @@ class schulmanager_ui
         $query_in = array(
             'filter' => $klasse_id,
             'total' => -1,
+            'adhocload' => true,
         );
         $rows = array();
         $readonlys = array();
