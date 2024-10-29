@@ -214,10 +214,13 @@ $phpgw_baseline = array(
             'note_description' => array('type' => 'varchar','precision' => '150','comment' => 'description'),
             'koppel_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id unterricht'),
             'schueler_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id schueler'),
+            'fach_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id fach'),
+            'belegart_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id belegart'),
+            'jahrgangsstufe_id' => array('type' => 'varchar','precision' => '40','nullable' => False,'comment' => 'id jahrgangsstufe'),
         ),
         'pk' => array('note_id'),
         'fk' => array(),
-        'ix' => array(array('koppel_id','schueler_id')),
+        'ix' => array(array('schueler_id','fach_id','belegart_id','jahrgangsstufe_id')),
         'uc' => array()
     ),
     // Schulamanger Note Extras
