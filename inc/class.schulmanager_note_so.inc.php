@@ -238,7 +238,10 @@ class schulmanager_note_so extends Api\Storage {
             egw_schulmanager_note.note_definition_date AS definition_date,
             egw_schulmanager_note.note_description AS description,
             egw_schulmanager_note.koppel_id AS koppel_id,
-            egw_schulmanager_note.schueler_id AS schueler_id
+            egw_schulmanager_note.schueler_id AS schueler_id,
+            egw_schulmanager_note.fach_id AS fach_id,
+            egw_schulmanager_note.belegart_id AS belegart_id,
+            egw_schulmanager_note.jahrgangsstufe_id AS jahrgangsstufe_id
 		FROM egw_schulmanager_note
 			WHERE egw_schulmanager_note.schueler_id='".$schueler_id."'
 			AND egw_schulmanager_note.fach_id='".$fach_id."'
@@ -293,7 +296,8 @@ class schulmanager_note_so extends Api\Storage {
 			egw_schulmanager_asv_schuelerfach.sf_asv_id AS asv_id,
 			egw_schulmanager_asv_schuelerfach.sf_asv_kurzform AS asv_kurzform,
 			egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform AS asv_anzeigeform,
-
+            egw_schulmanager_unterrichtselement2_schueler.belegart_id AS belegart_id,
+			egw_schulmanager_unterrichtselement2.bezeichnung AS unt_bezeichnung,
 			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'alt_b' THEN egw_schulmanager_note.note_note END) AS alt_b,
 			-- 1. HJ
 			GROUP_CONCAT(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'glnw_hj_1' AND egw_schulmanager_note.note_index_im_block >= 0 THEN egw_schulmanager_note.note_note END ORDER BY egw_schulmanager_note.note_index_im_block SEPARATOR ' | ') AS glnw_hj_1,
@@ -327,16 +331,23 @@ class schulmanager_note_so extends Api\Storage {
 
 			FROM egw_schulmanager_unterrichtselement2_schueler
 
+			INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_schueler_stamm_id = egw_schulmanager_unterrichtselement2_schueler.schueler_id
+			INNER JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_asv_klassengruppe.kg_asv_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_klassengruppe_id
 			INNER JOIN egw_schulmanager_unterrichtselement2 ON egw_schulmanager_unterrichtselement2.koppel_id = egw_schulmanager_unterrichtselement2_schueler.koppel_id
+		        AND egw_schulmanager_unterrichtselement2.unt_id = egw_schulmanager_unterrichtselement2_schueler.unt_id
+			    AND ((egw_schulmanager_unterrichtselement2.kg_id = egw_schulmanager_asv_klassengruppe.kg_asv_id)
+			              XOR (egw_schulmanager_unterrichtselement2.kg_id = '' AND egw_schulmanager_unterrichtselement2_schueler.belegart_id <> ''))
 			INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_unterrichtselement2.fach_id
 
             LEFT JOIN egw_schulmanager_config ON egw_schulmanager_asv_schuelerfach.sf_asv_kurzform = egw_schulmanager_config.cnf_val
-			LEFT JOIN egw_schulmanager_note ON egw_schulmanager_note.koppel_id = egw_schulmanager_unterrichtselement2_schueler.koppel_id AND egw_schulmanager_note.schueler_id = egw_schulmanager_unterrichtselement2_schueler.schueler_id
+			LEFT JOIN egw_schulmanager_note ON egw_schulmanager_note.koppel_id = egw_schulmanager_unterrichtselement2_schueler.koppel_id 
+			    AND egw_schulmanager_note.schueler_id = egw_schulmanager_unterrichtselement2_schueler.schueler_id
+			    AND egw_schulmanager_note.fach_id = egw_schulmanager_unterrichtselement2.fach_id
 
 			WHERE egw_schulmanager_unterrichtselement2_schueler.schueler_id = '".$schueler_id."'
 				AND (egw_schulmanager_unterrichtselement2_schueler.untart = 'P' OR egw_schulmanager_unterrichtselement2_schueler.untart = 'B')
 
-			 GROUP BY egw_schulmanager_asv_schuelerfach.sf_asv_id, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform, egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform, egw_schulmanager_config.cnf_extra
+			GROUP BY egw_schulmanager_asv_schuelerfach.sf_asv_id, egw_schulmanager_unterrichtselement2_schueler.belegart_id, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform, egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform, egw_schulmanager_config.cnf_extra
 
 			ORDER BY egw_schulmanager_config.cnf_extra, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform";
 
@@ -440,6 +451,12 @@ class schulmanager_note_so extends Api\Storage {
                 'is_par' => 0
             );
 
+            if(isset($row['belegart_id']) && strlen($row['belegart_id']) > 0){
+                $belegart = schulmanager_werteliste_bo::getBelegart($row['belegart_id'], 'kurzform');
+                $schueler['fachname'] .= ' / '.$belegart;
+                $schueler['nm_st']['st_asv_rufname'] = $schueler['fachname'];
+            }
+
             $this->beforeSendToClient($schueler);
             $rows[$id] = $schueler;
             $id++;
@@ -480,6 +497,8 @@ class schulmanager_note_so extends Api\Storage {
 			egw_schulmanager_asv_schuelerfach.sf_asv_id AS asv_id,
 			egw_schulmanager_asv_schuelerfach.sf_asv_kurzform AS asv_kurzform,
 			egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform AS asv_anzeigeform,
+			egw_schulmanager_unterrichtselement2_schueler.belegart_id AS belegart_id,
+			egw_schulmanager_unterrichtselement2.bezeichnung AS unt_bezeichnung,
 			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'alt_b' THEN egw_schulmanager_note.note_note END) AS alt_b,
 			GROUP_CONCAT(CASE WHEN (egw_schulmanager_note.note_blockbezeichner = 'klnw_hj_1' OR egw_schulmanager_note.note_blockbezeichner = 'klnw_hj_2') AND egw_schulmanager_note.note_index_im_block >= 0 THEN egw_schulmanager_note.note_note END ORDER BY egw_schulmanager_note.note_index_im_block SEPARATOR ' | ') AS klnw,
 			GROUP_CONCAT(CASE WHEN (egw_schulmanager_note.note_blockbezeichner = 'glnw_hj_1' OR egw_schulmanager_note.note_blockbezeichner = 'glnw_hj_2') AND egw_schulmanager_note.note_index_im_block >= 0 THEN egw_schulmanager_note.note_note END ORDER BY egw_schulmanager_note.note_index_im_block SEPARATOR ' | ') AS glnw,
@@ -488,13 +507,20 @@ class schulmanager_note_so extends Api\Storage {
 			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'schnitt_hj_2' THEN egw_schulmanager_note.note_note END) AS schnitt,
 			MAX(CASE WHEN egw_schulmanager_note.note_blockbezeichner = 'note_hj_2' THEN egw_schulmanager_note.note_note END) AS note
 			FROM egw_schulmanager_unterrichtselement2_schueler
+			INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_schueler_stamm_id = egw_schulmanager_unterrichtselement2_schueler.schueler_id
+			INNER JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_asv_klassengruppe.kg_asv_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_klassengruppe_id
 			INNER JOIN egw_schulmanager_unterrichtselement2 ON egw_schulmanager_unterrichtselement2.koppel_id = egw_schulmanager_unterrichtselement2_schueler.koppel_id
+			    AND egw_schulmanager_unterrichtselement2.unt_id = egw_schulmanager_unterrichtselement2_schueler.unt_id
+			    AND ((egw_schulmanager_unterrichtselement2.kg_id = egw_schulmanager_asv_klassengruppe.kg_asv_id)
+			              XOR (egw_schulmanager_unterrichtselement2.kg_id = '' AND egw_schulmanager_unterrichtselement2_schueler.belegart_id <> ''))
 			INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_unterrichtselement2.fach_id
             LEFT JOIN egw_schulmanager_config ON egw_schulmanager_asv_schuelerfach.sf_asv_kurzform = egw_schulmanager_config.cnf_val
-			LEFT JOIN egw_schulmanager_note ON egw_schulmanager_note.koppel_id = egw_schulmanager_unterrichtselement2_schueler.koppel_id AND egw_schulmanager_note.schueler_id = egw_schulmanager_unterrichtselement2_schueler.schueler_id
+			LEFT JOIN egw_schulmanager_note ON egw_schulmanager_note.koppel_id = egw_schulmanager_unterrichtselement2_schueler.koppel_id
+			    AND egw_schulmanager_note.schueler_id = egw_schulmanager_unterrichtselement2_schueler.schueler_id
+			    AND egw_schulmanager_note.fach_id = egw_schulmanager_unterrichtselement2.fach_id
 			WHERE egw_schulmanager_unterrichtselement2_schueler.schueler_id = '".$schueler_id."'
 				AND (egw_schulmanager_unterrichtselement2_schueler.untart = 'P' OR egw_schulmanager_unterrichtselement2_schueler.untart = 'B')
-			GROUP BY egw_schulmanager_asv_schuelerfach.sf_asv_id, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform, egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform, egw_schulmanager_config.cnf_extra
+			GROUP BY egw_schulmanager_asv_schuelerfach.sf_asv_id, egw_schulmanager_unterrichtselement2_schueler.belegart_id, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform, egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform, egw_schulmanager_config.cnf_extra
 			ORDER BY egw_schulmanager_config.cnf_extra, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform";
 
         $rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
@@ -523,6 +549,11 @@ class schulmanager_note_so extends Api\Storage {
                 ),
                 'is_par' => 0
             );
+
+            if(isset($row['belegart_id']) && strlen($row['belegart_id']) > 0){
+                $belegart = schulmanager_werteliste_bo::getBelegart($row['belegart_id'], 'kurzform');
+                $schueler['fachname'] .= ' / '.$belegart;
+            }
 
             $rows[$id] = $schueler;
             $id++;

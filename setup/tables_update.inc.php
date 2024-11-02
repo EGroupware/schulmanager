@@ -696,6 +696,14 @@ function schulmanager_upgrade23_1_20241011()
     return $GLOBALS['setup_info']['schulmanager']['currentver'] = '23.1.20241029';
 }
 
+function schulmanager_upgrade23_1_20241029()
+{
+    $GLOBALS['egw_setup']->oProc->AddColumn('egw_schulmanager_substitution','fach_id', array('type' => 'varchar','precision' => '40','nullable' => True,'comment' => 'ID Schuelerfach'));
+    $GLOBALS['egw_setup']->oProc->AlterColumn('egw_schulmanager_substitution','bezeichnung', array('type' => 'varchar','precision' => '80','nullable' => False,'comment' => 'description'));
+
+    return $GLOBALS['setup_info']['schulmanager']['currentver'] = '23.1.20241101';
+}
+
 
 
 

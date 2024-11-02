@@ -259,7 +259,12 @@ class schulmanager_lehrer_so extends Api\Storage{
 					egw_schulmanager_asv_schueler_stamm.sch_asv_id AS st_asv_id,
 					egw_schulmanager_asv_schueler_stamm.sch_asv_vornamen AS st_asv_vornamen,
 					egw_schulmanager_asv_schueler_stamm.sch_asv_wl_geschlecht_id AS st_asv_wl_geschlecht_id,
-					egw_schulmanager_asv_schueler_schuljahr.ss_asv_id AS asv_schueler_schuljahr_id
+					egw_schulmanager_asv_schueler_schuljahr.ss_asv_id AS asv_schueler_schuljahr_id,
+					egw_schulmanager_asv_klassengruppe.kg_asv_id AS kg_id,
+                    egw_schulmanager_asv_klassengruppe.kg_asv_kennung AS kg_kennung,
+                    egw_schulmanager_asv_klassengruppe.kg_asv_jahrgangsstufe_id AS jahrgangsstufe_id,
+                    egw_schulmanager_asv_klasse.kl_asv_id AS kl_id,
+                    egw_schulmanager_asv_klasse.kl_asv_klassenname AS kl_name
 				FROM egw_schulmanager_asv_klasse
 				INNER JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_asv_klassengruppe.kg_asv_klasse_id = egw_schulmanager_asv_klasse.kl_asv_id
 				INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_klassengruppe_id = egw_schulmanager_asv_klassengruppe.kg_asv_id
@@ -287,6 +292,13 @@ class schulmanager_lehrer_so extends Api\Storage{
 					'nm_st_class'		=> '',
                     'geschlecht' => $geschlecht
 				),
+                'klasse'     => array(
+                    'id' => $row['kl_id'],
+                    'name' => $row['kl_name'],
+                    'kg_id' => $row['kg_id'],
+                    'kg_kennung' => $row['kg_kennung'],
+                    'jahrgangsstufe_id' => $row['jahrgangsstufe_id'],
+                ),
 				'is_par' => 1
 			);
 

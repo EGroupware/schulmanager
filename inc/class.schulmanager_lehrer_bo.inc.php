@@ -138,6 +138,7 @@ class schulmanager_lehrer_bo
 				return;
 			}
             $koppel_id = $this->lessons[$filter]['koppel_id'];
+            $fach_id = $this->lessons[$filter]['fach_id'];
 
 			// Save in Session
             Api\Cache::setSession('schulmanager', 'actual_lesson', $this->lessons[$filter]);
@@ -150,7 +151,7 @@ class schulmanager_lehrer_bo
 			Api\Cache::setSession('schulmanager', 'notenmanager_gewichtungen', $gewichtungen);
 
             //$total = $this->unterricht_so->loadSchuelerNotenList($query_in, $koppel_id, $rows, $gewichtungen);
-            $this->unterricht_so->loadSchuelerNotenList($query_in, $koppel_id, $rows, $gewichtungen);
+            $this->unterricht_so->loadSchuelerNotenList($query_in, $koppel_id, $fach_id, $rows, $gewichtungen);
 
 			// Gewichtungen in rows schreiben
 			foreach($gewichtungen as $gewKey => $gewVal){

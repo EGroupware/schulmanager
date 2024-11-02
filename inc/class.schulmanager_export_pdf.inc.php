@@ -38,7 +38,7 @@ class schulmanager_export_pdf extends FPDF
 	{
 		parent::__construct();
 		$this->rows = $rows;
-		$this->title = $klassenname;
+		$this->title = utf8_decode($klassenname);
         $this->klassenname = $klassenname;
 		$this->schuljahr = schulmanager_ui::getSchuljahrXXXXYY();
 		$this->header_repeat = false;

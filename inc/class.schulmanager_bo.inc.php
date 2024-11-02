@@ -114,7 +114,7 @@ class schulmanager_bo
             $gewichtungen = array();
             $rows = array();
             $gew_bo->loadGewichtungen($unt['koppel_id'], $gewichtungen);
-            $unterricht_so->loadSchuelerNotenList($query_in, $unt['koppel_id'], $rows, $gewichtungen);
+            $unterricht_so->loadSchuelerNotenList($query_in, $unt['koppel_id'], $unt['fach_id'], $rows, $gewichtungen);
         }
     }
 
