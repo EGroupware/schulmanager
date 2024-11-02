@@ -180,4 +180,28 @@ class schulmanager_werteliste_bo {
         }
         return $result;
     }
+
+    /**
+     * @param $wl_belegart_id wl id
+     * @param $outputkey 'kurzform' | 'anzeigeform' | 'langform' | 'schluessel'
+     * @return mixed|string
+     */
+    public static function getBelegart($wl_belegart_id, $outputkey){
+        $result = '';
+        $wertelisten = Api\Cache::getSession('schulmanager', 'wertelisten');
+        if(!isset($wertelisten['BELEGART'])){
+            $wl_geschlecht = array();
+            self::loadWerteliste('BELEGART', $wl_belegart);
+            $wertelisten['BELEGART'] = $wl_belegart;
+            Api\Cache::setSession('schulmanager', 'wertelisten', $wertelisten);
+        }
+
+        foreach($wertelisten['BELEGART'] as $key => $value){
+            if($value['asv_wert_id'] == $wl_belegart_id){
+                $result = $value['asv_wert_'.$outputkey];
+                break;
+            }
+        }
+        return $result;
+    }
 }

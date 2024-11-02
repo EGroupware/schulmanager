@@ -261,7 +261,7 @@
                     </et2-vbox>
                     <description id="header_schuelername" class="sm_label"/>
                 </row>
-                <row>
+                <row height="100%">
                     <et2-tabbox id="tabs" span="all" >
                         <tabs>
                             <tab id="notenbild" label="Bericht / Zeugnis"/>

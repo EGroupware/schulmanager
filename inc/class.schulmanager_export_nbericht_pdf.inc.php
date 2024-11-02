@@ -254,7 +254,8 @@ class schulmanager_export_nbericht_pdf extends schulmanager_export_pdf //FPDF
 
         foreach ($faecher as $fach) {
             // output
-            $fachname = utf8_decode($fach['sf_asv_anzeigeform']);
+            //$fachname = utf8_decode($fach['sf_asv_anzeigeform']);
+            $fachname = utf8_decode($fach['fachname']);
             $x = $this->GetX();
             $y = $this->GetY();
             // group border

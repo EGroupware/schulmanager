@@ -74,17 +74,21 @@ class schulmanager_schueler_bo{
         $schueler['faecher'] = array();
         $fachIndex = 0;
         foreach($faecher as $key => $fach){
+            $schueler['noten'] = $note_bo->getNotenTemplate();
             $fach['noten'] = $note_bo->getNotenTemplate();
 
-            $note_so->loadNotenBySchueler($schueler['nm_st']['st_asv_id'], $fach);
+            // noten stehen aktuell nach Aufruf beim Schueler UND beim Fach!
+            $note_so->loadNotenBySchueler($schueler['nm_st']['st_asv_id'], $schueler, $fach);
 
             // load weights
             $gewichtungen = array();
             $gew_bo->loadGewichtungen($fach['koppel_id'], $gewichtungen);
             $fach['gew'] = $gewichtungen;
             // get teacher
-            $teacher = $unterricht_so->loadUnterrichtLehrer($schueler['nm_st']['st_asv_id'], $fach['untart'], $fach['belegart_id'], $fach['sf_asv_id']);
+            $teacher = $unterricht_so->loadUnterrichtLehrer($schueler['nm_st']['st_asv_id'], $fach['untart'], $fach['belegart_id'], $fach['fachid']);
             $fach['teacher'] = $teacher;
+
+            $fach['noten'] = $schueler['noten'];
 
             $schueler['faecher'][$fachIndex] = $fach;
             $fachIndex++;

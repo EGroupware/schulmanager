@@ -42,6 +42,7 @@ class schulmanager_substitution_so extends Api\Storage {
         $this->value_col['asv_kennung_orig'] = 'subs_asv_kennung_orig';
         $this->value_col['koppel_id'] = 'koppel_id';
         $this->value_col['bezeichnung'] = 'bezeichnung';
+        $this->value_col['fach_id'] = 'fach_id';
     }
     
     /**
@@ -79,12 +80,13 @@ class schulmanager_substitution_so extends Api\Storage {
     }
     
     
-    function saveItem($asv_kennung, $asv_kennung_orig, $koppel_id, $bezeichnung){
+    function saveItem($asv_kennung, $asv_kennung_orig, $koppel_id, $bezeichnung, $fach_id){
         $subs = array(
             'subs_asv_kennung' => $asv_kennung,
             'subs_asv_kennung_orig' => $asv_kennung_orig,
             'koppel_id' => $koppel_id,
             'bezeichnung' => $bezeichnung,
+            'fach_id' => $fach_id
         );
         
         $this->data = $subs;
