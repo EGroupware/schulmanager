@@ -624,7 +624,7 @@ class schulmanager_ui
         if(isset($query_in['filter'])){
             // load records
             if($query_in['filter'] != Api\Cache::getSession('schulmanager', 'filter')){
-                unset($query_in['total']);  // load new group
+                unset($query_in['rows_total']);  // load new group
             }
             Api\Cache::setSession('schulmanager', 'filter', $query_in['filter']);
         }
@@ -638,7 +638,8 @@ class schulmanager_ui
         // only for temporary calculation with ajax
         Api\Cache::setSession('schulmanager', 'notenmanager_temp_rows', $rows);
         Api\Cache::setSession('schulmanager', 'notenmanager_rows', $rows);
-        return $query_in['total'];
+
+        return $query_in['rows_total'];
     }
 
     /**
@@ -1075,11 +1076,8 @@ class schulmanager_ui
      * @param $klasse_id
      */
     function ajax_DetailsKlasseChanged($klasse_id){
-        // set filter and total=-1, otherwise only number of records will be returned (like first nextmatch call)
         $query_in = array(
             'filter' => $klasse_id,
-            'total' => -1,
-            'adhocload' => true,
         );
         $rows = array();
         $readonlys = array();

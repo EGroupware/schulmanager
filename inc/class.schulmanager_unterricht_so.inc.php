@@ -301,10 +301,6 @@ class schulmanager_unterricht_so extends Api\Storage {
      */
     function &loadSchuelerNotenList(&$query_in, $koppel_id, $fach_id, &$rows, $gewichtungen){
         $note_bo = new schulmanager_note_bo();
-        $limit = '';
-        if(isset($query_in['start']) && isset($query_in['num_rows'])){
-            $limit = " LIMIT ".$query_in['start'].", ".$query_in['num_rows'];
-        }
 
         $tables = $this->schulmanager_unterricht_schueler_table;
         $cols =   'DISTINCT egw_schulmanager_asv_schueler_stamm.sch_asv_id AS st_asv_id,
@@ -332,57 +328,60 @@ class schulmanager_unterricht_so extends Api\Storage {
 
         $append = "ORDER BY st_asv_familienname, st_asv_rufname COLLATE 'utf8_general_ci'";
 
-        if(!isset($query_in['total']) && !$query_in['adhocload']){
+        if(!isset($query_in['rows_total'])){
             // only get number of rows
-            $total = $this->db->select($tables, $cols, $where, '', '', False, $append, False, 0, $join)->NumRows();;
+            $total = $this->db->select($tables, $cols, $where, '', '', False, $append, False, 0, $join)->NumRows();
+            $query_in['rows_total'] = $total;
         }
-        else{
-            $rs = $this->db->select($tables, $cols, $where, '', '', $query_in['start'], $append, False, $query_in['num_rows'], $join);
-            $rowid = $query_in['start'] ?? 0;
-            $id = $rowid + 1;
 
-            foreach($rs as $row){
-                $schueler_id = $row['st_asv_id'];
-                $schueler = array(
-                    'nm_id'		=> $id,
-                    'nm_st'		=> array(
-                        'st_asv_id'			  => $schueler_id,
-                        'sch_schuljahr_asv_id' => $row['asv_schueler_schuljahr_id'],
-                        'st_asv_familienname' => $row['st_asv_familienname'],
-                        'st_asv_rufname'	  => $row['st_asv_rufname'],
-                        'st_asv_austrittsdatum' => $row['st_asv_austrittsdatum'],
-                        'nm_st_class'		=> ''
-                    ),
-                    'klasse'     => array(
-                        'id' => $row['kl_id'],
-                        'name' => $row['kl_name'],
-                        'kg_id' => $row['kg_id'],
-                        'kg_kennung' => $row['kg_kennung'],
-                        'jahrgangsstufe_id' => $row['jahrgangsstufe_id'],
-                    ),
-                    'fach'      => array(
-                        'fach_id' => $row['fach_id'],
-                        'belegart_id' => $row['belegart_id'],
-                    ),
-                );
-                $fach = array(
+        $query_in['start'] = $query_in['start'] ?? 0;
+        $query_in['num_rows'] = $query_in['num_rows'] ?? $query_in['rows_total'];
+
+        $rs = $this->db->select($tables, $cols, $where, '', '', $query_in['start'], $append, False, $query_in['num_rows'], $join);
+        $rowid = $query_in['start'] ?? 0;
+        $id = $rowid + 1;
+
+        foreach($rs as $row){
+            $schueler_id = $row['st_asv_id'];
+            $schueler = array(
+                'nm_id'		=> $id,
+                'nm_st'		=> array(
+                    'st_asv_id'			  => $schueler_id,
+                    'sch_schuljahr_asv_id' => $row['asv_schueler_schuljahr_id'],
+                    'st_asv_familienname' => $row['st_asv_familienname'],
+                    'st_asv_rufname'	  => $row['st_asv_rufname'],
+                    'st_asv_austrittsdatum' => $row['st_asv_austrittsdatum'],
+                    'nm_st_class'		=> ''
+                ),
+                'klasse'     => array(
+                    'id' => $row['kl_id'],
+                    'name' => $row['kl_name'],
+                    'kg_id' => $row['kg_id'],
+                    'kg_kennung' => $row['kg_kennung'],
+                    'jahrgangsstufe_id' => $row['jahrgangsstufe_id'],
+                ),
+                'fach'      => array(
                     'fach_id' => $row['fach_id'],
                     'belegart_id' => $row['belegart_id'],
-                );
+                ),
+            );
+            $fach = array(
+                'fach_id' => $row['fach_id'],
+                'belegart_id' => $row['belegart_id'],
+            );
 
-                $schueler['noten'] = $note_bo->getNotenTemplate();
-                $note_bo->loadNotenBySchueler($schueler_id, $schueler, $fach);
+            $schueler['noten'] = $note_bo->getNotenTemplate();
+            $note_bo->loadNotenBySchueler($schueler_id, $schueler, $fach);
 
-                $note_bo->beforeSendToClient($schueler, $gewichtungen);
-                $rows[$rowid] = $schueler;
-                $id++;
-                $rowid++;
-            }
-            // writes calculated values to Database
-            $note_bo->writeAutoValues($rows, $koppel_id);
-            $total = count($rows);
+            $note_bo->beforeSendToClient($schueler, $gewichtungen);
+            $rows[$rowid] = $schueler;
+            $id++;
+            $rowid++;
         }
-        $query_in['total'] = $total;
+        // writes calculated values to Database
+        $note_bo->writeAutoValues($rows, $koppel_id);
+        $total = count($rows);
+
         return $total;
     }
 }
