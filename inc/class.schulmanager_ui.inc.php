@@ -255,7 +255,7 @@ class schulmanager_ui
             $content['nm']['filter'] = $filter;
             $content['nm']['actions'] = self::get_actions($content);
             $content['nm']['no_columnselection'] = false;
-            $content['nm']['num_rows'] = 5;
+            $content['nm']['num_rows'] = 999;
 
             $content['nm']['options-filter'] = $this->bo->getKlassenFachList();
 
@@ -654,7 +654,6 @@ class schulmanager_ui
     function get_rows_edit(&$query_in,&$rows,&$readonlys,$id_only=false)
     {
         // todo if edit, dann rows aus session holen!
-        //$total = 0;
         if(isset($query_in['filter'])){
             $setSession = Api\Cache::setSession('schulmanager', 'filter', $query_in['filter']);
         }
@@ -674,11 +673,7 @@ class schulmanager_ui
                 Api\Cache::setSession('schulmanager', 'notenmanager_rows', $rows);
             }
         }
-        else{
-            // load rows from session if exists, needed for reload when columns has been resized
-            $rows = Api\Cache::getSession('schulmanager', 'notenmanager_temp_rows');
-        }
-        return $query_in['total'];
+        return $query_in['rows_total'];
     }
 
     /**
