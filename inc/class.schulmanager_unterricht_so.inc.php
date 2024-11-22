@@ -196,53 +196,49 @@ class schulmanager_unterricht_so extends Api\Storage {
             .$this->schulmanager_unterricht_schueler_table.'.untart, '
             .$this->schulmanager_unterricht_table.'.kg_id, '
             .$this->schulmanager_unterricht_table.'.fach_id, '
+            .$this->schulmanager_unterricht_table.'.bezeichnung, '
             ."egw_schulmanager_asv_schuelerfach.sf_asv_id, "
             ."egw_schulmanager_asv_schuelerfach.sf_asv_kurzform, "
             ."egw_schulmanager_asv_schuelerfach.sf_asv_anzeigeform, "
-            ."egw_schulmanager_asv_schuelerfach.sf_asv_pflichtfach";
+            ."egw_schulmanager_asv_schuelerfach.sf_asv_pflichtfach, "
+            ."egw_schulmanager_asv_klasse.kl_asv_klassenname";
         $where = array(
             "schueler_id='".$schueler_id."'"
         );
 
         $join = " INNER JOIN egw_schulmanager_unterrichtselement2 ON  egw_schulmanager_unterrichtselement2.koppel_id = egw_schulmanager_unterrichtselement2_schueler.koppel_id"
                 ." INNER JOIN egw_schulmanager_asv_schuelerfach ON  egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_unterrichtselement2.fach_id"
-                ." INNER JOIN egw_schulmanager_config ON egw_schulmanager_asv_schuelerfach.sf_asv_kurzform = egw_schulmanager_config.cnf_val ";
+                ." INNER JOIN egw_schulmanager_config ON egw_schulmanager_asv_schuelerfach.sf_asv_kurzform = egw_schulmanager_config.cnf_val "
+                ." LEFT JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_unterrichtselement2.kg_id = egw_schulmanager_asv_klassengruppe.kg_asv_id"
+                ." LEFT JOIN egw_schulmanager_asv_klasse ON egw_schulmanager_asv_klassengruppe.kg_asv_klasse_id = egw_schulmanager_asv_klasse.kl_asv_id";
 
         $append = "ORDER BY egw_schulmanager_config.cnf_extra, egw_schulmanager_asv_schuelerfach.sf_asv_kurzform, ".$this->schulmanager_unterricht_schueler_table.".koppel_id";
 
         $rs = $this->db->select($tables, $cols, $where, '', '', False, $append, False, 0, $join);
 
-        // TODO Merge lessons by class-group,subject-id and by koppel_id
-
-        $uhset = array();
+        $untLoaded = array();
         foreach($rs as $row){
-            $duplicateKey = $row['kg_id'].'#'.$row['fach_id'];
-            if(!array_key_exists($duplicateKey, $uhset) && !array_key_exists($row['koppel_id'], $uhset)) {
-                $unterrichtNew = array(
-                    'koppel_id' => $row['koppel_id'],
-                    'schueler_id' => $row['schueler_id'],
-                    'belegart_id' => $row['belegart_id'],
-                    'untart' => $row['untart'],
-                    'fach_id' => $row['sf_asv_id'],
-                    'sf_asv_kurzform' => $row['sf_asv_kurzform'],
-                    'sf_asv_anzeigeform' => $row['sf_asv_anzeigeform'],
-                    'sf_asv_pflichtfach' => $row['sf_asv_pflichtfach'],
-                    'fachname' => $row['sf_asv_anzeigeform'],
-                );
-
-                if(isset($row['belegart_id']) && strlen($row['belegart_id']) > 0){
-                    $belegart = schulmanager_werteliste_bo::getBelegart($row['belegart_id'], 'kurzform');
-                    $unterrichtNew['fachname'] .= ' / '.$belegart;
-                }
-
-                $unterricht[] = $unterrichtNew;
-            }
-
-            if (!empty($row['kg_id'])) {
-                $uhset[$duplicateKey] = $row['koppel_id'];
-            }
-            $uhset[$row['koppel_id']] = $row['koppel_id'];
+            $unt = array(
+                'koppel_id' => $row['koppel_id'],
+                'bezeichnung' => $row['bezeichnung'],
+                'kg_id' => $row['kg_id'],
+                'schueler_id' => $row['schueler_id'],
+                'belegart_id' => $row['belegart_id'],
+                'untart' => $row['untart'],
+                'fach_id' => $row['sf_asv_id'],
+                'sf_asv_kurzform' => $row['sf_asv_kurzform'],
+                'sf_asv_anzeigeform' => $row['sf_asv_anzeigeform'],
+                'sf_asv_pflichtfach' => $row['sf_asv_pflichtfach'],
+                'fachname' => $row['sf_asv_anzeigeform'],
+                'klassenname' => $row['kl_asv_klassenname'],
+                'klasse' => $row['kl_asv_klassenname'],
+                'klassen' => array()
+            );
+            if(isset($row['kl_asv_klassenname'])) $unt['klassen'][] = $row['kl_asv_klassenname'];
+            $untLoaded[] = $unt;
         }
+
+        $this->createUnterrichtList($unterricht, $untLoaded);
         return $unterricht;
     }
 
@@ -269,8 +265,8 @@ class schulmanager_unterricht_so extends Api\Storage {
             "egw_schulmanager_unterrichtselement2.fach_id='".$fach_id."'",
         );
 
-        $join = " INNER JOIN egw_schulmanager_unterrichtselement2 ON egw_schulmanager_unterrichtselement2.koppel_id = egw_schulmanager_unterrichtselement2_schueler.koppel_id".
-                " INNER JOIN egw_schulmanager_unterrichtselement2_lehrer ON egw_schulmanager_unterrichtselement2_lehrer.koppel_id = egw_schulmanager_unterrichtselement2.koppel_id".
+        $join = " INNER JOIN egw_schulmanager_unterrichtselement2 ON egw_schulmanager_unterrichtselement2.unt_id = egw_schulmanager_unterrichtselement2_schueler.unt_id".
+                " INNER JOIN egw_schulmanager_unterrichtselement2_lehrer ON egw_schulmanager_unterrichtselement2_lehrer.unt_id = egw_schulmanager_unterrichtselement2.unt_id".
                 " INNER JOIN egw_schulmanager_asv_lehrer_stamm ON egw_schulmanager_asv_lehrer_stamm.ls_asv_id = egw_schulmanager_unterrichtselement2_lehrer.lehrer_stamm_id";
 
         $append = "ORDER BY egw_schulmanager_asv_lehrer_stamm.ls_asv_familienname";

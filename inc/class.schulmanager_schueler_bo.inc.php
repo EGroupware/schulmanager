@@ -85,7 +85,7 @@ class schulmanager_schueler_bo{
             $gew_bo->loadGewichtungen($fach['koppel_id'], $gewichtungen);
             $fach['gew'] = $gewichtungen;
             // get teacher
-            $teacher = $unterricht_so->loadUnterrichtLehrer($schueler['nm_st']['st_asv_id'], $fach['untart'], $fach['belegart_id'], $fach['fachid']);
+            $teacher = $unterricht_so->loadUnterrichtLehrer($schueler['nm_st']['st_asv_id'], $fach['untart'], $fach['belegart_id'], $fach['fach_id']);
             $fach['teacher'] = $teacher;
 
             $fach['noten'] = $schueler['noten'];
