@@ -27,15 +27,15 @@
 				</row>
 				<row>
 					<description value="Schulleitung"/>
-					<select-account account_type="accounts" id="newsettings[schulleiter]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
+					<et2-select-account account_type="accounts" id="newsettings[schulleiter]" multiple="false" class="et2_fullWidth" span="4" tags="true"></et2-select-account>
 				</row>
 				<row>
 					<description value="Stellvertretung Schulleitung"/>
-					<select-account account_type="accounts" id="newsettings[schulleiter_stlvtr]" multiple="false" class="et2_fullWidth" span="4" tags="true"/>
+					<et2-select-account account_type="accounts" id="newsettings[schulleiter_stlvtr]" multiple="false" class="et2_fullWidth" span="4" tags="true"></et2-select-account>
 				</row>
 				<row>
 					<description value="Mitarbeiter Schulleitung"/>
-					<select-account account_type="accounts" id="newsettings[schulleitung_mitarb]" multiple="true" class="et2_fullWidth" span="4" tags="true"/>
+					<et2-select-account account_type="accounts" id="newsettings[schulleitung_mitarb]" multiple="true" class="et2_fullWidth" span="4" tags="true"></et2-select-account>
 				</row>
 				<row>
 					<description value="Aktuelles Schuljahr"/>

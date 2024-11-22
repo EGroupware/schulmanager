@@ -625,6 +625,8 @@ class schulmanager_ui
             // load records
             if($query_in['filter'] != Api\Cache::getSession('schulmanager', 'filter')){
                 unset($query_in['rows_total']);  // load new group
+                //Api\Cache::unsetSession('schulmanager', 'notenmanager_temp_rows');
+                //Api\Cache::unsetSession('schulmanager', 'notenmanager_rows');
             }
             Api\Cache::setSession('schulmanager', 'filter', $query_in['filter']);
         }
@@ -636,6 +638,11 @@ class schulmanager_ui
 
         $this->bo->getSchuelerNotenList($query_in,$rows);
         // only for temporary calculation with ajax
+        //$rowsCached = Api\Cache::getSession('schulmanager', 'notenmanager_rows');
+        //if(is_array($rowsCached)) {
+        //    $rows = array_merge($rowsCached, $rows);
+        //}
+
         Api\Cache::setSession('schulmanager', 'notenmanager_temp_rows', $rows);
         Api\Cache::setSession('schulmanager', 'notenmanager_rows', $rows);
 
