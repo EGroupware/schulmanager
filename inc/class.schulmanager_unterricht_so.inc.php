@@ -118,9 +118,10 @@ class schulmanager_unterricht_so extends Api\Storage {
      * Creates list without redundant lessens or single units of lesson
      * @param array $unterricht
      * @param array $untLoaded
+     * @param bool $teacherMode create specific display names
      * @return void
      */
-    function createUnterrichtList(array &$unterricht, array $untLoaded){
+    function createUnterrichtList(array &$unterricht, array $untLoaded, bool $teacherMode = true){
         $untKeys = array();
         //$untIndex = 0;
 
@@ -163,14 +164,44 @@ class schulmanager_unterricht_so extends Api\Storage {
 
         // create display name
         foreach($unterricht as &$unt){
-            $classes = $unt['klassen'];
-            if(count($classes) > 0){
-                $unt['bezeichnung'] = $unt['fach_name'].' / '.implode(',', $classes);
+            if($teacherMode) {
+                // create names for teachers unt list
+                $this->createUntDisplayName($unt, true, false, false, true);
             }
             else{
-                $unt['bezeichnung'] = $unt['fach_name'].' / '.$unt['bezeichnung'];
+                // create names for student unt list
+                $this->createUntDisplayName($unt, true, false, true,false);
             }
+        }
+    }
 
+    /**
+     * Create display name of subject/lesson
+     * @param array $unt data
+     * @param bool $fach add subject
+     * @param bool $bez add internal name
+     * @param bool $belegart add belegart
+     * @param bool $klassen add classes
+     * @return void
+     */
+    function createUntDisplayName(array &$unt, bool $display_fach = true, bool $display_bez = false, bool $display_belegart = false, bool $display_classnames = true){
+        $bezValue = $unt['bezeichnung'];
+        if($display_fach){
+            $unt['bezeichnung'] = $unt['fach_name'];
+        }
+
+        if($display_bez){
+            $unt['bezeichnung'] .= ' / '.$bezValue;
+        }
+
+        if($display_belegart && isset($unt['belegart_id']) && strlen($unt['belegart_id']) > 0){
+            $belegart = schulmanager_werteliste_bo::getBelegart($unt['belegart_id'], 'kurzform');
+            $unt['bezeichnung'] .= ' / '.$belegart;
+        }
+
+        $classes = $unt['klassen'];
+        if($display_classnames && count($classes) > 0){
+            $unt['bezeichnung'] .= ' / '.implode(',', $classes);
         }
     }
 
@@ -229,7 +260,7 @@ class schulmanager_unterricht_so extends Api\Storage {
                 'sf_asv_kurzform' => $row['sf_asv_kurzform'],
                 'sf_asv_anzeigeform' => $row['sf_asv_anzeigeform'],
                 'sf_asv_pflichtfach' => $row['sf_asv_pflichtfach'],
-                'fachname' => $row['sf_asv_anzeigeform'],
+                'fach_name' => $row['sf_asv_anzeigeform'],
                 'klassenname' => $row['kl_asv_klassenname'],
                 'klasse' => $row['kl_asv_klassenname'],
                 'klassen' => array()
@@ -238,7 +269,7 @@ class schulmanager_unterricht_so extends Api\Storage {
             $untLoaded[] = $unt;
         }
 
-        $this->createUnterrichtList($unterricht, $untLoaded);
+        $this->createUnterrichtList($unterricht, $untLoaded, false);
         return $unterricht;
     }
 

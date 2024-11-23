@@ -255,7 +255,7 @@ class schulmanager_export_pdf extends FPDF
 			$this->SetFontSize(10);
 			$this->Cell($header[0]['w'],5,$nr,'LR',0,'R',$fill);
 
-			$this->Cell($header[1]['w'],5,iconv('UTF-8', 'windows-1252', $name),'LR',0,'L',$fill);
+			$this->Cell($header[1]['w'],5,iconv('UTF-8', 'windows-1252//TRANSLIT', $name),'LR',0,'L',$fill); // windows-1252
 			$this->Cell($header[2]['w'],5,$altb,'L',0,'C',$fill);
 			$this->SetFont('','B');
 			$this->SetLineWidth(self::LW_MEDIUM);
