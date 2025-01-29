@@ -177,6 +177,37 @@
         </box>
     </template>
 
+    <template id="schulmanager.schuelerview.notenbild.rows" template="" lang="" group="0" version="0.0.1">
+            <grid id="not_nm" class="fl-table">
+                <columns>
+                    <column width="125"></column>
+                    <column width="30"></column>
+                    <column width="100"></column>
+                    <column width="100"></column>
+                    <column width="40"></column>
+                    <column width="40"></column>
+                    <column width="40"></column>
+                    <column width="30"></column>
+                </columns>
+                <rows>
+                    <row class="th">
+                        <nextmatch-header id="name" label="Fach" class="sm_label"></nextmatch-header>
+                        <nextmatch-header id="altb" label="alt. B"></nextmatch-header>
+                        <nextmatch-header id="glnw" label="GLNW" class="sm_label"></nextmatch-header>
+                        <nextmatch-header id="klnw" label="kLNW" class="sm_label"></nextmatch-header>
+                        <nextmatch-header id="glnw_avg" label="Ø GLNW" class="sm_label"></nextmatch-header>
+                        <nextmatch-header id="klnw_avg" label="Ø kLNW" class="sm_label"></nextmatch-header>
+                        <nextmatch-header id="schnitt" label="Ø Gesamt" class="sm_label"></nextmatch-header>
+                        <nextmatch-header id="note" label="Note " no_lang="true"  class="sm_label"></nextmatch-header>
+                    </row>
+                </rows>
+            </grid>
+            <et2-hbox disabled="!@isadmin">
+                <button statustext="LNW delete" label="Lnw 1. Hj löschen" id="button[dellnwpera]" image="delete" background_image="1" onclick="app.schulmanager.delLnwPerA"/>
+                <button statustext="LNW delete" label="Lnw 2. Hj löschen" id="button[dellnwperb]" image="delete" background_image="1" onclick="app.schulmanager.delLnwPerB"/>
+            </et2-hbox>
+        </template>
+
     <template id="schulmanager.schuelerview.notenbild">
         <et2-hbox>
             <et2-vbox width="50%">
@@ -205,36 +236,7 @@
         <et2-description label="testadmin" disabled="!@isadmin"></et2-description>
     </template>
 
-    <template id="schulmanager.schuelerview.notenbild.rows" template="" lang="" group="0" version="0.0.1">
-        <grid id="not_nm" class="fl-table">
-            <columns>
-                <column width="125"></column>
-                <column width="30"></column>
-                <column width="100"></column>
-                <column width="100"></column>
-                <column width="40"></column>
-                <column width="40"></column>
-                <column width="40"></column>
-                <column width="30"></column>
-            </columns>
-            <rows>
-                <row class="th">
-                    <nextmatch-header id="name" label="Fach" class="sm_label"></nextmatch-header>
-                    <nextmatch-header id="altb" label="alt. B"></nextmatch-header>
-                    <nextmatch-header id="glnw" label="GLNW" class="sm_label"></nextmatch-header>
-                    <nextmatch-header id="klnw" label="kLNW" class="sm_label"></nextmatch-header>
-                    <nextmatch-header id="glnw_avg" label="Ø GLNW" class="sm_label"></nextmatch-header>
-                    <nextmatch-header id="klnw_avg" label="Ø kLNW" class="sm_label"></nextmatch-header>
-                    <nextmatch-header id="schnitt" label="Ø Gesamt" class="sm_label"></nextmatch-header>
-                    <nextmatch-header id="note" label="Note " no_lang="true"  class="sm_label"></nextmatch-header>
-                </row>
-            </rows>
-        </grid>
-        <et2-hbox disabled="!@isadmin">
-            <button statustext="LNW delete" label="Lnw 1. Hj löschen" id="button[dellnwpera]" image="delete" background_image="1" onclick="app.schulmanager.delLnwPerA"/>
-            <button statustext="LNW delete" label="Lnw 2. Hj löschen" id="button[dellnwperb]" image="delete" background_image="1" onclick="app.schulmanager.delLnwPerB"/>
-        </et2-hbox>
-    </template>
+
 
     <template id="schulmanager.schuelerview" template="" lang="" group="0" version="0.0.001">
         <template id="schulmanager.schuelerview_zz_edit"></template>
