@@ -109,7 +109,7 @@ export class SchulmanagerApp extends EgwApp
 			params = 'mode=teacher_jz';
 		}
 
-		let modal = document.getElementById("schulmanager-notenmanager-klassenview_showexportmodal");
+		let modal = document.getElementById("schulmanager-schuelerview_showexportmodal");
 		modal.style.display = "none";
 
 		this.egw.loading_prompt('schulmanager',true,egw.lang('please wait...'));
@@ -184,18 +184,40 @@ export class SchulmanagerApp extends EgwApp
 	}
 
 	/**
+	 * reload klassleiter before pdf export
+	 * @param _id
+	 * @param _widget
+	 */
+	schuelerview_nbericht_prepare(_id, _widget){
+		let modal = document.getElementById("schulmanager-schuelerview_showexportmodal");
+		modal.style.display = "block";
+		let func = 'schulmanager.schulmanager_ui.ajax_nbericht_prepare';
+		this.egw.json(func, [], function (result) {
+			if(_widget !== null) {
+				let select_klassleiter = _widget.getRoot().getWidgetById('klassleiter');
+				let options = [];
+				for (let key in result['klassleiter']){
+					options.push({value:key, label: result['klassleiter'][key]});
+				}
+				select_klassleiter.set_select_options(options);
+				select_klassleiter.set_value(0);
+			}
+		}).sendRequest(true);
+	}
+
+	/**
 	 * download all grades in all subjects of all students as pdf handout for students
 	 * @param {type} _id
 	 * @param {type} _widget
 	 * @returns {undefined}
 	 */
 	exportpdf_nbericht(_id, _widget){
-		let modal = document.getElementById("schulmanager-notenmanager-klassenview_showexportmodal");
+		let modal = document.getElementById("schulmanager-schuelerview_showexportmodal");
 		modal.style.display = "none";
 		this.egw.loading_prompt('schulmanager',true, this.egw.lang('please wait...'));
-		let showReturn = document.getElementById('schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent_add_return_block').checked;
-		let showSigned = document.getElementById('schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent_add_signed_block').checked;
-		let signerWidget = <HTMLSelectElement> document.getElementById('schulmanager-notenmanager-klassenview_showexportmodal_showexportcontent_klassleiter');
+		let showReturn = document.getElementById('schulmanager-schuelerview_showexportmodal_showexportcontent_add_return_block').checked;
+		let showSigned = document.getElementById('schulmanager-schuelerview_showexportmodal_showexportcontent_add_signed_block').checked;
+		let signerWidget = <HTMLSelectElement> document.getElementById('schulmanager-schuelerview_showexportmodal_showexportcontent_klassleiter');
 		let signerid = signerWidget.value;
 		let $a = jQuery(document.createElement('a')).appendTo('body').hide();
 		let url = window.egw.webserverUrl+'/index.php?menuaction=schulmanager.schulmanager_download_ui.exportpdf_nbericht&showReturnInfo='+showReturn+'&signed='+showSigned+'&signerid='+signerid;
