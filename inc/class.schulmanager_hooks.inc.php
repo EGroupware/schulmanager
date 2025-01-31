@@ -78,16 +78,17 @@ class schulmanager_hooks
                 ))
             );
             //}
-
-			$file[] = array(
-				'text' => 'Klassenübersicht',
-				'icon' => Api\Image::find('schulmanager', 'group'),
-				'app'  => 'schulmanager',
-				'link' =>  Egw::link('/index.php',array(
-					'menuaction' => 'schulmanager.schulmanager_ui.klassenview',
-					'ajax' => 'true',
-				))
-			);
+            if (self::showModulesWhileDeveloping()) {
+                $file[] = array(
+                    'text' => 'Klassenübersicht',
+                    'icon' => Api\Image::find('schulmanager', 'group'),
+                    'app' => 'schulmanager',
+                    'link' => Egw::link('/index.php', array(
+                        'menuaction' => 'schulmanager.schulmanager_ui.klassenview',
+                        'ajax' => 'true',
+                    ))
+                );
+            }
 
             $file[] = array(
                 'text' => 'Schüler',
