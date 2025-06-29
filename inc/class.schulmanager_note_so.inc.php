@@ -89,114 +89,142 @@ class schulmanager_note_so extends Api\Storage {
 				egw_schulmanager_note.note_index_im_block AS index_im_block,
 				egw_schulmanager_note.note_asv_note_manuell AS manuell,
 				egw_schulmanager_note.note_update_date AS update_date,
+				egw_schulmanager_note.belegart_id AS belegart,
 				egw_schulmanager_asv_schuelerfach.sf_asv_unterrichtsfach_id AS fachid,
 				egw_schulmanager_asv_schuelerfach.sf_asv_kurzform AS kurzform,
-				egw_schulmanager_asv_schule_fach.sf_asv_schluessel AS schluessel
+				egw_schulmanager_asv_schule_fach.sf_asv_schluessel AS schluessel,
+				egw_schulmanager_unterrichtselement2.bezeichnung AS bezeichnung
 			FROM egw_schulmanager_asv_schueler_stamm
 			INNER JOIN egw_schulmanager_asv_schueler_schuljahr ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_schueler_stamm_id = egw_schulmanager_asv_schueler_stamm.sch_asv_id
-			INNER JOIN egw_schulmanager_note ON egw_schulmanager_note.note_asv_schueler_schuljahr_id = egw_schulmanager_asv_schueler_schuljahr.ss_asv_id
-			INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_note.note_asv_schueler_schuelerfach_id
+			INNER JOIN egw_schulmanager_asv_klassengruppe ON egw_schulmanager_asv_schueler_schuljahr.ss_asv_klassengruppe_id = egw_schulmanager_asv_klassengruppe.kg_asv_id
+			INNER JOIN egw_schulmanager_note ON (egw_schulmanager_note.schueler_id = egw_schulmanager_asv_schueler_stamm.sch_asv_id
+                AND egw_schulmanager_note.jahrgangsstufe_id = egw_schulmanager_asv_klassengruppe.kg_asv_jahrgangsstufe_id)
+			INNER JOIN egw_schulmanager_asv_schuelerfach ON egw_schulmanager_asv_schuelerfach.sf_asv_id = egw_schulmanager_note.fach_id
 			INNER JOIN egw_schulmanager_asv_schule_fach ON egw_schulmanager_asv_schule_fach.sf_asv_id = egw_schulmanager_asv_schuelerfach.sf_asv_schule_fach_id
+			INNER JOIN egw_schulmanager_unterrichtselement2 ON egw_schulmanager_note.koppel_id = egw_schulmanager_unterrichtselement2.koppel_id
+			    AND ((egw_schulmanager_unterrichtselement2.kg_id = egw_schulmanager_asv_klassengruppe.kg_asv_id)
+			              XOR (egw_schulmanager_unterrichtselement2.kg_id = '' AND egw_schulmanager_note.belegart_id <> ''))
 			WHERE egw_schulmanager_note.note_blockbezeichner IN ('$block') AND
 				egw_schulmanager_note.note_index_im_block = '-1'
 			ORDER BY lokales_dm";
 		$rs = $this->db->query($sql, __LINE__, __FILE__, 0, -1);
 
 
-		foreach($rs as $row){
-			$lokales_dm = $row['lokales_dm'];
-			$familienname = $row['familienname'];
-			$rufname = $row['rufname'];
-			$schuljahr_id = $row['schuljahr_id'];
-			$note = $row['note'];
+		foreach($rs as $row) {
+            $lokales_dm = $row['lokales_dm'];
+            $familienname = $row['familienname'];
+            $rufname = $row['rufname'];
+            $schuljahr_id = $row['schuljahr_id'];
+            $note = $row['note'];
 
-			$blockbezeichner = $row['blockbezeichner'];
-			$index_im_block = $row['index_im_block'];
-			$manuell = $row['manuell'];
-			$update_date = DateTime::createFromFormat('Y-m-d H:i:s.000', $row['update_date']);
-			$update_date = date_format($update_date, 'd.m.Y');
+            $blockbezeichner = $row['blockbezeichner'];
+            $index_im_block = $row['index_im_block'];
+            $manuell = $row['manuell'];
+            $update_date = DateTime::createFromFormat('Y-m-d H:i:s.000', $row['update_date']);
+            $update_date = date_format($update_date, 'd.m.Y');
+            $belegart = null;
+            $bemerkung = null;
 
-
-			$schluessel = $row['schluessel']; // UFACH_0300400500
-			$kurzform = $row['kurzform'];
-
-			//$zeugnisart = 'Zwischenzeugnis';
-			$zeugnisart = '01'; // 01 Schluessel Zwischenzeugnis
-
-			if($blockbezeichner === 'note_hj_2'){
-				//$zeugnisart = 'Jahreszeugnis';;
-				$zeugnisart = '25'; // 25 = Schluessel Jahreszeugnis
-			}
-
-			if($lokales_dm != $lokales_dm_before){
-				// end xml noten/schueler
-				if(!empty($lokales_dm_before)){
-					$xml->endElement(); // end note
-					$xml->endElement(); // end zeugnis
-					$xml->endElement(); // end zeugnisse
-					$xml->setIndent(--$in);
-					$xml->endElement(); // end schuelerin
-					$xml->setIndent(--$in);
-
-				}
+            if(isset($row['belegart']) && strlen($row['belegart']) > 0){
+                // belegart only exists for seminars, belegart_id==1038_27
+                $belegart = schulmanager_werteliste_bo::getBelegart($row['belegart'], 'schluessel');
+                $bemerkung = $row['bezeichnung'];
+            }
 
 
-				$xml->setIndent(++$in);
-				$xml->startElement('schuelerin');
-				// START IDENTIFIZIERBARE MERKMALE
-				$xml->setIndent(++$in);
-				$xml->startElement('identifizierende_merkmale');
+            $schluessel = $row['schluessel']; // UFACH_0300400500
+            $kurzform = $row['kurzform'];
 
-				$xml->setIndent(++$in);
-				$xml->startElement('lokales_differenzierungsmerkmal');
-				$xml->writeCdata($lokales_dm);
-				$xml->endElement();
-				$xml->setIndent($in);
-				$xml->startElement('familienname');
-				$xml->writeCdata($familienname);
-				$xml->endElement();
-				$xml->setIndent($in);
-				$xml->startElement('rufname');
-				$xml->writeCdata($rufname);
-				$xml->endElement();
-				$xml->setIndent(--$in);
+            //$zeugnisart = 'Zwischenzeugnis';
+            $zeugnisart = '01'; // 01 Schluessel Zwischenzeugnis
 
-				// END IDENTIFIZIERBARE MERKMALE
-				$xml->endElement();
-				$xml->setIndent($in);
+            if ($blockbezeichner === 'note_hj_2') {
+                //$zeugnisart = 'Jahreszeugnis';;
+                $zeugnisart = '25'; // 25 = Schluessel Jahreszeugnis
+            }
 
-				// START ZEUGNISSE
-				$xml->startElement('zeugnisse');
-				$xml->setIndent(++$in);
-				$xml->startElement('zeugnis');
-				$xml->setIndent(++$in);
-				$xml->startElement('zeugnisart');
-				$xml->writeCdata($zeugnisart);
-				$xml->endElement();
-				$xml->setIndent(--$in);
+            if ($lokales_dm != $lokales_dm_before) {
+                // end xml noten/schueler
+                if (!empty($lokales_dm_before)) {
+                    $xml->endElement(); // end note
+                    $xml->endElement(); // end zeugnis
+                    $xml->endElement(); // end zeugnisse
+                    $xml->setIndent(--$in);
+                    $xml->endElement(); // end schuelerin
+                    $xml->setIndent(--$in);
 
-				$xml->startElement('noten');
-			}
+                }
 
-			$xml->startElement('note');
-			$xml->startElement('fach');
-			$xml->setIndent(++$in);
-			$xml->startElement('schluessel');
-			$xml->writeCdata($schluessel);
-			$xml->endElement();
-			$xml->startElement('kurzform');
-			$xml->writeCdata($kurzform);
-			$xml->endElement();
-			$xml->setIndent(--$in);
-			$xml->endElement();
 
-			$xml->startElement('notenwert');
-			$xml->writeCdata($note);
-			$xml->endElement();
+                $xml->setIndent(++$in);
+                $xml->startElement('schuelerin');
+                // START IDENTIFIZIERBARE MERKMALE
+                $xml->setIndent(++$in);
+                $xml->startElement('identifizierende_merkmale');
 
-			$xml->startElement('datum');
-			$xml->writeCdata($update_date);
-			$xml->endElement();
+                $xml->setIndent(++$in);
+                $xml->startElement('lokales_differenzierungsmerkmal');
+                $xml->writeCdata($lokales_dm);
+                $xml->endElement();
+                $xml->setIndent($in);
+                $xml->startElement('familienname');
+                $xml->writeCdata($familienname);
+                $xml->endElement();
+                $xml->setIndent($in);
+                $xml->startElement('rufname');
+                $xml->writeCdata($rufname);
+                $xml->endElement();
+                $xml->setIndent(--$in);
+
+                // END IDENTIFIZIERBARE MERKMALE
+                $xml->endElement();
+                $xml->setIndent($in);
+
+                // START ZEUGNISSE
+                $xml->startElement('zeugnisse');
+                $xml->setIndent(++$in);
+                $xml->startElement('zeugnis');
+                $xml->setIndent(++$in);
+                $xml->startElement('zeugnisart');
+                $xml->writeCdata($zeugnisart);
+                $xml->endElement();
+                $xml->setIndent(--$in);
+
+                $xml->startElement('noten');
+            }
+
+            $xml->startElement('note');
+            $xml->startElement('fach');
+            $xml->setIndent(++$in);
+            $xml->startElement('schluessel');
+            $xml->writeCdata($schluessel);
+            $xml->endElement();
+            $xml->startElement('kurzform');
+            $xml->writeCdata($kurzform);
+            $xml->endElement();
+            $xml->setIndent(--$in);
+            $xml->endElement();
+
+            $xml->startElement('notenwert');
+            $xml->writeCdata($note);
+            $xml->endElement();
+
+            $xml->startElement('datum');
+            $xml->writeCdata($update_date);
+            $xml->endElement();
+
+            // belegart, Seminarthema
+            if (isset($belegart)) {
+                $xml->startElement('belegart');
+                $xml->writeCdata($belegart);
+                $xml->endElement();
+            }
+
+            if (isset($bemerkung)) {
+                $xml->startElement('bemerkung');
+                $xml->writeCdata($bemerkung);
+                $xml->endElement();
+            }
 
 			$xml->endElement();
 
