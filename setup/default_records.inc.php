@@ -18,8 +18,8 @@ $oProc->query("INSERT INTO {$egw_customfields} (cf_app,cf_name,cf_label,cf_type)
 $oProc->query("INSERT INTO {$egw_customfields} (cf_app,cf_name,cf_label,cf_type) VALUES ('calendar', '#SCHULMANAGER_CAL_KLASSE', 'Schulklasse des Termins', 'text')");
 $oProc->query("INSERT INTO {$egw_customfields} (cf_app,cf_name,cf_label,cf_type) VALUES ('calendar', '#SCHULMANAGER_CAL_KLASSENGRUPPE', 'Klassengruppe des Termins', 'text')");
 $oProc->query("INSERT INTO {$egw_customfields} (cf_app,cf_name,cf_label,cf_type,cf_values) VALUES ('calendar', '#SCHULMANAGER_CAL_TYPE', 'Typ des Termins', 'select','{\"sa\":\"Schulaufgabe\",\"ka\":\"Kurzarbeit\",\"ex\":\"Stegreifaufgabe\",\"flt\":\"fachlicher Leistungstest\",\"sonst\":\"Sonstiges\",\"block\":\"BLOCKIERT\"}')");
-$oProc->query("INSERT INTO {$egw_customfields} (cf_app,cf_name,cf_label,cf_len) VALUES ('calendar', '#SCHULMANAGER_CAL_FACH', 'Unterrichtsfach des Termins', 'text',5)");
-$oProc->query("INSERT INTO {$egw_customfields} (cf_app,cf_name,cf_label) VALUES ('calendar', '#SCHULMANAGER_CAL_USER', 'verantw. Lehrer des Termins', 'select-account')");
+$oProc->query("INSERT INTO {$egw_customfields} (cf_app,cf_name,cf_label,cf_type,cf_len) VALUES ('calendar', '#SCHULMANAGER_CAL_FACH', 'Unterrichtsfach des Termins', 'text', 5)");
+$oProc->query("INSERT INTO {$egw_customfields} (cf_app,cf_name,cf_label,cf_type) VALUES ('calendar', '#SCHULMANAGER_CAL_USER', 'verantw. Lehrer des Termins', 'select-account')");
 
 $egw_config = 'egw_schulmanager_config';
 $oProc->query("INSERT INTO {$egw_config} (cnf_key, cnf_val, cnf_extra) VALUES ('#FACH_ORDER#', 'K',   '010')");
