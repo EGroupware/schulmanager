@@ -13,6 +13,7 @@ import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {et2_dialog} from "../../api/js/etemplate/et2_widget_dialog";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {Et2Checkbox} from "../../api/js/etemplate/Et2Checkbox/Et2Checkbox";
@@ -1156,7 +1157,8 @@ export class SchulmanagerApp extends EgwApp
 		let tokenDiv = <HTMLInputElement> document.getElementById('schulmanager-mntc_token');
 		let token = tokenDiv.value;
 
-		et2_dialog.show_prompt(function(button_id, value){
+		//et2_dialog.show_prompt(function(button_id, value){
+		Et2Dialog.show_prompt(function(button_id, value){
 			if (button_id == et2_dialog.OK_BUTTON)
 			{
 				let func = 'schulmanager.schulmanager_mntc_ui.ajax_resetAllGrades';
@@ -1167,7 +1169,7 @@ export class SchulmanagerApp extends EgwApp
 					egw(window).message(result.msg, 'success');
 				}).sendRequest(true);
 			}
-		}, egw.lang('Confirmation required'), egw.lang('Absolut sicher, dass alle Noten gelöscht werden sollen?'), {}, et2_dialog.BUTTONS_OK_CANCEL, et2_dialog.QUESTION_MESSAGE);
+		}, egw.lang('Confirmation required'), egw.lang('Absolut sicher, dass alle Noten gelöscht werden sollen?'), {}, et2_dialog.BUTTONS_OK_CANCEL, null);
 	}
 
 	/**
