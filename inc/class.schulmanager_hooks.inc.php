@@ -148,7 +148,7 @@ class schulmanager_hooks
                 );
             }
 
-			display_sidebox($appname,$title,$file);
+			$GLOBALS['egw']->framework->sidebox($appname,$title,$file);
 
 
 			$title = 'Export';
@@ -159,7 +159,7 @@ class schulmanager_hooks
 				$file['Export: ZZ-Noten nach ASV'] = Egw::link('/index.php', 'menuaction=schulmanager.schulmanager_ui.exportasv_zz&appname=' . $appname, '&ajax=true');
 				$file['Export: JZ-Noten nach ASV'] = Egw::link('/index.php', 'menuaction=schulmanager.schulmanager_ui.exportasv_jz&appname=' . $appname, '&ajax=true');
 			}
-			display_sidebox($appname,$title,$file);
+			$GLOBALS['egw']->framework->sidebox($appname,$title,$file);
 			
 			$title = 'Zuordnungen';			
 			$file = Array();
@@ -169,7 +169,7 @@ class schulmanager_hooks
 			    $file['Vertretungen'] = Egw::link('/index.php', 'menuaction=schulmanager.schulmanager_substitution_ui.index&appname=' . $appname, '&ajax=true');
                 $file['Lehrer'] = Egw::link('/index.php', 'menuaction=schulmanager.schulmanager_substitution_ui.accounts&appname=' . $appname, '&ajax=true');
             }
-			display_sidebox($appname,$title,$file);
+			$GLOBALS['egw']->framework->sidebox($appname,$title,$file);
 		}
 
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
@@ -188,7 +188,7 @@ class schulmanager_hooks
 			}
 			else
 			{
-				display_sidebox($appname,lang('Admin'),$file);
+				$GLOBALS['egw']->framework->sidebox($appname,lang('Admin'),$file);
 			}
 		}
 	}
