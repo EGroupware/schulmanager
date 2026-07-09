@@ -17,7 +17,7 @@
 				</row>
 				<row class="row ">
 					<et2-textbox align="center" id="${row}[nr]" no_lang="1" readonly="false" class="place"></et2-textbox>
-					<et2-button id="${row}[nachname]" no_lang="1" font_style="" class="lastname leftPad5" label="{$row}[nachname]"></et2-button>
+					<et2-button id="${row}[nachname]" no_lang="1" font_style="" class="lastname leftPad5" label="${row}[nachname]"></et2-button>
 					<et2-checkbox id="${row}[test]"></et2-checkbox>
 				</row>
 			</rows>

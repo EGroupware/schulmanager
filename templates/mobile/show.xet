@@ -47,7 +47,7 @@
 							<description align="left" id="${row}[quantity]" no_lang="1"/>
 						</hbox>
 						<menulist>
-							<menupopup type="select-cat" id="{$row}[cat_id]" no_lang="1" readonly="true"/>
+							<menupopup type="select-cat" id="${row}[cat_id]" no_lang="1" readonly="true"/>
 						</menulist>
 					</vbox>
 					<vbox>
