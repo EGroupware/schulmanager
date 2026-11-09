@@ -39,6 +39,7 @@ class schulmanager_schueler_so {
 
     function __construct() {
         $this->db = clone($GLOBALS['egw']->db);
+        $this->db->requireSqlFragmentObjects(false); // old, unaudited app - see wiki/phpbrain/ranking for the same pattern
         $this->db->set_app('stundenplan');
         $this->all_tables = array($this->sm_schueler_table);
 		foreach(array('stamm','schuljahr') as $name)

@@ -32,6 +32,7 @@ class schulmanager_lehrer_account_so extends Api\Storage
     public function __construct()
     {
         $this->db = clone($GLOBALS['egw']->db);
+        $this->db->requireSqlFragmentObjects(false); // old, unaudited app - see wiki/phpbrain/ranking for the same pattern
         $this->db->set_app('schulmanager');
         $this->all_tables = array($this->schulmanager_lehrer_account_table);
         $this->setup_table('schulmanager', $this->schulmanager_lehrer_account_table);

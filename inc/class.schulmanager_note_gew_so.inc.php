@@ -27,6 +27,7 @@ class schulmanager_note_gew_so extends Api\Storage {
 
 	public function __construct(){
         $this->db = clone($GLOBALS['egw']->db);
+        $this->db->requireSqlFragmentObjects(false); // old, unaudited app - see wiki/phpbrain/ranking for the same pattern
         $this->db->set_app('schulmanager');
 		$this->all_tables = array($this->sm_note_gew_table);
 
